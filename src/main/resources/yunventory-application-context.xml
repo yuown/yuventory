@@ -7,6 +7,6 @@
 
     <context:annotation-config />
     <context:component-scan base-package="yuown.yuventory" />
-    <context:property-placeholder location="yuventory.properties"/>
+    <context:property-placeholder location="classpath:/yuventory.properties"/>
 
 </beans>
