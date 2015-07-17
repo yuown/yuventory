@@ -1,16 +1,15 @@
 package yuown.yunventory.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.glassfish.jersey.server.wadl.config.WadlGeneratorConfig;
 import org.glassfish.jersey.server.wadl.config.WadlGeneratorDescription;
+import org.glassfish.jersey.server.wadl.internal.generators.WadlGeneratorJAXBGrammarGenerator;
+
+import java.util.List;
 
 public class YuownJerseyWADLGeneratorConfiguration extends WadlGeneratorConfig {
 
-	@Override
-	public List<WadlGeneratorDescription> configure() {
-		List<WadlGeneratorDescription> list = new ArrayList<WadlGeneratorDescription>();
-		return list;
-	}
+    @Override
+    public List<WadlGeneratorDescription> configure() {
+        return generator(WadlGeneratorJAXBGrammarGenerator.class).descriptions();
+    }
 }

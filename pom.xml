@@ -69,10 +69,26 @@
 			<version>${apache.commons.lang3.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jersey.bean.validation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+			<version>${jersey.bean.validation.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-bean-validation</artifactId>
 			<version>${jersey.bean.validation.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>2.6.0-rc4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -97,6 +113,7 @@
 							</includes>
 						</resource>
 					</webResources>
+					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
