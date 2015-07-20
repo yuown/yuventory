@@ -48,13 +48,18 @@ public abstract class AbstractRepositoryService<R extends BaseRepository<E, ID>,
     }
 
     public void remove(E entity) {
-        entity.setEnabled(false);
         repository().save(entity);
     }
 
     public void removeAll(Iterable<E> entities) {
         repository().deleteInBatch(entities);
     }
+
+    public List<E> findByName(String name) {
+        return repository().findByName(name);
+    }
+
+    public abstract List<E> findAllByDescOrder();
 
     public abstract R repository();
 }

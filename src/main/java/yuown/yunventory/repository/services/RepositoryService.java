@@ -9,7 +9,7 @@ import java.util.Map;
 public interface RepositoryService<E extends BaseEntity<ID>, ID extends Serializable> {
 
     E findById(ID id);
-    
+
     List<E> findAll();
 
     Map<ID, E> findAllAsMap();
@@ -19,8 +19,9 @@ public interface RepositoryService<E extends BaseEntity<ID>, ID extends Serializ
     E saveOrUpdate(E entity);
 
     List<E> saveOrUpdateAll(Iterable<? extends E> entities);
-    
+
     void remove(E entity);
 
     void removeAll(Iterable<E> entities);
+
 }

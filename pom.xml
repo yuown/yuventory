@@ -64,6 +64,16 @@
 			<version>${spring.data.jpa.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.10.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-envers</artifactId>
+			<version>0.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
@@ -118,7 +128,11 @@
 			<version>3.2.0</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.11.1.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -143,7 +157,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<outputDirectory>/Users/kirannk/Development/apache-tomcat-6.0.41/webapps</outputDirectory>
+					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -17,11 +17,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "supplier", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
+@Table(name = "SUPPLIER", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
 @AttributeOverrides( value = 
 {
-    @AttributeOverride(name = "id", column = @Column(name = "id", insertable = false, updatable = false)),
-    @AttributeOverride(name = "name", column = @Column(name = "name"))
+    @AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false)),
+    @AttributeOverride(name = "name", column = @Column(name = "NAME"))
 })
 public class Supplier extends BaseEntity<Integer> implements Serializable {
 

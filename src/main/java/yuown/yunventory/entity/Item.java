@@ -3,8 +3,10 @@ package yuown.yunventory.entity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -29,7 +31,8 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     private static final long serialVersionUID = 4289151143888117381L;
     
     private String name;
-    private String expression;
+    private Date date = new DateTime().toDate();
+    private String supplier;
 
     @NotNull(message = "Item name cannot be empty")
     public String getName() {
@@ -38,14 +41,6 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getExpression() {
-        return expression;
-    }
-
-    public void setExpression(String expression) {
-        this.expression = expression;
     }
 
     @Override
@@ -58,6 +53,22 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

@@ -7,8 +7,11 @@ import org.springframework.data.repository.NoRepositoryBean;
 import yuown.yunventory.entity.BaseEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 @NoRepositoryBean
 public interface BaseRepository<E extends BaseEntity<ID>, ID extends Serializable> extends JpaRepository<E, ID>, JpaSpecificationExecutor<E> {
+
+    List<E> findByName(String name);
 
 }
