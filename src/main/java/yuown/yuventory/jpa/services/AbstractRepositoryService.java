@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractRepositoryService<R extends BaseRepository<E, ID>, E extends BaseEntity<ID>, ID extends Serializable> implements RepositoryService<E, ID> {
 
     public List<E> findAll() {
-        return repository().findAll();
+        return repository().findAllByOrderByIdDesc();
     }
 
     public void delete(ID id) {

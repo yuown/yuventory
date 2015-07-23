@@ -16,6 +16,12 @@
 		<spring.data.jpa.version>1.8.1.RELEASE</spring.data.jpa.version>
 		<apache.commons.lang3.version>3.4</apache.commons.lang3.version>
 		<jersey.bean.validation.version>2.19</jersey.bean.validation.version>
+		<spring-data-commons.version>1.10.1.RELEASE</spring-data-commons.version>
+		<com.fasterxml.jackson.jaxrs.version>2.6.0</com.fasterxml.jackson.jaxrs.version>
+		<spring-data-envers.version>0.2.0.RELEASE</spring-data-envers.version>
+		<slf4j-api.version>1.7.12</slf4j-api.version>
+		<com.google.zxing.version>3.2.0</com.google.zxing.version>
+		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -71,28 +77,18 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
-			<version>1.10.1.RELEASE</version>
+			<version>${spring-data-commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-envers</artifactId>
-			<version>0.2.0.RELEASE</version>
+			<version>${spring-data-envers.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.glassfish.jersey.containers</groupId> -->
-		<!-- <artifactId>jersey-container-servlet</artifactId> -->
-		<!-- <version>${jersey.bean.validation.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.glassfish.jersey.containers</groupId> -->
-		<!-- <artifactId>jersey-container-servlet-core</artifactId> -->
-		<!-- <version>${jersey.bean.validation.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-bean-validation</artifactId>
@@ -101,51 +97,39 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
-			<version>2.6.0-rc4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.12</version>
-		</dependency>
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.slf4j</groupId> -->
-		<!-- <artifactId>slf4j-simple</artifactId> -->
-		<!-- <version>1.7.12</version> -->
-		<!-- </dependency> -->
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.12</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>3.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>3.2.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.36</version>
+			<version>${com.fasterxml.jackson.jaxrs.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.6.0</version>
+			<version>${com.fasterxml.jackson.jaxrs.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>${com.google.zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${com.google.zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<finalName>yuventory</finalName>
 		<plugins>
@@ -161,10 +145,8 @@
 						</goals>
 						<configuration>
 							<target>
-								<delete
-									dir="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory"
-									includeemptydirs="true" />
-								<delete file="C:\Kiran\Installed\apache-tomcat-6.0.41\yuventory.war" />
+								<delete dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory" includeemptydirs="true" />
+								<delete file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory.war" />
 							</target>
 						</configuration>
 					</execution>
@@ -189,7 +171,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
+					<outputDirectory>/Users/kirannk/Development/apache-tomcat-6.0.41/webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
