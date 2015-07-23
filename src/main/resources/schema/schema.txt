@@ -1,32 +1,38 @@
-CREATE TABLE YUVENTORY.ITEMS (
-    ID INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL,
-    NAME VARCHAR(100),
-    ITEM_TYPE VARCHAR(30),
-    WEIGHT DOUBLE,
-    DATE TIMESTAMP,
-    STOCK_TYPE INTEGER,
-    USER_ENTERED INTEGER,
-    SUPPLIER INTEGER,
-    PRIMARY KEY (ID)
-);
+CREATE TABLE `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `weight` double DEFAULT NULL,
+  `date` varchar(45) DEFAULT NULL,
+  `stock_type` int(11) DEFAULT NULL,
+  `user_entered` int(11) DEFAULT NULL,
+  `supplier` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `items2stock_type_idx` (`stock_type`),
+  KEY `items2supplier_idx` (`supplier`),
+  KEY `items2user_idx` (`user_entered`),
+  CONSTRAINT `items2stock_type` FOREIGN KEY (`stock_type`) REFERENCES `stock_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `items2user` FOREIGN KEY (`user_entered`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE YUVENTORY.STOCK_TYPE (
-    ID INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL,
-    NAME VARCHAR(30),
-    PRIMARY KEY (ID)
-);
+CREATE TABLE `stock_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE YUVENTORY.SUPPLIER (
-    ID INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL,
-    NAME VARCHAR(50),
-    PRIMARY KEY (ID)
-);
+CREATE TABLE `supplier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE YUVENTORY.USERS (
-    ID INTEGER GENERATED ALWAYS AS IDENTITY NOT NULL,
-    USER_ID VARCHAR(25),
-    PASSWORD VARCHAR(25),
-    USER_NAME VARCHAR(25),
-    ENABLED BOOLEAN(1),
-    PRIMARY KEY (ID)
-);
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `enabled` varchar(45) DEFAULT NULL,
+  `full_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
