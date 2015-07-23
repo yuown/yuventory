@@ -25,13 +25,13 @@ public class SupplierResourceImpl implements SupplierResource {
         return supplierService.getById(id);
     }
 
-    public List<SupplierModel> getByName(String name) {
-        return supplierService.getByName(name);
-    }
+//    public List<SupplierModel> getByName(String name) {
+//        return supplierService.getByName(name);
+//    }
 
-    public List<SupplierModel> getAll() {
-        return supplierService.getAll();
-    }
+//    public List<SupplierModel> getAll() {
+//        return supplierService.getAll();
+//    }
 
     public Response removeById(int id) {
         SupplierModel supplier = supplierService.getById(id);

@@ -25,6 +25,6 @@ public class SupplierRepositoryService extends AbstractRepositoryService<Supplie
     }
 
     public List<Supplier> findAllByDescOrder() {
-        return repository().findAllOrderByIdDesc();
+        return repository().findAll();
     }
 }

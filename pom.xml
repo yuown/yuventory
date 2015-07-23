@@ -129,15 +129,35 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.11.1.1</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.36</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
 		<finalName>yunventory</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<delete dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yunventory" includeemptydirs="true" />
+								<delete file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yunventory.war" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
@@ -157,7 +177,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
+					<outputDirectory>/Users/kirannk/Development/apache-tomcat-6.0.41/webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

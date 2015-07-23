@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface SupplierRepository extends BaseRepository<Supplier, Integer> {
 
-    List<Supplier> findAllOrderByIdDesc();
+//    List<Supplier> findAllOrderByIdDesc();
 
 }
