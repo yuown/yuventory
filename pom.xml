@@ -54,6 +54,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons-core</artifactId>
 			<version>${spring.data.commons.core.version}</version>
@@ -78,16 +83,16 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet</artifactId>
-			<version>${jersey.bean.validation.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet-core</artifactId>
-			<version>${jersey.bean.validation.version}</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.glassfish.jersey.containers</groupId> -->
+		<!-- <artifactId>jersey-container-servlet</artifactId> -->
+		<!-- <version>${jersey.bean.validation.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.glassfish.jersey.containers</groupId> -->
+		<!-- <artifactId>jersey-container-servlet-core</artifactId> -->
+		<!-- <version>${jersey.bean.validation.version}</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-bean-validation</artifactId>
@@ -133,11 +138,16 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.36</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.0</version>
+		</dependency>
 
 	</dependencies>
 
 	<build>
-		<finalName>yunventory</finalName>
+		<finalName>yuventory</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -151,8 +161,10 @@
 						</goals>
 						<configuration>
 							<target>
-								<delete dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yunventory" includeemptydirs="true" />
-								<delete file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yunventory.war" />
+								<delete
+									dir="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory"
+									includeemptydirs="true" />
+								<delete file="C:\Kiran\Installed\apache-tomcat-6.0.41\yuventory.war" />
 							</target>
 						</configuration>
 					</execution>
@@ -177,7 +189,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<outputDirectory>/Users/kirannk/Development/apache-tomcat-6.0.41/webapps</outputDirectory>
+					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
