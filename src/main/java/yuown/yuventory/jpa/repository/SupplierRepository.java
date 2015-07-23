@@ -1,4 +1,4 @@
-package yuown.yuventory.repository;
+package yuown.yuventory.jpa.repository;
 
 import org.springframework.stereotype.Repository;
 

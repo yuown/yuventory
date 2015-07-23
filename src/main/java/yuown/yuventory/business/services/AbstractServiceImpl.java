@@ -3,9 +3,9 @@ package yuown.yuventory.business.services;
 import org.springframework.transaction.annotation.Transactional;
 
 import yuown.yuventory.entity.BaseEntity;
+import yuown.yuventory.jpa.repository.BaseRepository;
+import yuown.yuventory.jpa.services.AbstractRepositoryService;
 import yuown.yuventory.model.Model;
-import yuown.yuventory.repository.BaseRepository;
-import yuown.yuventory.repository.services.AbstractRepositoryService;
 import yuown.yuventory.transformer.DTOTransformer;
 
 import java.io.Serializable;

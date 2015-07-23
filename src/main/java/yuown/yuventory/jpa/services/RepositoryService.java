@@ -1,4 +1,4 @@
-package yuown.yuventory.repository.services;
+package yuown.yuventory.jpa.services;
 
 import yuown.yuventory.entity.BaseEntity;
 

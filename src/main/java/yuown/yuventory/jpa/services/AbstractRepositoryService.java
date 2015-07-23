@@ -1,9 +1,9 @@
-package yuown.yuventory.repository.services;
+package yuown.yuventory.jpa.services;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import yuown.yuventory.entity.BaseEntity;
-import yuown.yuventory.repository.BaseRepository;
+import yuown.yuventory.jpa.repository.BaseRepository;
 
 import java.io.Serializable;
 import java.util.List;

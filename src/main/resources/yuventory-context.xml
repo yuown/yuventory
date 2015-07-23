@@ -48,5 +48,5 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-	<jpa:repositories base-package="yuown.yuventory.repository" entity-manager-factory-ref="entityManagerFactory" />
+	<jpa:repositories base-package="yuown.yuventory.jpa.repository" entity-manager-factory-ref="entityManagerFactory" />
 </beans>

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import yuown.yuventory.entity.Supplier;
+import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.model.SupplierModel;
-import yuown.yuventory.repository.SupplierRepositoryService;
 import yuown.yuventory.transformer.SupplierTransformer;
 
 @Service

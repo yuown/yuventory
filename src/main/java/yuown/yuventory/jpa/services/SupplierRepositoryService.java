@@ -1,10 +1,10 @@
-package yuown.yuventory.repository;
+package yuown.yuventory.jpa.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import yuown.yuventory.entity.Supplier;
-import yuown.yuventory.repository.services.AbstractRepositoryService;
+import yuown.yuventory.jpa.repository.SupplierRepository;
 
 import java.util.List;
 
