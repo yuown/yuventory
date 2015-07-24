@@ -19,6 +19,7 @@
 		<spring-data-commons.version>1.10.1.RELEASE</spring-data-commons.version>
 		<com.fasterxml.jackson.jaxrs.version>2.6.0</com.fasterxml.jackson.jaxrs.version>
 		<spring-data-envers.version>0.2.0.RELEASE</spring-data-envers.version>
+		<spring.security.version>4.0.1.RELEASE</spring.security.version>
 		<slf4j-api.version>1.7.12</slf4j-api.version>
 		<com.google.zxing.version>3.2.0</com.google.zxing.version>
 		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
@@ -85,6 +86,21 @@
 			<version>${spring-data-envers.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
@@ -145,8 +161,11 @@
 						</goals>
 						<configuration>
 							<target>
-								<delete dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory" includeemptydirs="true" />
-								<delete file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory.war" />
+								<delete
+									dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory"
+									includeemptydirs="true" />
+								<delete
+									file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory.war" />
 							</target>
 						</configuration>
 					</execution>
