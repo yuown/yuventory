@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "USERS", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false)),
-		@AttributeOverride(name = "userName", column = @Column(name = "UNAME")),
+		@AttributeOverride(name = "username", column = @Column(name = "username")),
 		@AttributeOverride(name = "password", column = @Column(name = "PASSWORD")),
 		@AttributeOverride(name = "enabled", column = @Column(name = "ENABLED")),
 		@AttributeOverride(name = "fullName", column = @Column(name = "FULL_NAME"))
@@ -29,7 +29,7 @@ public class User extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 4289151143888117381L;
 
-	private String userName;
+	private String username;
 
 	private String password;
 
@@ -37,8 +37,8 @@ public class User extends BaseEntity<Integer> implements Serializable {
 
 	private String fullName;
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getPassword() {
@@ -53,8 +53,8 @@ public class User extends BaseEntity<Integer> implements Serializable {
 		return fullName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public void setPassword(String password) {

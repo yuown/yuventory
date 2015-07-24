@@ -23,6 +23,7 @@
 		<slf4j-api.version>1.7.12</slf4j-api.version>
 		<com.google.zxing.version>3.2.0</com.google.zxing.version>
 		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
+		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -101,6 +102,11 @@
 			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.commons.lang3.version}</version>
@@ -145,6 +151,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>yuventory</finalName>
@@ -162,10 +174,10 @@
 						<configuration>
 							<target>
 								<delete
-									dir="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory"
+									dir="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory"
 									includeemptydirs="true" />
 								<delete
-									file="/Users/kirannk/Development/apache-tomcat-6.0.41/webapps/yuventory.war" />
+									file="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory.war" />
 							</target>
 						</configuration>
 					</execution>
@@ -190,7 +202,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<outputDirectory>/Users/kirannk/Development/apache-tomcat-6.0.41/webapps</outputDirectory>
+					<outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

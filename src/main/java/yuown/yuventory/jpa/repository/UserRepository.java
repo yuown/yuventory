@@ -7,4 +7,6 @@ import yuown.yuventory.entity.User;
 @Repository
 public interface UserRepository extends BaseRepository<User, Integer> {
 
+    public User findByUsername(String userName);
+
 }

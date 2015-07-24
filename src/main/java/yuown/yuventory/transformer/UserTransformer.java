@@ -3,8 +3,13 @@ package yuown.yuventory.transformer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 import yuown.yuventory.entity.User;
 import yuown.yuventory.model.UserModel;
+import yuown.yuventory.security.YuownGrantedAuthority;
 
 @Component
 public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
@@ -34,6 +39,9 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 			try {
 				dest = new UserModel();
 				BeanUtils.copyProperties(source, dest, TO_EXCLUDES);
+				ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
+				authorities.add(new YuownGrantedAuthority("ROLE_USER"));
+				dest.setAuthorities(authorities);
 			} catch (Exception e) {
 				dest = null;
 			}

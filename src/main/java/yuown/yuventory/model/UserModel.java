@@ -1,49 +1,76 @@
 package yuown.yuventory.model;
 
-public class UserModel extends Model {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-	/**
-     * 
-     */
-	private static final long serialVersionUID = -3340859196299627969L;
+import yuown.yuventory.security.YuownGrantedAuthority;
 
-	private String userName;
+import java.util.ArrayList;
+import java.util.Collection;
 
-	private String password;
+public class UserModel extends Model implements UserDetails {
 
-	private boolean enabled;
+    private static final long serialVersionUID = 3212743390766576226L;
 
-	private String fullName;
+    private String username;
 
-	public String getUserName() {
-		return userName;
-	}
+    private String password;
 
-	public String getPassword() {
-		return password;
-	}
+    private boolean enabled;
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    private String fullName;
 
-	public String getFullName() {
-		return fullName;
-	}
+    private ArrayList<YuownGrantedAuthority> authorities;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    public void setUsername(String userName) {
+        this.username = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public boolean isAccountNonExpired() {
+        return this.enabled;
+    }
+
+    public boolean isAccountNonLocked() {
+        return this.enabled;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return this.enabled;
+    }
+
+    public void setAuthorities(ArrayList<YuownGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 }
