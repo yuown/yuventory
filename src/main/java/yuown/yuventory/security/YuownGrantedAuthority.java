@@ -4,16 +4,22 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class YuownGrantedAuthority implements GrantedAuthority {
 
-    private static final long serialVersionUID = 2811224602083076264L;
+	private static final long serialVersionUID = 648120512795626447L;
 
-    private String authority;
+	private String authority;
 
-    public YuownGrantedAuthority(String authority) {
-        this.authority = authority;
-    }
+	public YuownGrantedAuthority() {
+	}
 
-    public String getAuthority() {
-        return authority;
-    }
+	public YuownGrantedAuthority(String authority) {
+		this.authority = authority;
+	}
 
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 }

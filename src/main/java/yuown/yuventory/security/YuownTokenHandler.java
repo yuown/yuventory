@@ -11,8 +11,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.springframework.stereotype.Component;
-
 import yuown.yuventory.model.UserModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,7 +21,7 @@ public class YuownTokenHandler {
 	private static final String HMAC_ALGO = "HmacSHA256";
 
 	private static final String SEPARATOR = ".";
-	
+
 	private static final String SEPARATOR_SPLITTER = "\\.";
 
 	private final Mac hmac;
@@ -36,7 +34,7 @@ public class YuownTokenHandler {
 			throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
 		}
 	}
-	
+
 	public UserModel parseUserFromToken(String token) {
 		final String[] parts = token.split(SEPARATOR_SPLITTER);
 		if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0) {
@@ -52,12 +50,11 @@ public class YuownTokenHandler {
 					}
 				}
 			} catch (IllegalArgumentException e) {
-				//log tempering attempt here
 			}
 		}
 		return null;
 	}
-	
+
 	public String createTokenForUser(UserModel user) {
 		byte[] userBytes = toJSON(user);
 		byte[] hash = createHmac(userBytes);

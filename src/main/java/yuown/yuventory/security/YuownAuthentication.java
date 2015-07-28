@@ -9,6 +9,8 @@ import yuown.yuventory.model.UserModel;
 
 public class YuownAuthentication implements Authentication {
 
+	private static final long serialVersionUID = 2640815854559046081L;
+
 	private UserModel user;
 
 	private boolean authenticated = true;
@@ -51,5 +53,4 @@ public class YuownAuthentication implements Authentication {
 	public void setAuthenticated(boolean authenticated) throws IllegalArgumentException {
 		this.authenticated = authenticated;
 	}
-
 }

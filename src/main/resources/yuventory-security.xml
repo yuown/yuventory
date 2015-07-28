@@ -6,22 +6,22 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-<!-- 	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest"> -->
-<!-- 		<security:intercept-url pattern="/rest/*" access="ROLE_USER" /> -->
-<!-- 		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" /> -->
-<!-- 		<security:custom-filter ref="yuownAuthenticationFilter" before="FORM_LOGIN_FILTER" /> -->
-<!-- 	</security:http> -->
-	
-	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest">
-        <security:intercept-url pattern="/users/login" />
+    <security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/users/login">
         <security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
         <security:custom-filter ref="yuownLoginFilter" before="FORM_LOGIN_FILTER" />
     </security:http>
-
+    
+	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/*">
+		<security:intercept-url pattern="/rest/*" access="ROLE_USER" />
+		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
+		<security:custom-filter ref="yuownAuthenticationFilter" before="FORM_LOGIN_FILTER" />
+	</security:http>
+	
     <bean id="yuownLoginFilter" class="yuown.yuventory.security.YuownLoginFilter">
         <constructor-arg name="defaultFilterProcessesUrl" value="/rest/users/login" />
+        <property name="authenticationSuccessHandler" ref="yuownAuthenticationSuccessHandler" />
     </bean>
-<!--     <bean id="yuownAuthenticationFilter" class="yuown.yuventory.security.YuownAuthenticationFilter" /> -->
+    <bean id="yuownAuthenticationFilter" class="yuown.yuventory.security.YuownAuthenticationFilter" />
     <bean id="yuownTokenAuthenticationService" class="yuown.yuventory.security.YuownTokenAuthenticationService" />
 
 	<bean id="yuownAuthenticationEntryPoint" class="yuown.yuventory.security.YuownAuthenticationEntryPoint" />

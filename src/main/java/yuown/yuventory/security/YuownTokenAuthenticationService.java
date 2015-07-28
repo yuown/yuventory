@@ -14,7 +14,9 @@ import yuown.yuventory.model.UserModel;
 @Component
 public class YuownTokenAuthenticationService {
 
-	private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+	@Value("${X-AUTH-TOKEN}")
+	private String AUTH_HEADER_NAME;
+
 	private static final long TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
 
 	private final YuownTokenHandler yuownTokenHandler;
