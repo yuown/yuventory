@@ -37,4 +37,8 @@ public class UserResourceImpl implements UserResource {
 	public List<UserModel> getAll() {
 		return userService.getAll();
 	}
+
+	public Response save(String authorization) {
+		return null;
+	}
 }

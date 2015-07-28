@@ -22,6 +22,8 @@ public class UserModel extends Model implements UserDetails {
 
     private ArrayList<YuownGrantedAuthority> authorities;
 
+	private long expires;
+
     public String getPassword() {
         return password;
     }
@@ -73,4 +75,12 @@ public class UserModel extends Model implements UserDetails {
     public void setAuthorities(ArrayList<YuownGrantedAuthority> authorities) {
         this.authorities = authorities;
     }
+
+	public void setExpires(long l) {
+		this.expires = l;
+	}
+	
+	public long getExpires() {
+		return expires;
+	}
 }

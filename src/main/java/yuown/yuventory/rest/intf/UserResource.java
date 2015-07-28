@@ -28,4 +28,7 @@ public interface UserResource {
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public Response removeById(@PathVariable int id);
 
+	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = { "Authorization" })
+	public Response save(String authorization);
+
 }
