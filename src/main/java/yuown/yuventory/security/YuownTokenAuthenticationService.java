@@ -26,8 +26,7 @@ public class YuownTokenAuthenticationService {
 		yuownTokenHandler = new YuownTokenHandler(DatatypeConverter.parseBase64Binary(secret));
 	}
 
-	public void addAuthentication(HttpServletResponse response, Authentication authentication) {
-		final UserModel user = (UserModel) authentication.getDetails();
+	public void addAuthentication(HttpServletResponse response, UserModel user) {
 		user.setExpires(System.currentTimeMillis() + TEN_DAYS);
 		response.addHeader(AUTH_HEADER_NAME, yuownTokenHandler.createTokenForUser(user));
 	}

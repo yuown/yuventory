@@ -37,9 +37,9 @@ public class YuownAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 		response.setStatus(HttpServletResponse.SC_OK);
-		final UserModel authenticatedUser = userService.loadUserByUsername(authResult.getName());
+		final UserModel authenticatedUser = (UserModel) authResult.getPrincipal();
 		final Authentication userAuthentication = new YuownAuthentication(authenticatedUser);
-		yuownTokenAuthenticationService.addAuthentication(response, userAuthentication);
+		yuownTokenAuthenticationService.addAuthentication(response, authenticatedUser);
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
 	}
 }
