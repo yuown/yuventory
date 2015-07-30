@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="yuventoryApp">
 <head>
 <meta charset="UTF-8">
 <title>yuventory</title>
 <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />
-<link rel="stylesheet" type="text/css"
-	href="bootstrap/bootstrap-theme.css" />
+<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap-theme.css" />
 <script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="angular/angular.js"></script>
-<script type="text/javascript" src="angular/angular-route.min.js"></script>
-<script type="text/javascript" src="js/yuventory.js"></script>
+<script type="text/javascript" src="angular/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/yuventoryApp.js"></script>
+<script type="text/javascript" src="js/controllers.js"></script>
+<script type="text/javascript" src="js/httpProvider.js"></script>
+<script type="text/javascript" src="js/services.js"></script>
+<script type="text/javascript" src="js/stateProvider.js"></script>
 </head>
-<body ng-app="yuventoryApp" style="height: 100%">
-	<div ng-view></div>
+<body style="height: 100%">
+	<div ui-view></div>
 </body>
 </html>

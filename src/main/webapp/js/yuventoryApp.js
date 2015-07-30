@@ -1,0 +1,1 @@
+var yuventoryApp = angular.module("yuventoryApp", [ 'ui.router' ]);

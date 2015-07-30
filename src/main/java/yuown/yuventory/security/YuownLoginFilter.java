@@ -19,6 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import yuown.yuventory.model.UserModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 public class YuownLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -36,7 +37,12 @@ public class YuownLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-		final UserModel user = new ObjectMapper().readValue(request.getInputStream(), UserModel.class);
+		UserModel user = null;
+		try {
+			user = new ObjectMapper().readValue(request.getInputStream(), UserModel.class);
+		} catch (UnrecognizedPropertyException urpe) {
+			throw new IOException(urpe.getMessage());
+		}
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 		return getAuthenticationManager().authenticate(loginToken);
 	}

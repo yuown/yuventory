@@ -38,7 +38,8 @@ public class UserResourceImpl implements UserResource {
 		return userService.getAll();
 	}
 
-	public Response save(String authorization) {
-		return null;
+	public UserModel login(UserModel user) {
+		user.setPassword(null);
+		return user;
 	}
 }
