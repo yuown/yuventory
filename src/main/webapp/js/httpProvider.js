@@ -22,5 +22,16 @@ yuventoryApp.config(function($httpProvider) {
         };
     } ];
 
+    var authSetter = [ '$q', '$location', function($q, $location) {
+        return {
+            request : function(config) {
+                config.headers = config.headers || {};
+                config.headers['YUOWN-KEY'] = sessionStorage.getItem('YUOWN-KEY');
+                return config;
+            }
+        };
+    } ];
+
+    $httpProvider.interceptors.push(authSetter);
     $httpProvider.interceptors.push(logsOutUserOn401);
 });

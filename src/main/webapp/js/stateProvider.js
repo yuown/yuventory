@@ -11,6 +11,13 @@ yuventoryApp.config(function($stateProvider, $urlRouterProvider) {
         url : '/home',
         templateUrl : 'templates/home.html',
         controller : 'HomeController'
+    }).state('suppliers', {
+        url : '/suppliers',
+        scope : {
+            current : '=content-holder'
+        },
+        templateUrl : 'templates/suppliers.html',
+        controller : 'SuppliersController'
     })
 });
 

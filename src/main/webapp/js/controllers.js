@@ -18,3 +18,11 @@ yuventoryApp.controller('HomeController', function($scope, SessionService) {
 
     $scope.name = SessionService.currentUser.username;
 });
+
+yuventoryApp.controller('SuppliersController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
+    'use strict';
+
+    AjaxService.call('http://localhost:8080/yuventory/rest/suppliers', 'GET').success(function(data, status, headers, config) {
+        $scope.suppliers = data;
+    });
+} ]);
