@@ -11,7 +11,7 @@ yuventoryApp.run(['$rootScope', '$location', '$cookieStore', '$http', function($
 			$location.path('/login');
 		}
 		if ($location.path() == '/login' && $rootScope.globals.currentUser) {
-			event.preventDefault();
+			$location.path('/home');
 		}
 	});
 } ]);
