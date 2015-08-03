@@ -184,29 +184,27 @@
 	<build>
 		<finalName>yuventory</finalName>
 		<plugins>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-antrun-plugin</artifactId> -->
-			<!-- <version>1.8</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <phase>clean</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>run</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <target> -->
-			<!-- <delete -->
-			<!-- dir="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory" -->
-			<!-- includeemptydirs="true" /> -->
-			<!-- <delete -->
-			<!-- file="C:\Kiran\Installed\apache-tomcat-6.0.41\webapps\yuventory.war" 
-				/> -->
-			<!-- </target> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-antrun-plugin</artifactId> -->
+<!-- 				<version>1.8</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>clean</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>run</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<target> -->
+<!-- 								<delete dir="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps" -->
+<!-- 									includeemptydirs="true" /> -->
+<!-- 								<delete -->
+<!-- 									file="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps\yuventory.war" /> -->
+<!-- 							</target> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
@@ -226,7 +224,7 @@
 							</includes>
 						</resource>
 					</webResources>
-					<!-- <outputDirectory>C:\Kiran\Installed\apache-tomcat-6.0.41\webapps</outputDirectory> -->
+<!-- 					<outputDirectory>C:\Kiran\Installed\apache-tomcat-7.0.55\webapps</outputDirectory> -->
 				</configuration>
 			</plugin>
 		</plugins>

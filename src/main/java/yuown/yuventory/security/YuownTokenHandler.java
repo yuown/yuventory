@@ -30,7 +30,9 @@ public class YuownTokenHandler {
 		try {
 			hmac = Mac.getInstance(HMAC_ALGO);
 			hmac.init(new SecretKeySpec(secretKey, HMAC_ALGO));
-		} catch (NoSuchAlgorithmException | InvalidKeyException e) {
+		} catch(InvalidKeyException e) {
+		    throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
+		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
 		}
 	}

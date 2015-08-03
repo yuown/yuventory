@@ -1,23 +1,33 @@
-yuventoryApp.controller('LoginController', [ '$scope', 'AuthenticationService', '$location',
-        function($scope, AuthenticationService, $location) {
-            'use strict';
+yuventoryApp.controller('LoginController', [ '$scope', '$location', 'AuthenticationService', function($scope, $location, AuthenticationService) {
+	'use strict';
 
-            $scope.loginUser = function(user) {
-                // this should be replaced with a call to your API for user
-                // verification
-                // (or you could also do it in the service)
-                AuthenticationService.login(user);
-                if (AuthenticationService.isLoggedIn()) {
-                    $location.path('/home');
-                }
-            };
-        } ]);
+	AuthenticationService.ClearCredentials();
 
-yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', function($scope, $routeSegment) {
+	$scope.login = function() {
+		$scope.dataLoading = true;
+		AuthenticationService.Login($scope.user, function(response, headers) {
+			if (response == 200) {
+				AuthenticationService.SetCredentials($scope.user.username, headers("YUOWN-KEY"));
+				$location.path('/home');
+			} else {
+				$scope.error = response.message;
+				$scope.dataLoading = false;
+			}
+		});
+	};
+
+} ]);
+
+yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', '$location', 'AuthenticationService', function($scope, $routeSegment, $location, AuthenticationService) {
     'use strict';
     
     $scope.isSegment = function(segment) {
         return $routeSegment.name.endsWith(segment);
+    };
+    
+    $scope.logout = function() {
+    	AuthenticationService.ClearCredentials();
+    	$location.path('/login');
     };
 
 } ]);
