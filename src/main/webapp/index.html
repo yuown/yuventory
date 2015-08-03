@@ -8,15 +8,16 @@
 <script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="angular/angular.js"></script>
-<script type="text/javascript" src="angular/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/angular-route.js"></script>
+<script type="text/javascript" src="js/angular-route-segment.js"></script>
 <script type="text/javascript" src="js/underscore.js"></script>
 <script type="text/javascript" src="js/yuventoryApp.js"></script>
 <script type="text/javascript" src="js/controllers.js"></script>
 <script type="text/javascript" src="js/httpProvider.js"></script>
 <script type="text/javascript" src="js/services.js"></script>
-<script type="text/javascript" src="js/stateProvider.js"></script>
+<script type="text/javascript" src="js/routeSegmentProvider.js"></script>
 </head>
 <body style="height: 100%">
-	<div ui-view></div>
+	<div id="main-contents" app-view-segment="0"></div>
 </body>
 </html>

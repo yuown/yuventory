@@ -1,5 +1,5 @@
 <div ng-controller='HomeController'>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default"><!--  navbar-fixed-top  -->
 		<div ng-controller="MenuController" class="container">
 	       <div class="navbar-header">
 	         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
@@ -12,9 +12,9 @@
 	       </div>
 	       <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="#items">Items</a></li>
-	            <li><a href="#suppliers">Suppliers</a></li>
-	            <li><a href="#stockTypes">Stock Types</a></li>
+	            <li ng-class="{active: isSegment('items')}"><a href="#/home/items">Items</a></li>
+	            <li ng-class="{active: isSegment('suppliers')}"><a href="#/home/suppliers">Suppliers</a></li>
+	            <li ng-class="{active: isSegment('stockTypes')}"><a href="#/home/stockTypes">Stock Types</a></li>
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
@@ -35,7 +35,6 @@
 	    </div>
     </nav>
 	<div class="container">
-	   <div ng-include id="content-holder" src="contentTemplate">
-	   </div>
+	   <div id="main-contents" app-view-segment="1"></div>
 	</div>
 </div>

@@ -1,24 +1,7 @@
 yuventoryApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
 
-    $urlRouterProvider.otherwise('/login');
 
-    $stateProvider.state('login', {
-        url : '/login',
-        templateUrl : 'templates/login.html',
-        controller : 'LoginController'
-    }).state('home', {
-        url : '/home',
-        templateUrl : 'templates/home.html',
-        controller : 'HomeController'
-    }).state('suppliers', {
-        url : '/suppliers',
-        scope : {
-            current : '=content-holder'
-        },
-        templateUrl : 'templates/suppliers.html',
-        controller : 'SuppliersController'
-    })
 });
 
 yuventoryApp.run(function($rootScope, $location, AuthenticationService, RoleService, SessionService) {

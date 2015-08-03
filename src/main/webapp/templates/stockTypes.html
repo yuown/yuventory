@@ -1,4 +1,4 @@
-<div ng-controller='SuppliersController' ng-init="load()">
+<div ng-controller='StockTypesController' ng-init="load()">
 	<button type="button" class="btn btn-primary" ng-click="add()">Add</button>
 	<button type="button" class="btn btn-info" ng-click="load()">Refresh</button>
 	<div class="table-responsive">
@@ -10,12 +10,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="supplier in suppliers">
-					<td>{{ supplier.name }}</td>
+				<tr ng-repeat="stockType in stockTypes">
+					<td>{{ stockType.name }}</td>
 					<td class='btn-group'>
 						<div>
-							<button type='button' class='btn navbar-btn btn-success' ng-click="add(supplier)">Edit</button>
-							<button type='button' class='btn navbar-btn btn-danger' ng-click="delete(supplier)">Delete</button>
+							<button type='button' class='btn navbar-btn btn-success' ng-click="add(stockType)">Edit</button>
+							<button type='button' class='btn navbar-btn btn-danger' ng-click="delete(stockType)">Delete</button>
 						</div>
 					</td>
 				</tr>

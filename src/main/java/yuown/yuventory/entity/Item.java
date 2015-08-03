@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "items", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
+@Table(name = "ITEMS", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "id", insertable = false, updatable = false)),
         @AttributeOverride(name = "name", column = @Column(name = "name")),

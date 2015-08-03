@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "SUPPLIER", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
+@Table(name = "SUPPLIERS", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
 @AttributeOverrides( value = 
 {
     @AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false)),

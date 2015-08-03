@@ -13,16 +13,41 @@ yuventoryApp.controller('LoginController', [ '$scope', 'AuthenticationService', 
             };
         } ]);
 
-yuventoryApp.controller('HomeController', function($scope, SessionService) {
+yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', function($scope, $routeSegment) {
+    'use strict';
+    
+    $scope.isSegment = function(segment) {
+        return $routeSegment.name.endsWith(segment);
+    };
+
+} ]);
+
+yuventoryApp.controller('MenuController', function($scope) {
     'use strict';
 
-    $scope.name = SessionService.currentUser.username;
+    console.log("Menu");
 });
+
+yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
+    'use strict';
+
+    AjaxService.call('http://localhost:8080/yuventory/rest/items', 'GET').success(function(data, status, headers, config) {
+        $scope.items = data;
+    });
+} ]);
 
 yuventoryApp.controller('SuppliersController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
     'use strict';
 
     AjaxService.call('http://localhost:8080/yuventory/rest/suppliers', 'GET').success(function(data, status, headers, config) {
         $scope.suppliers = data;
+    });
+} ]);
+
+yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
+    'use strict';
+
+    AjaxService.call('http://localhost:8080/yuventory/rest/stockTypes', 'GET').success(function(data, status, headers, config) {
+        $scope.stockTypes = data;
     });
 } ]);
