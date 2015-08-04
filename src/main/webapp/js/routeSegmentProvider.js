@@ -21,10 +21,10 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         within().
             segment('items', {
                 'default': 'true',
-                templateUrl : 'templates/items.html'
+                templateUrl : 'items/list.html'
             }).
             segment('suppliers', {
-                templateUrl : 'templates/suppliers.html'
+                templateUrl : 'suppliers/list.html'
             }).
             segment('stockTypes', {
                 templateUrl : 'stockTypes/list.html'

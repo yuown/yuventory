@@ -2,7 +2,7 @@ yuventoryApp.controller('SuppliersController', [ '$scope', 'AjaxService', '$moda
     'use strict';
 
     $scope.load = function() {
-        AjaxService.call('http://localhost:8080/yuventory/rest/suppliers', 'GET').success(function(data, status, headers, config) {
+        AjaxService.call('suppliers', 'GET').success(function(data, status, headers, config) {
             $scope.suppliers = data;
         });
     };
@@ -25,7 +25,7 @@ yuventoryApp.controller('AddSupplierController', [ '$scope', 'AjaxService', func
     'use strict';
 
     $scope.save = function(request) {
-        AjaxService.call('http://localhost:8080/yuventory/rest/suppliers', 'POST', request).success(function(data, status, headers, config) {
+        AjaxService.call('suppliers', 'POST', request).success(function(data, status, headers, config) {
             $scope.addDialog.dismiss('cancel');
             $scope.load();
         });

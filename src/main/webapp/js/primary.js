@@ -37,11 +37,3 @@ yuventoryApp.controller('MenuController', function($scope) {
 
     console.log("Menu");
 });
-
-yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
-    'use strict';
-
-    AjaxService.call('http://localhost:8080/yuventory/rest/items', 'GET').success(function(data, status, headers, config) {
-        $scope.items = data;
-    });
-} ]);

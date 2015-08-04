@@ -5,14 +5,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -28,6 +31,8 @@ public class StockType extends BaseEntity<Integer> implements Serializable {
     private static final long serialVersionUID = 4289151143888117381L;
 
     private String name;
+    
+    private List<Item> items;
 
     public String getName() {
         return name;
@@ -49,7 +54,16 @@ public class StockType extends BaseEntity<Integer> implements Serializable {
         this.id = id;
     }
 
-    @Override
+    @OneToMany(mappedBy="stockType",fetch=FetchType.LAZY)
+    public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	@Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }

@@ -1,16 +1,29 @@
 package yuown.yuventory.transformer;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.jpa.services.StockTypeRepositoryService;
+import yuown.yuventory.jpa.services.SupplierRepositoryService;
+import yuown.yuventory.jpa.services.UserRepositoryService;
 import yuown.yuventory.model.ItemModel;
 
 @Component
 public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
-	private static final String[] FROM_EXCLUDES = new String[] {};
-	private static final String[] TO_EXCLUDES = new String[] {};
+	private static final String[] FROM_EXCLUDES = new String[] { "supplier", "stockType", "user" };
+	private static final String[] TO_EXCLUDES = new String[] { "supplier", "stockType", "user" };
+
+	@Autowired
+	private SupplierRepositoryService supplierRepositoryService;
+
+	@Autowired
+	private StockTypeRepositoryService stockTypeRepositoryService;
+
+	@Autowired
+	private UserRepositoryService userRepositoryService;
 
 	@Override
 	public Item transformFrom(ItemModel source) {
@@ -20,6 +33,9 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest = new Item();
 				BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
 				dest.setName(dest.getName().toUpperCase());
+				dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
+				dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
+				dest.setUser(userRepositoryService.findOne(source.getUser()));
 			} catch (Exception e) {
 				dest = null;
 			}
@@ -34,6 +50,9 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 			try {
 				dest = new ItemModel();
 				BeanUtils.copyProperties(source, dest, TO_EXCLUDES);
+				dest.setSupplier(source.getSupplier().getId());
+				dest.setStockType(source.getStockType().getId());
+				dest.setUser(source.getUser().getId());
 			} catch (Exception e) {
 				dest = null;
 			}

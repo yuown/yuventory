@@ -3,6 +3,7 @@ package yuown.yuventory.holders;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public enum ItemType {
 
@@ -38,5 +39,9 @@ public enum ItemType {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public static Set<String> all() {
+		return map.keySet();
 	}
 }

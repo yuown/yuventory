@@ -2,7 +2,7 @@ yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', '$mod
     'use strict';
 
     $scope.load = function() {
-        AjaxService.call('http://localhost:8080/yuventory/rest/stockTypes', 'GET').success(function(data, status, headers, config) {
+        AjaxService.call('stockTypes', 'GET').success(function(data, status, headers, config) {
             $scope.stockTypes = data;
         });
     };
@@ -25,7 +25,7 @@ yuventoryApp.controller('AddStockTypeController', [ '$scope', 'AjaxService', fun
     'use strict';
 
     $scope.save = function(request) {
-        AjaxService.call('http://localhost:8080/yuventory/rest/stockTypes', 'POST', request).success(function(data, status, headers, config) {
+        AjaxService.call('stockTypes', 'POST', request).success(function(data, status, headers, config) {
             $scope.addDialog.dismiss('cancel');
             $scope.load();
         });
