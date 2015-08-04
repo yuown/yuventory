@@ -1,1 +1,1 @@
-var yuventoryApp = angular.module("yuventoryApp", [ 'ngRoute', 'route-segment', 'view-segment', 'ngCookies' ]);
+var yuventoryApp = angular.module("yuventoryApp", [ 'ngRoute', 'route-segment', 'view-segment', 'ngCookies', 'ui.bootstrap' ]);

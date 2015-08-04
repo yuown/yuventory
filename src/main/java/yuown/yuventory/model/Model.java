@@ -5,11 +5,6 @@ import java.util.Date;
 
 public class Model implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -6529986883388546178L;
-
     protected Integer id;
 
     private Date date;

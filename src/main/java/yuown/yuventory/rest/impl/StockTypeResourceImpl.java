@@ -2,30 +2,41 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.StockTypeService;
 import yuown.yuventory.model.StockTypeModel;
-import yuown.yuventory.rest.intf.StockTypeResource;
 
-@Service
-public class StockTypeResourceImpl implements StockTypeResource {
+@RestController
+@RequestMapping(value = "/stockTypes", produces = { MediaType.APPLICATION_JSON })
+public class StockTypeResourceImpl {
 
 	@Autowired
 	private StockTypeService stockTypeService;
 
-	public StockTypeModel save(StockTypeModel model) {
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
+	@ResponseBody
+	public StockTypeModel save(@RequestBody StockTypeModel model) {
 		return stockTypeService.save(model);
 	}
 
-	public StockTypeModel getById(int id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	@ResponseBody
+	public StockTypeModel getById(@PathVariable int id) {
 		return stockTypeService.getById(id);
 	}
 
-	public Response removeById(int id) {
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public Response removeById(@PathVariable int id) {
 		StockTypeModel stockType = stockTypeService.getById(id);
 		if (null == stockType) {
 			return Response.status(Response.Status.NOT_FOUND).entity("StockType with ID " + id + " Not Found").build();
@@ -34,6 +45,8 @@ public class StockTypeResourceImpl implements StockTypeResource {
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public List<StockTypeModel> getAll() {
 		return stockTypeService.getAll();
 	}

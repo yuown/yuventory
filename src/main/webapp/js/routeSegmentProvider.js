@@ -27,7 +27,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
                 templateUrl : 'templates/suppliers.html'
             }).
             segment('stockTypes', {
-                templateUrl : 'templates/stockTypes.html'
+                templateUrl : 'stockTypes/list.html'
             });
 
     $routeProvider.otherwise({redirectTo: '/login'}); 

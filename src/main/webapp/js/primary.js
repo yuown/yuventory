@@ -29,7 +29,7 @@ yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', '$locatio
     	AuthenticationService.ClearCredentials();
     	$location.path('/login');
     };
-
+    
 } ]);
 
 yuventoryApp.controller('MenuController', function($scope) {
@@ -43,21 +43,5 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', function($
 
     AjaxService.call('http://localhost:8080/yuventory/rest/items', 'GET').success(function(data, status, headers, config) {
         $scope.items = data;
-    });
-} ]);
-
-yuventoryApp.controller('SuppliersController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
-    'use strict';
-
-    AjaxService.call('http://localhost:8080/yuventory/rest/suppliers', 'GET').success(function(data, status, headers, config) {
-        $scope.suppliers = data;
-    });
-} ]);
-
-yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
-    'use strict';
-
-    AjaxService.call('http://localhost:8080/yuventory/rest/stockTypes', 'GET').success(function(data, status, headers, config) {
-        $scope.stockTypes = data;
     });
 } ]);
