@@ -34,16 +34,18 @@
 	                <select class="form-control" ng-options="supplier.id as supplier.name for supplier in suppliers" ng-model="request.supplier"></select>
 	            </div>
 	        </div>
-	        <div class="form-group" ng-show="barcodePath">
-	        	<div class="section-to-print">
-	        		<div class="row">
-					    <div class="col-sm-6">
-					        <img alt="" src="{{barcodePath}}" />
-					    </div>
-					    <div class="col-sm-6">
-					        <h5>{{request.name}}    {{request.weight}} gm</h5>
-					    </div>
-					</div>
+	        <div class="form-group" ng-show="barcode">
+	            <div class="input-group">
+                    <span class="input-group-addon">Barcode</span>
+                    <div class="section-to-print">
+	                    <div class="barcodecontainer">
+	                        <img src="data:image/png;base64,{{barcode}}" />
+	                        <div class="barcodecaption">
+	                            <span class="barcodecaption1">{{request.weight}} gm</span>
+	                            <span class="barcodecaption2">{{request.name}}</span>
+	                        </div>
+	                    </div>
+	                </div>
                 </div>
 	        </div>
         </form>

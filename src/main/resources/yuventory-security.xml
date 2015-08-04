@@ -11,8 +11,8 @@
         <security:custom-filter ref="yuownLoginFilter" before="FORM_LOGIN_FILTER" />
     </security:http>
     
-	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/*">
-		<security:intercept-url pattern="/rest/*" access="ROLE_USER" />
+	<security:http use-expressions="true" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
+		<security:intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
 		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
 		<security:custom-filter ref="yuownAuthenticationFilter" before="FORM_LOGIN_FILTER" />
 	</security:http>

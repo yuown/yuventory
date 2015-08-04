@@ -14,19 +14,19 @@ import yuown.yuventory.business.services.BarcodeService;
 import yuown.yuventory.rest.intf.BarcodeResource;
 
 @RestController
-@RequestMapping(value = "/items")
+@RequestMapping(value = "/barcode")
 public class BarcodeResourceImpl implements BarcodeResource {
 
 	@Autowired
 	private BarcodeService barcodeService;
 
 	@Override
-	@RequestMapping(value = "/barcode/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<byte[]> generateBarcodeFromItemID(@PathVariable("id") Integer id) {
 		byte[] barcodeImage = barcodeService.generateBarcodeFromItemID(id);
 		if (null != barcodeImage && barcodeImage.length > 0) {
 			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.parseMediaType(MediaType.IMAGE_PNG_VALUE));
+			headers.setContentType(MediaType.parseMediaType(MediaType.TEXT_PLAIN_VALUE));
 			return new ResponseEntity<byte[]>(barcodeImage, headers, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<byte[]>(HttpStatus.NO_CONTENT);

@@ -30,10 +30,12 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         $scope.title = $scope.request.id == null ? "Add Item" : "Edit Item";
         if($scope.request.id == null) {
         	$scope.title = "Add Item";
-        	$scope.barcodePath = "";
+        	$scope.barcode = "";
         } else {
         	$scope.title = "Edit Item";
-        	$scope.barcodePath = AjaxService.baseUrl() + "items/barcode/" + request.id;
+        	AjaxService.call("barcode/" + $scope.request.id, 'GET').success(function(data, status, headers, config) {
+                $scope.barcode = data;
+            });
         }
         $scope.addDialog = $modal.open({
             templateUrl : 'items/add.html',
@@ -48,9 +50,9 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
 
     $scope.save = function(request) {
         AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
-        	if(request.id == null) {
-        		$scope.barcodePath = AjaxService.baseUrl() + "items/barcode/" + request.id;
-        	}
+            AjaxService.call("barcode/" + data.id, 'GET').success(function(data, status, headers, config) {
+        		$scope.barcode = data;
+        	});
             $scope.load();
         });
     };
