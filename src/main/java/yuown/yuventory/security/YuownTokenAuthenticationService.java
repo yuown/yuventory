@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -14,10 +15,13 @@ import yuown.yuventory.model.UserModel;
 @Component
 public class YuownTokenAuthenticationService {
 
-	@Value("${X-AUTH-TOKEN}")
+	@Value("${auth.header.name}")
 	private String AUTH_HEADER_NAME;
 
-	private static final long TEN_DAYS = 1000 * 60 * 60 * 24 * 10;
+	@Value("${valid.days.for.auth.token}")
+	private int validDaysForAuthToken;
+
+	private static final long ONE_DAY = 1000 * 60 * 60 * 24;
 
 	private final YuownTokenHandler yuownTokenHandler;
 
@@ -27,8 +31,11 @@ public class YuownTokenAuthenticationService {
 	}
 
 	public void addAuthentication(HttpServletResponse response, UserModel user) {
-		user.setExpires(System.currentTimeMillis() + TEN_DAYS);
-		response.addHeader(AUTH_HEADER_NAME, yuownTokenHandler.createTokenForUser(user));
+		user.setExpires(System.currentTimeMillis() + (ONE_DAY * validDaysForAuthToken));
+		String encryptedToken = yuownTokenHandler.createTokenForUser(user);
+		if (StringUtils.isNotBlank(encryptedToken)) {
+			response.addHeader(AUTH_HEADER_NAME, encryptedToken);
+		}
 	}
 
 	public Authentication getAuthentication(HttpServletRequest request) {

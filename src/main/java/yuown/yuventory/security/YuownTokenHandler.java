@@ -3,68 +3,81 @@ package yuown.yuventory.security;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Date;
 
-import javax.crypto.Mac;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-
-import yuown.yuventory.model.UserModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import yuown.yuventory.model.UserModel;
+
 public class YuownTokenHandler {
 
-	private static final String HMAC_ALGO = "HmacSHA256";
+	private static final String ALGORITHM = "AES";
 
-	private static final String SEPARATOR = ".";
+	private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 
-	private static final String SEPARATOR_SPLITTER = "\\.";
+	private Key secretKey;
 
-	private final Mac hmac;
+	public YuownTokenHandler(byte[] secret) {
+		secretKey = new SecretKeySpec(secret, ALGORITHM);
+	}
 
-	public YuownTokenHandler(byte[] secretKey) {
+	public String createTokenForUser(UserModel user) {
+		String encryptedToken = null;
 		try {
-			hmac = Mac.getInstance(HMAC_ALGO);
-			hmac.init(new SecretKeySpec(secretKey, HMAC_ALGO));
-		} catch(InvalidKeyException e) {
-		    throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
+			byte[] userBytes = toJSON(user);
+			byte[] hash = doCrypto(Cipher.ENCRYPT_MODE, userBytes);
+			encryptedToken = new String(toBase64(hash));
 		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
 		}
+		return encryptedToken;
 	}
 
 	public UserModel parseUserFromToken(String token) {
-		final String[] parts = token.split(SEPARATOR_SPLITTER);
-		if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0) {
-			try {
-				final byte[] userBytes = fromBase64(parts[0]);
-				final byte[] hash = fromBase64(parts[1]);
-
-				boolean validHash = Arrays.equals(createHmac(userBytes), hash);
-				if (validHash) {
-					final UserModel user = fromJSON(userBytes);
-					if (new Date().getTime() < user.getExpires()) {
-						return user;
-					}
-				}
-			} catch (IllegalArgumentException e) {
+		try {
+			byte[] input = fromBase64(token);
+			byte[] jsonBytes = doCrypto(Cipher.DECRYPT_MODE, input);
+			final UserModel user = fromJSON(jsonBytes);
+			if (new Date().getTime() < user.getExpires()) {
+				return user;
 			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public String createTokenForUser(UserModel user) {
-		byte[] userBytes = toJSON(user);
-		byte[] hash = createHmac(userBytes);
-		final StringBuilder sb = new StringBuilder(170);
-		sb.append(toBase64(userBytes));
-		sb.append(SEPARATOR);
-		sb.append(toBase64(hash));
-		return sb.toString();
+	private byte[] doCrypto(int mode, byte[] input) throws NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+		cipher.init(mode, secretKey);
+		return cipher.doFinal(input);
 	}
 
 	private UserModel fromJSON(final byte[] userBytes) {
@@ -83,15 +96,11 @@ public class YuownTokenHandler {
 		}
 	}
 
-	private String toBase64(byte[] content) {
-		return DatatypeConverter.printBase64Binary(content);
-	}
-
 	private byte[] fromBase64(String content) {
 		return DatatypeConverter.parseBase64Binary(content);
 	}
 
-	private synchronized byte[] createHmac(byte[] content) {
-		return hmac.doFinal(content);
+	private String toBase64(byte[] content) {
+		return DatatypeConverter.printBase64Binary(content);
 	}
 }

@@ -10,15 +10,19 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	};
 
 	service.SetCredentials = function(username, authdata) {
-		$rootScope.globals = {
-			currentUser : {
-				username : username,
-				authdata : authdata
-			}
-		};
+		if (authdata != null && authdata != '' && authdata != 'null' && authdata != undefined) {
+			$rootScope.globals = {
+				currentUser : {
+					username : username,
+					authdata : authdata
+				}
+			};
 
-		$http.defaults.headers.common['YUOWN-KEY'] = authdata;
-		$cookieStore.put('globals', $rootScope.globals);
+			$http.defaults.headers.common['YUOWN-KEY'] = authdata;
+			$cookieStore.put('globals', $rootScope.globals);
+		} else{
+			$rootScope.errorMessage = "Failed to Login, due to a Server Error, Please contact Administrator!";
+		}
 	};
 
 	service.ClearCredentials = function() {
@@ -30,12 +34,13 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	return service;
 } ]);
 
-yuventoryApp.factory('AjaxService', [ '$http', function($http) {
+yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
 	var serverUrl = "http://localhost:8080/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
+        	$rootScope.errorMessage = '';
             switch (method) {
             case 'POST':
                 return $http.post(serverUrl + url, params);
