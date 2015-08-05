@@ -1,6 +1,8 @@
 CREATE TABLE `stock_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
+  `method` varchar(10) DEFAULT NULL,
+  `delete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -36,3 +38,8 @@ CREATE TABLE `items` (
   CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2user` FOREIGN KEY (`user_entered`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+1	Stock Purchase	Entry	0
+2	Get From Other Shop	Entry	0
+3	Sale to Customer	Exit	1
+4	Lend to Other Shop	Exit	0

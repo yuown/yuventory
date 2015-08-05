@@ -23,7 +23,7 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
             $scope.suppliers = data;
             $scope.request.supplier = $scope.request.supplier == null ? data[0].id : $scope.request.supplier;
         });
-        AjaxService.call('stockTypes', 'GET').success(function(data, status, headers, config) {
+        AjaxService.call('stockTypes?method=Entry', 'GET').success(function(data, status, headers, config) {
             $scope.stockTypes = data;
             $scope.request.stockType = $scope.request.stockType == null ? data[0].id : $scope.request.stockType;
         });

@@ -2,9 +2,11 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +49,11 @@ public class StockTypeResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<StockTypeModel> getAll() {
-		return stockTypeService.getAll();
+	public List<StockTypeModel> getAll(@QueryParam("method") String method) {
+		if (StringUtils.isBlank(method)) {
+			return stockTypeService.getAll();
+		} else {
+			return stockTypeService.getAllByMethod(method);
+		}
 	}
 }

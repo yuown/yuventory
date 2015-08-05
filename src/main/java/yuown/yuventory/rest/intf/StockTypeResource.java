@@ -12,7 +12,7 @@ public interface StockTypeResource {
 
 	public StockTypeModel getById(int id);
 
-	public List<StockTypeModel> getAll();
+	public List<StockTypeModel> getAll(String method);
 
 	public Response removeById(int id);
 

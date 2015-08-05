@@ -1,5 +1,7 @@
 package yuown.yuventory.business.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,9 @@ public class StockTypeService extends AbstractServiceImpl<Integer, StockTypeMode
 	@Override
 	protected StockTypeTransformer transformer() {
 		return stockTypeTransformer;
+	}
+
+	public List<StockTypeModel> getAllByMethod(String method) {
+		return transformer().transformTo(repoService().findAllByMethod(method));
 	}
 }

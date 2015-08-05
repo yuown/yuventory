@@ -17,6 +17,10 @@ yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', '$mod
             templateUrl : 'stockTypes/add.html',
             scope : $scope
         });
+        AjaxService.call('meta/stockTypeMethods', 'GET').success(function(data, status, headers, config) {
+            $scope.stockMethods = data;
+            $scope.request.stockMethod = $scope.request.stockMethod == null ? data[0] : $scope.request.stockMethod;
+        });
     };
     
 } ]);

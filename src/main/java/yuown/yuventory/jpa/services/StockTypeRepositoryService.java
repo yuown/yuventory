@@ -38,4 +38,8 @@ public class StockTypeRepositoryService extends AbstractRepositoryService<StockT
 	public StockType save(StockType entity) {
 		return super.save(entity);
 	}
+
+	public List<StockType> findAllByMethod(String method) {
+		return repository().findAllByMethod(method);
+	}
 }

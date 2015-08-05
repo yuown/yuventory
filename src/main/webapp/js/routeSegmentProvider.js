@@ -9,6 +9,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
     $routeSegmentProvider.
         when('/login', 'login').
         when('/home', 'home').
+        when('/home/sell', 'home.sell').
         when('/home/items', 'home.items').
         when('/home/suppliers', 'home.suppliers').
         when('/home/stockTypes', 'home.stockTypes').
@@ -19,8 +20,11 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             templateUrl : 'templates/home.html',
         }).
         within().
+	        segment('sell', {
+	            'default': 'true',
+	            templateUrl : 'sell/search.html'
+	        }).
             segment('items', {
-                'default': 'true',
                 templateUrl : 'items/list.html'
             }).
             segment('suppliers', {
