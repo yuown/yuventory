@@ -2,6 +2,8 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -15,18 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.ItemService;
 import yuown.yuventory.model.ItemModel;
-import yuown.yuventory.rest.intf.ItemResource;
+import yuown.yuventory.security.YuownTokenAuthenticationService;
 
 @RestController
 @RequestMapping(value = "/items", produces = { MediaType.APPLICATION_JSON })
-public class ItemResourceImpl implements ItemResource {
+public class ItemResourceImpl {
 
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
 	@ResponseBody
-	public ItemModel save(@RequestBody ItemModel model) {
+	public ItemModel save(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
+		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
 		return itemService.save(model);
 	}
 

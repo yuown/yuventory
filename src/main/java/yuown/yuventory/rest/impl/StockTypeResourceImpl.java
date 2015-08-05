@@ -43,7 +43,12 @@ public class StockTypeResourceImpl {
 		if (null == stockType) {
 			return Response.status(Response.Status.NOT_FOUND).entity("StockType with ID " + id + " Not Found").build();
 		} else {
-			return Response.status(Response.Status.OK).entity("StockType with ID " + id + " Deleted Successfully").build();
+			try {
+				stockTypeService.removeById(id);
+				return Response.status(Response.Status.OK).entity("StockType with ID " + id + " Deleted Successfully").build();
+			} catch (Exception e) {
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("StockType with ID " + id + " cannot be Deleted").build();
+			}
 		}
 	}
 

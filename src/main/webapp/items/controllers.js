@@ -50,6 +50,7 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
 
     $scope.save = function(request) {
         AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
+            $scope.request = data;
             AjaxService.call("barcode/" + data.id, 'GET').success(function(data, status, headers, config) {
         		$scope.barcode = data;
         	});

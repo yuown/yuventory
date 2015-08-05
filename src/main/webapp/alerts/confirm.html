@@ -1,0 +1,10 @@
+<div ng-controller="AlertsController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">{{confirmMessage}}</div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-danger btn-large" ng-click="submitOption('no')"><i class="glyphicon glyphicon-remove"></i> No</a>
+        <a href="#" class="btn btn-success btn-large" ng-click="submitOption('yes', confirmCallback)"><i class="glyphicon glyphicon-ok"></i> Yes</a>
+    </div>
+</div>

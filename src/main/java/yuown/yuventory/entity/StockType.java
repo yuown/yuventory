@@ -22,10 +22,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name = "STOCK_TYPE", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }) )
 @AttributeOverrides(value = {
-		@AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false) ),
-		@AttributeOverride(name = "name", column = @Column(name = "NAME") ),
+		@AttributeOverride(name = "id", column = @Column(name = "id", insertable = false, updatable = false) ),
+		@AttributeOverride(name = "name", column = @Column(name = "name") ),
 		@AttributeOverride(name = "method", column = @Column(name = "method") ),
-		@AttributeOverride(name = "delete", column = @Column(name = "delete") )
+		@AttributeOverride(name = "remove", column = @Column(name = "remove") )
 })
 public class StockType extends BaseEntity<Integer>implements Serializable {
 
@@ -35,7 +35,7 @@ public class StockType extends BaseEntity<Integer>implements Serializable {
 
 	private String method;
 
-	private boolean delete;
+	private Boolean remove;
 
 	private List<Item> items;
 
@@ -55,12 +55,12 @@ public class StockType extends BaseEntity<Integer>implements Serializable {
 		this.method = method;
 	}
 
-	public boolean isDelete() {
-		return delete;
+	public Boolean getRemove() {
+		return remove;
 	}
 
-	public void setDelete(boolean delete) {
-		this.delete = delete;
+	public void setRemove(Boolean remove) {
+		this.remove = remove;
 	}
 
 	@Override

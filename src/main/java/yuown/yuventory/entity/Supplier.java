@@ -32,6 +32,8 @@ public class Supplier extends BaseEntity<Integer> implements Serializable {
 
     private String name;
     
+    private String description;
+    
     private List<Item> items;
 
     public String getName() {
@@ -42,7 +44,15 @@ public class Supplier extends BaseEntity<Integer> implements Serializable {
         this.name = name;
     }
 
-    @Override
+    public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {

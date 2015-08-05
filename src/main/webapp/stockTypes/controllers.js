@@ -1,4 +1,4 @@
-yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', '$modal', function($scope, AjaxService, $modal) {
+yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
 
     $scope.load = function() {
@@ -12,14 +12,39 @@ yuventoryApp.controller('StockTypesController', [ '$scope', 'AjaxService', '$mod
             name : "",
             id : null,
         };
-        $scope.title = $scope.request.id == null ? "Add Stock Type" : "Edit Stock Type";
+        if($scope.request.id == null) {
+            $scope.title = "Add Stock Type";
+            $scope.showStockTypeDelete = false;
+        } else {
+            $scope.title = "Edit Stock Type";
+        }
+        
         $scope.addDialog = $modal.open({
             templateUrl : 'stockTypes/add.html',
             scope : $scope
         });
         AjaxService.call('meta/stockTypeMethods', 'GET').success(function(data, status, headers, config) {
             $scope.stockMethods = data;
-            $scope.request.stockMethod = $scope.request.stockMethod == null ? data[0] : $scope.request.stockMethod;
+            if($scope.request.id != null) {
+                if($scope.stockMethods[$scope.request.method] == true) {
+                    $scope.showStockTypeDelete = true;
+                } else {
+                    $scope.showStockTypeDelete = false;
+                }
+            }
+        });
+    };
+    
+    $scope.showHideDelete = function(key, value) {
+        $scope.request.method = key;
+        $scope.showStockTypeDelete = value;
+    }
+    
+    $scope.deleteRecord = function(request) {
+        AlertsService.confirm('Are you sure to delete this?', function() {
+            AjaxService.call('stockTypes/' + request.id, 'DELETE').success(function(data, status, headers, config) {
+                $scope.load();
+            });
         });
     };
     

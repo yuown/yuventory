@@ -8,7 +8,7 @@ public class StockTypeModel extends Model {
 
 	private StockTypeMethod method;
 
-	private boolean delete;
+	private boolean remove;
 
 	public StockTypeModel() {
 	}
@@ -33,11 +33,12 @@ public class StockTypeModel extends Model {
 		this.method = method;
 	}
 
-	public boolean isDelete() {
-		return delete;
+	public boolean isRemove() {
+		return remove;
 	}
 
-	public void setDelete(boolean delete) {
-		this.delete = delete;
+	public void setRemove(boolean remove) {
+		this.remove = remove;
 	}
+
 }

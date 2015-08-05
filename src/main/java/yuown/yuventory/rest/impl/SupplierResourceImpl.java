@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.SupplierService;
 import yuown.yuventory.model.SupplierModel;
-import yuown.yuventory.rest.intf.SupplierResource;
 
 @RestController
 @RequestMapping(value = "/suppliers", produces = { MediaType.APPLICATION_JSON })
-public class SupplierResourceImpl implements SupplierResource {
+public class SupplierResourceImpl {
 
 	@Autowired
 	private SupplierService supplierService;

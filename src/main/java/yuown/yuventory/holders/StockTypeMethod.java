@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public enum StockTypeMethod {
 
-	Entry("Entry", "entry"), Exit("Exit", "exit");
+	Entry("Entry", false), Exit("Exit", true);
 
 	private String name;
-	private String type;
+	private boolean deleteAllowed;
 
 	private static Map<String, StockTypeMethod> map = new HashMap<String, StockTypeMethod>();
 
@@ -20,9 +22,9 @@ public enum StockTypeMethod {
 		}
 	}
 
-	StockTypeMethod(String name, String type) {
+	StockTypeMethod(String name, boolean deleteAllowed) {
 		this.name = name;
-		this.type = type;
+		this.setDeleteAllowed(deleteAllowed);
 	}
 
 	public String getName() {
@@ -33,15 +35,20 @@ public enum StockTypeMethod {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
+	public boolean isDeleteAllowed() {
+		return deleteAllowed;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setDeleteAllowed(boolean deleteAllowed) {
+		this.deleteAllowed = deleteAllowed;
 	}
 
-	public static Set<String> all() {
+	public static Set<String> allKeys() {
 		return map.keySet();
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

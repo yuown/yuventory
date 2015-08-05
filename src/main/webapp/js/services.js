@@ -48,6 +48,9 @@ yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope
             case 'GET':
                 return $http.get(serverUrl + url, params);
                 break;
+            case 'DELETE':
+                return $http.delete(serverUrl + url);
+                break;
             default:
                 break;
             }

@@ -1,5 +1,7 @@
 package yuown.yuventory.rest.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MediaType;
@@ -24,7 +26,12 @@ public class MetaResourceImpl {
 
 	@RequestMapping(value = "/stockTypeMethods", method = RequestMethod.GET)
 	@ResponseBody
-	public Set<String> stockTypeMethodss() {
-		return StockTypeMethod.all();
+	public Map<String, Boolean> stockTypeMethods() {
+		Map<String, Boolean> stockTypeMetnods = new HashMap<String, Boolean>();
+		StockTypeMethod[] array = StockTypeMethod.values();
+		for (int i = 0; i < array.length; i++) {
+			stockTypeMetnods.put(array[i].getName(), array[i].isDeleteAllowed());
+		}
+		return stockTypeMetnods;
 	}
 }

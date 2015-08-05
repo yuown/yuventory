@@ -7,26 +7,27 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Name</span>
-	                <input class="form-control" type="text" placeholder="Enter Stock Type Name" value="{{ request.name }}" ng-model="request.name" required="required" maxlength="45"/>
+	                <input class="form-control" type="text" placeholder="Enter Stock Type Name" value="{{ request.name }}" ng-model="request.name" required="required" maxlength="45" />
 	            </div>
 	        </div>
 	        <div class="form-group">
 	        	<div class="input-group">
 	                <div class="btn-group btn-group-justified" data-toggle="buttons" role="group">
-		                <label class="btn-group btn btn-warning" ng-repeat="stockMethod in stockMethods">
-		                    <input type="radio" id="stockMethod{{$index}}" name="stockMethod" value="{{stockMethod}}" ng-model="request.method" />{{stockMethod}}
+		                <label class="btn-group btn btn-warning" ng-class="{'active':request.method==stmKey}" ng-repeat="(stmKey,stmVal) in stockMethods" ng-click="showHideDelete(stmKey, stmVal)">
+		                    <input type="radio" id="stockMethod{{$index}}" name="stockMethod" ng-value="stmVal" ng-model="request.method" ng-required="!request.method" />{{stmKey}}
 		                </label>
 	                </div>
 	            </div>
             </div>
-            <div class="form-group">
-	            <div class="btn-group">
-	                <label for="stockType-delete-ontrx" class="btn btn-danger">
-	                    <span class="glyphicon glyphicon-ok"></span>
-	                    <span>&nbsp;</span>
+            <div class="[ form-group ]" ng-if="showStockTypeDelete == true">
+	            <input type="checkbox" name="delete-on-stock-trx" id="delete-on-stock-trx" autocomplete="off" ng-model="request.remove" />
+	            <div class="[ btn-group ]">
+	                <label for="delete-on-stock-trx" class="[ btn btn-danger ]">
+	                    <span class="[ glyphicon glyphicon-ok ]"></span>
+	                    <span> </span>
 	                </label>
-	                <label for="stockType-delete-ontrx" class="btn btn-default active">
-	                    Delete Item on transaction
+	                <label for="delete-on-stock-trx" class="[ btn btn-default active ]">
+	                    Delete Item When this Stock Type Selected ?
 	                </label>
 	            </div>
 	        </div>
