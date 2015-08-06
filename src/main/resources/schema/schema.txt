@@ -30,12 +30,17 @@ CREATE TABLE `items` (
   `stock_type` int(11) DEFAULT NULL,
   `user_entered` int(11) DEFAULT NULL,
   `supplier` int(11) DEFAULT NULL,
+  `lend_to` int(11) DEFAULT NULL,
+  `lend_date` varchar(45) DEFAULT NULL,
+  `lend_description` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `items2stock_type_idx` (`stock_type`),
   KEY `items2supplier_idx` (`supplier`),
   KEY `items2user_idx` (`user_entered`),
+  KEY `itemlendto` (`lend_to`),
+  CONSTRAINT `itemlendto` FOREIGN KEY (`lend_to`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2stock_type` FOREIGN KEY (`stock_type`) REFERENCES `stock_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2user` FOREIGN KEY (`user_entered`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 

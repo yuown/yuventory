@@ -13,7 +13,7 @@
 	        <div class="form-group">
 	        	<div class="input-group">
 	                <div class="btn-group btn-group-justified" data-toggle="buttons" role="group">
-		                <label class="btn-group btn btn-warning" ng-class="{'active':request.method==stmKey}" ng-repeat="(stmKey,stmVal) in stockMethods" ng-click="showHideDelete(stmKey, stmVal)">
+		                <label class="btn-group btn btn-default" ng-class="{'active':request.method==stmKey}" ng-repeat="(stmKey,stmVal) in stockMethods" ng-click="showHideDelete(stmKey, stmVal)">
 		                    <input type="radio" id="stockMethod{{$index}}" name="stockMethod" ng-value="stmVal" ng-model="request.method" ng-required="!request.method" />{{stmKey}}
 		                </label>
 	                </div>
@@ -24,7 +24,7 @@
 	            <div class="[ btn-group ]">
 	                <label for="delete-on-stock-trx" class="[ btn btn-danger ]">
 	                    <span class="[ glyphicon glyphicon-ok ]"></span>
-	                    <span> </span>
+	                    <span></span>
 	                </label>
 	                <label for="delete-on-stock-trx" class="[ btn btn-default active ]">
 	                    Delete Item When this Stock Type Selected ?

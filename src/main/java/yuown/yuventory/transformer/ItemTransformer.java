@@ -1,5 +1,7 @@
 package yuown.yuventory.transformer;
 
+import java.util.Date;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,8 +15,8 @@ import yuown.yuventory.model.ItemModel;
 @Component
 public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
-	private static final String[] FROM_EXCLUDES = new String[] { "supplier", "stockType", "user" };
-	private static final String[] TO_EXCLUDES = new String[] { "supplier", "stockType", "user" };
+	private static final String[] FROM_EXCLUDES = new String[] { "supplier", "stockType", "user", "lendTo" };
+	private static final String[] TO_EXCLUDES = new String[] { "supplier", "stockType", "user", "lendTo" };
 
 	@Autowired
 	private SupplierRepositoryService supplierRepositoryService;
@@ -36,6 +38,14 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
 				dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
 				dest.setUser(userRepositoryService.findOne(source.getUser()));
+				if(source.getLendTo() > 0) {
+					dest.setLendTo(supplierRepositoryService.findOne(source.getLendTo()));
+					dest.setLendDate(source.getLendDate());
+					dest.setLendDescription(source.getLendDescription());
+				}
+				if(source.getId() <= 0) {
+					dest.setDate(new Date());
+				}
 			} catch (Exception e) {
 				dest = null;
 			}
@@ -53,6 +63,10 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest.setSupplier(source.getSupplier().getId());
 				dest.setStockType(source.getStockType().getId());
 				dest.setUser(source.getUser().getId());
+				if(source.getLendTo() != null) {
+					dest.setLendTo(source.getLendTo().getId());
+					dest.setLendDescription(source.getLendDescription());
+				}
 			} catch (Exception e) {
 				dest = null;
 			}

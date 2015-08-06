@@ -35,6 +35,8 @@ public class Supplier extends BaseEntity<Integer> implements Serializable {
     private String description;
     
     private List<Item> items;
+    
+    private List<Item> lendedItems;
 
     public String getName() {
         return name;
@@ -71,6 +73,15 @@ public class Supplier extends BaseEntity<Integer> implements Serializable {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	@OneToMany(mappedBy="lendTo",fetch=FetchType.LAZY)
+	public List<Item> getLendedItems() {
+		return lendedItems;
+	}
+
+	public void setLendedItems(List<Item> lendedItems) {
+		this.lendedItems = lendedItems;
 	}
 
 	@Override

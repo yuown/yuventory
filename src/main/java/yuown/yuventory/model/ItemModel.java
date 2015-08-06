@@ -1,5 +1,7 @@
 package yuown.yuventory.model;
 
+import java.util.Date;
+
 public class ItemModel extends Model {
 
 	private String name;
@@ -13,6 +15,12 @@ public class ItemModel extends Model {
 	private int stockType;
 
 	private int user;
+
+	private int lendTo;
+
+	private Date lendDate;
+
+	private String lendDescription;
 
 	public String getName() {
 		return name;
@@ -60,5 +68,29 @@ public class ItemModel extends Model {
 
 	public void setUser(int user) {
 		this.user = user;
+	}
+
+	public int getLendTo() {
+		return lendTo;
+	}
+
+	public void setLendTo(int lendTo) {
+		this.lendTo = lendTo;
+	}
+
+	public Date getLendDate() {
+		return lendDate;
+	}
+
+	public void setLendDate(Date lendDate) {
+		this.lendDate = lendDate;
+	}
+
+	public String getLendDescription() {
+		return lendDescription;
+	}
+
+	public void setLendDescription(String lendDescription) {
+		this.lendDescription = lendDescription;
 	}
 }

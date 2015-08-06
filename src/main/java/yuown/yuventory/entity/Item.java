@@ -25,11 +25,15 @@ import org.joda.time.DateTime;
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "id", insertable = false, updatable = false)),
         @AttributeOverride(name = "name", column = @Column(name = "name")),
+        @AttributeOverride(name = "date", column = @Column(name = "date")),
         @AttributeOverride(name = "itemType", column = @Column(name = "type")),
         @AttributeOverride(name = "weight", column = @Column(name = "weight")),
         @AttributeOverride(name = "supplier", column = @Column(name = "supplier")),
         @AttributeOverride(name = "stockType", column = @Column(name = "stock_type")),
-        @AttributeOverride(name = "user", column = @Column(name = "user_entered"))
+        @AttributeOverride(name = "user", column = @Column(name = "user_entered")),
+        @AttributeOverride(name = "lendTo", column = @Column(name = "lend_to")),
+        @AttributeOverride(name = "lendDate", column = @Column(name = "lend_date")),
+        @AttributeOverride(name = "lendDescription", column = @Column(name = "lend_description"))
 })
 public class Item extends BaseEntity<Integer> implements Serializable {
 
@@ -41,13 +45,19 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     
     private double weight;
     
-    private Date date = new DateTime().toDate();
+    private Date date;
     
     private Supplier supplier;
     
     private StockType stockType;
     
     private User user;
+    
+    private Supplier lendTo;
+    
+    private Date lendDate;
+    
+    private String lendDescription;
 
     public String getName() {
         return name;
@@ -96,6 +106,32 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     }
 
     @ManyToOne
+    @JoinColumn(name = "lend_to", nullable = true)
+    public Supplier getLendTo() {
+		return lendTo;
+	}
+
+	public void setLendTo(Supplier lendTo) {
+		this.lendTo = lendTo;
+	}
+
+	public Date getLendDate() {
+		return lendDate;
+	}
+
+	public void setLendDate(Date lendDate) {
+		this.lendDate = lendDate;
+	}
+
+	public String getLendDescription() {
+		return lendDescription;
+	}
+
+	public void setLendDescription(String lendDescription) {
+		this.lendDescription = lendDescription;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "stock_type", nullable = false)
     public StockType getStockType() {
 		return stockType;

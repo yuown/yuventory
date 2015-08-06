@@ -1,14 +1,77 @@
-<div ng-controller='SellController'>
+<div ng-controller='SellController' ng-init="search={}">
 	<div class="container">
 		<div class="row">
 			<div class="input-group">
-				<input type="text" class="form-control" name="x" placeholder="Search items" />
+				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
+					<button class="btn btn-default glyphicon glyphicon-search" type="button" ng-click="searchItem()"></button>
+					<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="clearSearch()"></button>
 				</span>
 			</div>
+		</div>
+	</div>
+	<div class="divider"><br /></div>
+	<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+	<div class="panel panel-success" ng-if="search.hasResult==true && request.id != null">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{request.name}}</h3>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Item ID</span>
+	                <input class="form-control" type="text" ng-model="request.id" readonly="readonly" />
+	            </div>
+	        </div>
+			<div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Item Name</span>
+	                <input class="form-control" type="text" ng-model="request.name" readonly="readonly" />
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Item Type</span>
+	                <input class="form-control" type="text" ng-model="request.itemType" readonly="readonly" />
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Weight (in grams)</span>
+	                <input class="form-control" type="text" ng-model="request.weight" readonly="readonly" />
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Stock Type</span>
+	                <input class="form-control" type="text" ng-model="request.stockType" readonly="readonly" />
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Supplier</span>
+	                <input class="form-control" type="text" ng-model="request.supplier" readonly="readonly" />
+	            </div>
+	        </div>
+	        <div class="form-group" ng-if="barcode">
+	            <div class="input-group">
+                    <span class="input-group-addon">Barcode</span>
+                    <div class="section-to-print">
+	                    <div class="barcodecontainer">
+	                        <img src="data:image/png;base64,{{barcode}}" />
+	                        <div class="barcodecaption">
+	                            <span class="barcodecaption1">{{request.weight}} gm</span>
+	                            <span class="barcodecaption2">{{request.name}}</span>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+	        </div>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-success" ng-hide="$scope.request.lendTo" ng-click="lendItem()">Lend Item</button>
+			<button class="btn btn-success" ng-show="$scope.request.lendTo">Get back Item</button>
+			<button class="btn btn-danger pull-right">Sell Item</button>
 		</div>
 	</div>
 </div>
