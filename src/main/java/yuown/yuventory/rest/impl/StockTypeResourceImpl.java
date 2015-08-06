@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,16 +40,20 @@ public class StockTypeResourceImpl {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public Response removeById(@PathVariable int id) {
+	public ResponseEntity<String> removeById(@PathVariable int id) {
 		StockTypeModel stockType = stockTypeService.getById(id);
+		HttpHeaders headers = new HttpHeaders();
 		if (null == stockType) {
-			return Response.status(Response.Status.NOT_FOUND).entity("StockType with ID " + id + " Not Found").build();
+			headers.add("errorMessage", "StockType with ID " + id + " Not Found");
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
 		} else {
 			try {
 				stockTypeService.removeById(id);
-				return Response.status(Response.Status.OK).entity("StockType with ID " + id + " Deleted Successfully").build();
+				headers.add("errorMessage", "StockType with ID " + id + " Deleted Successfully");
+				return new ResponseEntity<String>(headers, HttpStatus.OK);
 			} catch (Exception e) {
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("StockType with ID " + id + " cannot be Deleted").build();
+				headers.add("errorMessage", "StockType with ID " + id + " cannot be Deleted");
+				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 	}

@@ -2,43 +2,67 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.UserService;
 import yuown.yuventory.model.UserModel;
-import yuown.yuventory.rest.intf.UserResource;
 
-@Service
-public class UserResourceImpl implements UserResource {
+@RestController
+@RequestMapping(value = "/users", produces = { MediaType.APPLICATION_JSON })
+public class UserResourceImpl {
 
 	@Autowired
 	private UserService userService;
 
-	public UserModel save(UserModel model) {
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
+	@ResponseBody
+	public UserModel save(@RequestBody UserModel model) {
 		return userService.save(model);
 	}
 
-	public UserModel getById(int id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	@ResponseBody
+	public UserModel getById(@PathVariable("id") int id) {
 		return userService.getById(id);
 	}
 
-	public Response removeById(int id) {
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public ResponseEntity<String> removeById(@PathVariable("id") int id) {
 		UserModel user = userService.getById(id);
 		if (null == user) {
-			return Response.status(Response.Status.NOT_FOUND).entity("User with ID " + id + " Not Found").build();
+			return new ResponseEntity<String>("User with ID " + id + " Not Found", HttpStatus.NOT_FOUND);
 		} else {
-			return Response.status(Response.Status.OK).entity("User with ID " + id + " Deleted Successfully").build();
+			try {
+				userService.removeById(id);
+				return new ResponseEntity<String>("User with ID " + id + " Deleted Successfully", HttpStatus.OK);
+			} catch (Exception e) {
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("errorMessage", "User with ID " + id + " cannot be Deleted");
+				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public List<UserModel> getAll() {
 		return userService.getAll();
 	}
 
-	public UserModel login(UserModel user) {
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
+	public UserModel login(@RequestBody UserModel user) {
 		user.setPassword(null);
 		return user;
 	}

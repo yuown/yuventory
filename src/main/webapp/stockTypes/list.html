@@ -1,4 +1,5 @@
 <div ng-controller='StockTypesController' ng-init="load()">
+    <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <div>
         <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
         <button type="button" class="btn btn-info" ng-click="load()">Refresh</button>
@@ -24,5 +25,4 @@
 			</tbody>
 		</table>
 	</div>
-	<span class="label label-default">{{ message }}</span>
 </div>

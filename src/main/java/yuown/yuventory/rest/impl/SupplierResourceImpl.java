@@ -3,9 +3,11 @@ package yuown.yuventory.rest.impl;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +38,21 @@ public class SupplierResourceImpl {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public Response removeById(@PathVariable("id") int id) {
+	public ResponseEntity<String> removeById(@PathVariable("id") int id) throws Exception {
 		SupplierModel supplier = supplierService.getById(id);
+		HttpHeaders headers = new HttpHeaders();
 		if (null == supplier) {
-			return Response.status(Response.Status.NOT_FOUND).entity("Supplier with ID " + id + " Not Found").build();
+			headers.add("errorMessage", "Supplier with ID " + id + " Not Found");
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
 		} else {
-			return Response.status(Response.Status.OK).entity("Supplier with ID " + id + " Deleted Successfully").build();
+			try {
+				supplierService.removeById(id);
+				headers.add("errorMessage", "Supplier with ID " + id + " Deleted Successfully");
+				return new ResponseEntity<String>(headers, HttpStatus.OK);
+			} catch (Exception e) {
+				headers.add("errorMessage", "Supplier with ID " + id + " cannot be Deleted");
+				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 	}
 

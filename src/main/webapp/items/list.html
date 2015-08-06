@@ -1,4 +1,5 @@
 <div ng-controller='ItemsController' ng-init="load()">
+    <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <div>
         <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
         <button type="button" class="btn btn-info" ng-click="load()">Refresh</button>
@@ -17,12 +18,11 @@
 					<td class='btn-group'>
 						<div>
 							<button type='button' class='btn navbar-btn btn-success' ng-click="add(item)">Edit</button>
-							<button type='button' class='btn navbar-btn btn-danger' ng-click="delete(item)">Delete</button>
+							<button type='button' class='btn navbar-btn btn-danger' ng-click="deleteRecord(item)">Delete</button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<span class="label label-default">{{ message }}</span>
 </div>

@@ -1,4 +1,4 @@
-yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', function($scope, AjaxService, $modal) {
+yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
 
     $scope.load = function() {
@@ -40,6 +40,14 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         $scope.addDialog = $modal.open({
             templateUrl : 'items/add.html',
             scope : $scope
+        });
+    };
+    
+    $scope.deleteRecord = function(request) {
+        AlertsService.confirm('Are you sure to delete this?', function() {
+            AjaxService.call('items/' + request.id, 'DELETE').success(function(data, status, headers, config) {
+                $scope.load();
+            });
         });
     };
     
