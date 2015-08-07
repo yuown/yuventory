@@ -60,11 +60,15 @@ public class StockTypeResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<StockTypeModel> getAll(@QueryParam("method") String method) {
+	public List<StockTypeModel> getAll(@QueryParam("method") String method, @QueryParam("remove") String remove) {
 		if (StringUtils.isBlank(method)) {
 			return stockTypeService.getAll();
 		} else {
-			return stockTypeService.getAllByMethod(method);
+			if (StringUtils.isBlank(remove)) {
+				return stockTypeService.getAllByMethod(method);
+			} else {
+				return stockTypeService.getAllByMethodAndRemove(method, Boolean.parseBoolean(remove));
+			}
 		}
 	}
 }

@@ -42,4 +42,8 @@ public class StockTypeRepositoryService extends AbstractRepositoryService<StockT
 	public List<StockType> findAllByMethod(String method) {
 		return repository().findAllByMethod(method);
 	}
+	
+	public List<StockType> findAllByMethodAndRemove(String method, boolean remove) {
+		return repository().findAllByMethodAndRemove(method, remove);
+	}
 }

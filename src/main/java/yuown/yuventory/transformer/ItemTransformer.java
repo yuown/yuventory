@@ -43,7 +43,7 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 					dest.setLendDate(source.getLendDate());
 					dest.setLendDescription(source.getLendDescription());
 				}
-				if(source.getId() <= 0) {
+				if(source.getId() != null) {
 					dest.setDate(new Date());
 				}
 			} catch (Exception e) {

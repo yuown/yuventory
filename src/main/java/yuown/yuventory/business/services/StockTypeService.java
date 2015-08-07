@@ -32,4 +32,8 @@ public class StockTypeService extends AbstractServiceImpl<Integer, StockTypeMode
 	public List<StockTypeModel> getAllByMethod(String method) {
 		return transformer().transformTo(repoService().findAllByMethod(method));
 	}
+	
+	public List<StockTypeModel> getAllByMethodAndRemove(String method, boolean remove) {
+		return transformer().transformTo(repoService().findAllByMethodAndRemove(method, remove));
+	}
 }

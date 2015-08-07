@@ -11,4 +11,6 @@ public interface StockTypeRepository extends BaseRepository<StockType, Integer> 
 
 	public List<StockType> findAllByMethod(String method);
 
+	public List<StockType> findAllByMethodAndRemove(String method, boolean remove);
+
 }

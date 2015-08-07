@@ -1,13 +1,15 @@
 <div ng-controller='SellController' ng-init="search={}">
 	<div class="container">
 		<div class="row">
+		  <form>
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" />
 				<span class="input-group-btn">
-					<button class="btn btn-default glyphicon glyphicon-search" type="button" ng-click="searchItem()"></button>
-					<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="clearSearch()"></button>
+					<button class="btn btn-default glyphicon glyphicon-search" type="rest" ng-click="searchItem()"></button>
+					<button class="btn btn-default glyphicon glyphicon-remove" type="submit" ng-click="clearSearch()"></button>
 				</span>
 			</div>
+		  </form>
 		</div>
 	</div>
 	<div class="divider"><br /></div>
@@ -44,16 +46,16 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Stock Type</span>
-	                <input class="form-control" type="text" ng-model="request.stockType" readonly="readonly" />
+	                <input class="form-control" type="text" ng-model="request.stockTypeDesc" readonly="readonly" />
 	            </div>
 	        </div>
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Supplier</span>
-	                <input class="form-control" type="text" ng-model="request.supplier" readonly="readonly" />
+	                <input class="form-control" type="text" ng-model="request.supplierDesc" readonly="readonly" />
 	            </div>
 	        </div>
-	        <div class="form-group" ng-if="barcode">
+	        <div class="form-group" ng-show="barcode">
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
                     <div class="section-to-print">
@@ -67,11 +69,25 @@
 	                </div>
                 </div>
 	        </div>
+	        <div ng-if="request.lendTo != null && request.lendTo > 0">
+		        <div class="form-group">
+	                <div class="input-group">
+	                    <span class="input-group-addon">Item Lend to</span>
+	                    <input class="form-control" type="text" ng-model="request.lendToDesc" readonly="readonly" />
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <div class="input-group">
+	                    <span class="input-group-addon">Lend Description</span>
+	                    <input class="form-control" type="text" ng-model="request.lendDescription" readonly="readonly" />
+	                </div>
+	            </div>
+            </div>
 		</div>
 		<div class="panel-footer">
-			<button class="btn btn-success" ng-hide="$scope.request.lendTo" ng-click="lendItem()">Lend Item</button>
-			<button class="btn btn-success" ng-show="$scope.request.lendTo">Get back Item</button>
-			<button class="btn btn-danger pull-right">Sell Item</button>
+			<button class="btn btn-success" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="lendItem(request)">Lend Item</button>
+			<button class="btn btn-success" ng-if="request.lendTo != null && request.lendTo > 0" ng-click="getItemBack(request)">Get back Item</button>
+			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)">Sell Item</button>
 		</div>
 	</div>
 </div>
