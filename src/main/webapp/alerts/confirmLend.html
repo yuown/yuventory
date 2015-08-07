@@ -12,7 +12,8 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Reason</span>
-                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="clonedRequest.stockType"></select>
+                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="clonedRequest.stockType" ng-init="clonedRequest.stockType=stockTypes[0]">
+                </select>
             </div>
         </div>
         <div class="form-group">
