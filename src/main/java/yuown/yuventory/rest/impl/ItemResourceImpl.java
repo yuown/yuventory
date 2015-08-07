@@ -3,6 +3,7 @@ package yuown.yuventory.rest.impl;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -65,7 +66,7 @@ public class ItemResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<ItemModel> getAll() {
-		return itemService.getAll();
+	public List<ItemModel> getAll(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+		return itemService.getAll(page, size);
 	}
 }
