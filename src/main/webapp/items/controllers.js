@@ -1,10 +1,23 @@
 yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
+    
+    $scope.currentPage = 1;
 
-    $scope.load = function() {
-        AjaxService.call('items', 'GET').success(function(data, status, headers, config) {
+    $scope.load = function(pageNumber) {
+        AjaxService.call('items?page=' + (pageNumber - 1), 'GET').success(function(data, status, headers, config) {
+        	$scope.totalItems = headers("totalItems");
+        	$scope.pages = headers("pages");
+        	$scope.currentPage = pageNumber;
             $scope.items = data;
         });
+    };
+    
+    $scope.getNumber = function(num) {
+    	var array = [];
+    	for (var int = 0; int < num;) {
+			array[int] = ++int;
+		}
+    	return array;
     };
     
     $scope.view = function(request) {
@@ -89,7 +102,7 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     $scope.deleteRecord = function(request) {
         AlertsService.confirm('Are you sure to delete this?', function() {
             AjaxService.call('items/' + request.id, 'DELETE').success(function(data, status, headers, config) {
-                $scope.load();
+                $scope.load($scope.currentPage);
             });
         });
     };
@@ -106,7 +119,7 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
             AjaxService.call("barcode/" + data.id, 'GET').success(function(data, status, headers, config) {
         		$scope.barcode = data;
         	});
-            $scope.load();
+            $scope.load($scope.currentPage);
         });
     };
     

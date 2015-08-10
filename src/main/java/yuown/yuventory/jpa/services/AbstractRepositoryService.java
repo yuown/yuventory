@@ -3,6 +3,7 @@ package yuown.yuventory.jpa.services;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ public abstract class AbstractRepositoryService<R extends BaseRepository<E, ID>,
 		return repository().findAllByOrderByIdDesc();
 	}
 
-	public List<E> findAll(PageRequest pageRequest) {
+	public PageImpl<E> findAll(PageRequest pageRequest) {
 		return repository().findAllByOrderByIdDesc(pageRequest);
 	}
 

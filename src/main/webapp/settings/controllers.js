@@ -18,6 +18,10 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
                 $scope.settings.barcodeDimensions.barcode_height = data.barcode_height;
             }
         });
+        
+        AjaxService.call("items/pageSize", 'GET').success(function(data, status, headers, config) {
+        	$scope.settings.pageSize = data;
+        });
     };
     
     $scope.popDimensions = function() {
@@ -33,12 +37,36 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
         });
     };
     
+    $scope.popPageSize = function() {
+        $scope.pageSizeDialog = $modal.open({
+            templateUrl : 'settings/pageSize.html',
+            scope : $scope
+        });
+    };
+    
+    $scope.pageSizeCallback = function() {
+        AjaxService.call("items/pageSize", 'POST', $scope.settings.pageSize).success(function(data, status, headers, config) {
+            $scope.refreshSettings();
+        });
+    };
+    
 } ]);
 
 yuventoryApp.controller('BarcodeDimensionsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     
     $scope.submitOption = function(option, callback) {
         $scope.barcodeDimensionsDialog.dismiss('cancel')
+        if(option == 'yes') {
+            callback();
+        }
+    };
+    
+} ]);
+
+yuventoryApp.controller('PagesizeController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    
+    $scope.submitOption = function(option, callback) {
+        $scope.pageSizeDialog.dismiss('cancel')
         if(option == 'yes') {
             callback();
         }

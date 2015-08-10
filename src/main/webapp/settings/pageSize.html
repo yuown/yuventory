@@ -1,0 +1,19 @@
+<div ng-controller="PagesizeController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">Items Per Page</h4>
+    </div>
+    <div class="modal-body">
+    	<form id="formPageSize" ng-submit="submitOption('yes', pageSizeCallback)">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Items to Display Per Page (Minimum: 1 and Maximum: 100)</span>
+	                <input type="number" ng-model="settings.pageSize" class="form-control" min="1" max="100" />
+	            </div>
+	        </div>
+        </form>
+	</div>
+    <div class="modal-footer">
+        <a class="btn btn-danger btn-large" ng-click="submitOption('no')"><i class="glyphicon glyphicon-remove"></i> No</a>
+        <button class="btn btn-success btn-large" type="submit" form="formPageSize"><i class="glyphicon glyphicon-ok"></i> Yes</button>
+    </div>
+</div>

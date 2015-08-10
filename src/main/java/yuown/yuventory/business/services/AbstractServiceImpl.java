@@ -3,7 +3,6 @@ package yuown.yuventory.business.services;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import yuown.yuventory.entity.BaseEntity;
@@ -35,11 +34,4 @@ public abstract class AbstractServiceImpl<ID extends Serializable, DTO extends M
 
 	protected abstract TR transformer();
 
-	public List<DTO> getAll(Integer page, Integer size) {
-		if (page != null && size != null) {
-			return transformer().transformTo(repoService().findAll(new PageRequest(page, size)));
-		} else {
-			return this.getAll();
-		}
-	}
 }

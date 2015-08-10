@@ -3,21 +3,23 @@
         <h4 class="modal-title">Barcode Dimensions</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon">Barcode Width</span>
-                <input type="number" ng-model="settings.barcodeDimensions.barcode_width" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon">Barcode Height</span>
-                <input type="number" ng-model="settings.barcodeDimensions.barcode_height" class="form-control" />
-            </div>
-        </div>
+    	<form ng-submit="submitOption('yes', barcodeCallback)" id="formBarcodeDimensions">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Barcode Width</span>
+	                <input type="number" ng-model="settings.barcodeDimensions.barcode_width" class="form-control" min=1 />
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Barcode Height</span>
+	                <input type="number" ng-model="settings.barcodeDimensions.barcode_height" class="form-control" min=1 />
+	            </div>
+	        </div>
+        </form>
 	</div>
     <div class="modal-footer">
         <a class="btn btn-danger btn-large" ng-click="submitOption('no')"><i class="glyphicon glyphicon-remove"></i> No</a>
-        <a class="btn btn-success btn-large" ng-click="submitOption('yes', barcodeCallback)"><i class="glyphicon glyphicon-ok"></i> Yes</a>
+        <button type="submit" class="btn btn-success btn-large" form="formBarcodeDimensions"><i class="glyphicon glyphicon-ok"></i> Yes</button>
     </div>
 </div>
