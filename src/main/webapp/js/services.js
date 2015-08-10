@@ -10,6 +10,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	};
 
 	service.SetCredentials = function(username, authdata) {
+	    service.ClearCredentials();
 		if (authdata != null && authdata != '' && authdata != 'null' && authdata != undefined) {
 			$rootScope.globals = {
 				currentUser : {

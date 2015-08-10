@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.jpa.services.CategoryRepositoryService;
 import yuown.yuventory.jpa.services.StockTypeRepositoryService;
 import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.jpa.services.UserRepositoryService;
@@ -20,6 +21,9 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
 	@Autowired
 	private SupplierRepositoryService supplierRepositoryService;
+	
+	@Autowired
+	private CategoryRepositoryService categoryRepositoryService;
 
 	@Autowired
 	private StockTypeRepositoryService stockTypeRepositoryService;
@@ -35,7 +39,9 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest = new Item();
 				BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
 				dest.setName(dest.getName().toUpperCase());
+				dest.setSold(source.isSold());
 				dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
+				dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
 				dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
 				dest.setUser(userRepositoryService.findOne(source.getUser()));
 				if(source.getLendTo() > 0) {
@@ -61,8 +67,10 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest = new ItemModel();
 				BeanUtils.copyProperties(source, dest, TO_EXCLUDES);
 				dest.setSupplier(source.getSupplier().getId());
+				dest.setCategory(source.getCategory().getId());
 				dest.setStockType(source.getStockType().getId());
 				dest.setUser(source.getUser().getId());
+				dest.setSold(source.isSold());
 				if(source.getLendTo() != null) {
 					dest.setLendTo(source.getLendTo().getId());
 					dest.setLendDescription(source.getLendDescription());

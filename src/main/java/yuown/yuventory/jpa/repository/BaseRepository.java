@@ -12,5 +12,5 @@ import yuown.yuventory.entity.BaseEntity;
 public interface BaseRepository<E extends BaseEntity<ID>, ID extends Serializable> extends JpaRepository<E, ID> {
 
 	public List<E> findAllByOrderByIdDesc();
-	
+
 }

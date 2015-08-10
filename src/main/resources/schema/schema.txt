@@ -1,23 +1,15 @@
-CREATE TABLE `stock_type` (
+CREATE DATABASE `yuventory`;
+
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `method` varchar(10) DEFAULT NULL,
-  `delete` tinyint(1) DEFAULT NULL,
+  `name` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `supplier` (
+CREATE TABLE `configuration` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uname` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `enabled` varchar(45) DEFAULT NULL,
-  `full_name` varchar(45) DEFAULT NULL,
+  `value` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -26,6 +18,7 @@ CREATE TABLE `items` (
   `name` varchar(45) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
   `weight` double DEFAULT NULL,
+  `category` int(11) DEFAULT NULL,
   `date` varchar(45) DEFAULT NULL,
   `stock_type` int(11) DEFAULT NULL,
   `user_entered` int(11) DEFAULT NULL,
@@ -33,18 +26,40 @@ CREATE TABLE `items` (
   `lend_to` int(11) DEFAULT NULL,
   `lend_date` varchar(45) DEFAULT NULL,
   `lend_description` varchar(200) DEFAULT NULL,
+  `sold` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `items2stock_type_idx` (`stock_type`),
   KEY `items2supplier_idx` (`supplier`),
   KEY `items2user_idx` (`user_entered`),
   KEY `itemlendto` (`lend_to`),
+  KEY `item2category_idx` (`category`),
+  CONSTRAINT `item2category` FOREIGN KEY (`category`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `itemlendto` FOREIGN KEY (`lend_to`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2stock_type` FOREIGN KEY (`stock_type`) REFERENCES `stock_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2user` FOREIGN KEY (`user_entered`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-1	Stock Purchase	Entry	0
-2	Get From Other Shop	Entry	0
-3	Sale to Customer	Exit	1
-4	Lend to Other Shop	Exit	0
+CREATE TABLE `stock_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `method` varchar(10) DEFAULT NULL,
+  `remove` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `suppliers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `enabled` varchar(45) DEFAULT NULL,
+  `full_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);

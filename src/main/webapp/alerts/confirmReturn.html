@@ -3,15 +3,19 @@
         <h4 class="modal-title">{{title}}</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon">Reason</span>
-                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="clonedRequest.stockType"></select>
-            </div>
-        </div>
+	    <form ng-submit="submitOption('yes', confirmCallback)" id="formConfirmReturn">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Reason</span>
+	                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="clonedRequest.stockType" ng-required="true">
+	                    <option value="">Select a Reason</option>
+	                </select>
+	            </div>
+	        </div>
+	    </form>
 	</div>
     <div class="modal-footer">
-        <a class="btn btn-danger btn-large" ng-click="submitOption('no')"><i class="glyphicon glyphicon-remove"></i> No</a>
-        <a class="btn btn-success btn-large" ng-click="submitOption('yes', confirmCallback)"><i class="glyphicon glyphicon-ok"></i> Yes</a>
+        <button type="button" class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="submitOption('no')"> No</button>
+        <button type="submit" class="btn btn-success btn-large glyphicon glyphicon-ok" form="formConfirmReturn"> Yes</button>
     </div>
 </div>

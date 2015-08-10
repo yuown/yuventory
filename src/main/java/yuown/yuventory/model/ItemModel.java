@@ -12,6 +12,8 @@ public class ItemModel extends Model {
 
 	private int supplier;
 
+	private int category;
+
 	private int stockType;
 
 	private int user;
@@ -21,6 +23,8 @@ public class ItemModel extends Model {
 	private Date lendDate;
 
 	private String lendDescription;
+
+	private Boolean sold;
 
 	public String getName() {
 		return name;
@@ -44,6 +48,14 @@ public class ItemModel extends Model {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
 	}
 
 	public int getSupplier() {
@@ -92,5 +104,13 @@ public class ItemModel extends Model {
 
 	public void setLendDescription(String lendDescription) {
 		this.lendDescription = lendDescription;
+	}
+
+	public Boolean isSold() {
+		return sold;
+	}
+
+	public void setSold(Boolean sold) {
+		this.sold = sold;
 	}
 }

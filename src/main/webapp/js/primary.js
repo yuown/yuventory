@@ -34,6 +34,4 @@ yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', '$locatio
 
 yuventoryApp.controller('MenuController', function($scope) {
     'use strict';
-
-    console.log("Menu");
 });

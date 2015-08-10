@@ -1,0 +1,86 @@
+<div ng-controller="AddItemController"> 
+    <div class="modal-header modal-header-primary">
+        <h4 class="modal-title">View Item</h4>
+    </div>
+    <div class="modal-body">
+        <form ng-submit="save(request)" id="addForm">
+	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Item Name</span>
+                    <input class="form-control" type="text" ng-model="request.name" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Item Type</span>
+                    <input class="form-control" type="text" ng-model="request.itemType" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Weight (in grams)</span>
+                    <input class="form-control" type="text" ng-model="request.weight" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Category</span>
+                    <input class="form-control" type="text" ng-model="request.categoryDesc" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Stock Type</span>
+                    <input class="form-control" type="text" ng-model="request.stockTypeDesc" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Supplier</span>
+                    <input class="form-control" type="text" ng-model="request.supplierDesc" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group" ng-if="barcode">
+                <div class="input-group">
+                    <span class="input-group-addon">Barcode</span>
+                    <div class="section-to-print">
+                        <div class="barcodecontainer">
+                            <img src="data:image/png;base64,{{barcode}}" ng-if="barcode" />
+                            <div class="barcodecaption">
+                                <span class="barcodecaption1">{{request.weight}} gm</span>
+                                <span class="barcodecaption2">{{request.categoryDesc}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="request.sold">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon alert-danger">Item Sold to</span>
+                        <input class="form-control" type="text" ng-model="request.lendToDesc" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="request.sold">
+                <div ng-if="request.lendTo != null && request.lendTo > 0">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon alert-danger">Item Lend to</span>
+                            <input class="form-control" type="text" ng-model="request.lendToDesc" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">Lend Description</span>
+                            <input class="form-control" type="text" ng-model="request.lendDescription" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
+    </div>
+</div>

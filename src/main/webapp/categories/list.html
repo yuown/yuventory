@@ -1,4 +1,4 @@
-<div ng-controller='StockTypesController' ng-init="load()">
+<div ng-controller='CategoriesController' ng-init="load()">
     <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <div>
         <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
@@ -9,17 +9,15 @@
 			<thead>
 				<tr class="info table-row">
 					<th>Name</th>
-					<th>Mode</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="stockType in stockTypes" class="table-row">
-					<td>{{stockType.name}}</td>
-					<td>{{stockType.method}}</td>
+				<tr ng-repeat="category in categories" class="table-row">
+					<td>{{category.name}}</td>
 					<td>
-						<button type='button' class='btn btn-success' ng-click="add(stockType)">Edit</button>
-						<button type='button' class='btn btn-danger' ng-click="deleteRecord(stockType)">Delete</button>
+						<button type='button' class='btn btn-success' ng-click="add(category)">Edit</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteRecord(category)">Delete</button>
 					</td>
 				</tr>
 			</tbody>

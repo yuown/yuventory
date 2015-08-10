@@ -1,6 +1,6 @@
 <div ng-controller="AddItemController"> 
     <div class="modal-header modal-header-primary">
-        <h4 class="modal-title">{{ title }}</h4>
+        <h4 class="modal-title">{{title}}</h4>
     </div>
     <div class="modal-body">
         <form ng-submit="save(request)" id="addForm">
@@ -23,17 +23,23 @@
 	            </div>
 	        </div>
 	        <div class="form-group">
-	            <div class="input-group">
-	                <span class="input-group-addon">Stock Type</span>
-	                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="request.stockType"></select>
-	            </div>
-	        </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Category</span>
+                    <select class="form-control" ng-options="category.id as category.name for category in categories" ng-model="request.category" ng-change="setCategoryDescription()"></select>
+                </div>
+            </div>
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Supplier</span>
 	                <select class="form-control" ng-options="supplier.id as supplier.name for supplier in suppliers" ng-model="request.supplier"></select>
 	            </div>
 	        </div>
+	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Stock Type</span>
+                    <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="request.stockType"></select>
+                </div>
+            </div>
 	        <div class="form-group" ng-show="barcode">
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
@@ -42,7 +48,7 @@
 	                        <img src="data:image/png;base64,{{barcode}}" />
 	                        <div class="barcodecaption">
 	                            <span class="barcodecaption1">{{request.weight}} gm</span>
-	                            <span class="barcodecaption2">{{request.name}}</span>
+	                            <span class="barcodecaption2">{{request.currCategory}}</span>
 	                        </div>
 	                    </div>
 	                </div>

@@ -12,19 +12,24 @@
 	       </div>
 	       <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
 	          <ul class="nav navbar-nav">
-	          	<li ng-class="{active: isSegment('sell')}"><a href="#/home/sell">Sell</a></li>
-	            <li ng-class="{active: isSegment('items')}"><a href="#/home/items">Stock</a></li>
-	            <li ng-class="{active: isSegment('suppliers')}"><a href="#/home/suppliers">Suppliers</a></li>
-	            <li ng-class="{active: isSegment('stockTypes')}"><a href="#/home/stockTypes">Stock Types</a></li>
+	          	<li ng-class="{active: isSegment('stockOut')}"><a href="#/home/stockOut">Stock Out</a></li>
+	            <li ng-class="{active: isSegment('stockIn')}"><a href="#/home/stockIn">Stock In</a></li>
+	            <li class="dropdown" ng-class="{active: isSegment('suppliers') || isSegment('categories') || isSegment('stockTypes')}">
+	               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference Data <span class="caret"></span></a>
+	               <ul class="dropdown-menu">
+                    <li ng-class="{active: isSegment('suppliers')}"><a href="#/home/suppliers">Suppliers</a></li>
+                    <li ng-class="{active: isSegment('categories')}"><a href="#/home/categories">Categories</a></li>
+                    <li ng-class="{active: isSegment('stockTypes')}"><a href="#/home/stockTypes">Stock Types</a></li>
+                  </ul>
+                </li>
 	            <li ng-class="{active: isSegment('reports')}"><a href="#/home/reports">Reports</a></li>
 	            <li ng-class="{active: isSegment('settings')}"><a href="#/home/settings">Settings</a></li>
 	            <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
+	              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users/ Roles <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
-	                <li><a href="#">Action1</a></li>
 	                <li role="separator" class="divider"></li>
-	                <li class="dropdown-header">Nav header</li>
-	                <li><a href="#">Separated link</a></li>
+	                <li class="dropdown-header">Manage Users</li>
+	                <li><a>Manage</a></li>
 	              </ul>
 	            </li>
 	          </ul>

@@ -81,7 +81,12 @@ yuventoryApp.controller('AlertsLendController', [ '$scope', '$modal', 'AjaxServi
 yuventoryApp.controller('AlertsSellController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
     'use strict';
     
-    AjaxService.call('stockTypes?method=Exit&remove=true', 'GET').success(function(data, status, headers, config) {
+    AjaxService.call("suppliers/", 'GET').success(function(data, status, headers, config) {
+        $scope.lendTos = data;
+        $scope.clonedRequest.lendTo = $scope.clonedRequest.lendTo == 0 || $scope.clonedRequest.lendTo == null ? data[0].id : $scope.clonedRequest.lendTo;
+    });
+    
+    AjaxService.call('stockTypes?method=Exit', 'GET').success(function(data, status, headers, config) {
         $scope.stockTypes = data;
         $scope.clonedRequest.stockType = $scope.clonedRequest.stockType == null ? data[0].id : $scope.clonedRequest.stockType;
     });
@@ -89,7 +94,14 @@ yuventoryApp.controller('AlertsSellController', [ '$scope', '$modal', 'AjaxServi
     $scope.submitOption = function(option, confirmCallback) {
         $scope.confirmDialog.dismiss('cancel')
         if(option == 'yes') {
-            confirmCallback($scope.clonedRequest);
+            confirmCallback($scope.clonedRequest, $scope.deleteFromStock);
+        }
+    };
+    
+    $scope.showHideDeleteMessage = function() {
+        $scope.deleteFromStock = null;
+        if(getObjectFromId($scope.stockTypes, $scope.clonedRequest.stockType)) {
+            $scope.deleteFromStock = getObjectFromId($scope.stockTypes, $scope.clonedRequest.stockType)['remove'];
         }
     };
     

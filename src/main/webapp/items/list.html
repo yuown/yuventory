@@ -7,19 +7,20 @@
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead>
-				<tr class="info">
+				<tr class="info table-row">
 					<th>Name</th>
+					<th>Status</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in items">
-					<td>{{ item.name }}</td>
-					<td class='btn-group'>
-						<div>
-							<button type='button' class='btn navbar-btn btn-success' ng-click="add(item)">Edit</button>
-							<button type='button' class='btn navbar-btn btn-danger' ng-click="deleteRecord(item)">Delete</button>
-						</div>
+				<tr ng-repeat="item in items" class="table-row">
+					<td>{{item.name}}</td>
+					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Sold' : 'Item Lent')}}</td>
+					<td>
+					    <button type='button' class='btn btn-warning' ng-click="view(item)">View</button>
+						<button type='button' class='btn btn-success' ng-click="add(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false">Edit</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteRecord(item)">Delete</button>
 					</td>
 				</tr>
 			</tbody>

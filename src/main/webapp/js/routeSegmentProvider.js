@@ -9,10 +9,13 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
     $routeSegmentProvider.
         when('/login', 'login').
         when('/home', 'home').
-        when('/home/sell', 'home.sell').
-        when('/home/items', 'home.items').
+        when('/home/stockOut', 'home.stockOut').
+        when('/home/stockIn', 'home.stockIn').
         when('/home/suppliers', 'home.suppliers').
         when('/home/stockTypes', 'home.stockTypes').
+        when('/home/categories', 'home.categories').
+        when('/home/reports', 'home.reports').
+        when('/home/settings', 'home.settings').
         segment('login', {
             templateUrl : 'templates/login.html',
         }).
@@ -20,11 +23,11 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             templateUrl : 'templates/home.html',
         }).
         within().
-	        segment('sell', {
+	        segment('stockOut', {
 	            'default': 'true',
 	            templateUrl : 'sell/search.html'
 	        }).
-            segment('items', {
+            segment('stockIn', {
                 templateUrl : 'items/list.html'
             }).
             segment('suppliers', {
@@ -32,6 +35,15 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             }).
             segment('stockTypes', {
                 templateUrl : 'stockTypes/list.html'
+            }).
+            segment('categories', {
+                templateUrl : 'categories/list.html'
+            }).
+            segment('reports', {
+                templateUrl : 'reports/list.html'
+            }).
+            segment('settings', {
+                templateUrl : 'settings/list.html'
             });
 
     $routeProvider.otherwise({redirectTo: '/login'}); 

@@ -1,12 +1,10 @@
 package yuown.yuventory.transformer;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import jersey.repackaged.com.google.common.collect.Lists;
 import yuown.yuventory.entity.User;
 import yuown.yuventory.model.UserModel;
 import yuown.yuventory.security.YuownGrantedAuthority;

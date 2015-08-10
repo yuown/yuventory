@@ -18,7 +18,6 @@ import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "ITEMS", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
@@ -28,12 +27,14 @@ import org.joda.time.DateTime;
         @AttributeOverride(name = "date", column = @Column(name = "date")),
         @AttributeOverride(name = "itemType", column = @Column(name = "type")),
         @AttributeOverride(name = "weight", column = @Column(name = "weight")),
+        @AttributeOverride(name = "category", column = @Column(name = "category")),
         @AttributeOverride(name = "supplier", column = @Column(name = "supplier")),
         @AttributeOverride(name = "stockType", column = @Column(name = "stock_type")),
         @AttributeOverride(name = "user", column = @Column(name = "user_entered")),
         @AttributeOverride(name = "lendTo", column = @Column(name = "lend_to")),
         @AttributeOverride(name = "lendDate", column = @Column(name = "lend_date")),
-        @AttributeOverride(name = "lendDescription", column = @Column(name = "lend_description"))
+        @AttributeOverride(name = "lendDescription", column = @Column(name = "lend_description")),
+        @AttributeOverride(name = "sold", column = @Column(name = "sold"))
 })
 public class Item extends BaseEntity<Integer> implements Serializable {
 
@@ -44,6 +45,8 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     private String itemType;
     
     private double weight;
+    
+    private Category category;
     
     private Date date;
     
@@ -58,6 +61,8 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     private Date lendDate;
     
     private String lendDescription;
+    
+    private Boolean sold;
 
     public String getName() {
         return name;
@@ -94,6 +99,16 @@ public class Item extends BaseEntity<Integer> implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+	@ManyToOne
+    @JoinColumn(name = "category", nullable = false)
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
     @ManyToOne
     @JoinColumn(name = "supplier", nullable = false)
@@ -129,6 +144,14 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 
 	public void setLendDescription(String lendDescription) {
 		this.lendDescription = lendDescription;
+	}
+
+	public Boolean isSold() {
+		return sold == null ? false : sold;
+	}
+
+	public void setSold(Boolean sold) {
+		this.sold = sold == null ? false : sold;
 	}
 
 	@ManyToOne

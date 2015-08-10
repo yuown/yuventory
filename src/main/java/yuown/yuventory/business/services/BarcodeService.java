@@ -3,7 +3,6 @@ package yuown.yuventory.business.services;
 import java.io.ByteArrayOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
@@ -19,14 +18,18 @@ public class BarcodeService {
 
 	@Autowired
 	private ItemService itemService;
-	
-	@Value("${barcode.width}")
+
+	private static final String BARCODE_WIDTH = "barcode_width";
+
+	private static final String BARCODE_HEIGHT = "barcode_height";
+
 	private int barcodeWidth;
-	
-	@Value("${barcode.height}")
+
 	private int barcodeHeight;
 
 	public byte[] generateBarcodeFromItemID(Integer id) {
+		barcodeWidth = Integer.parseInt(System.getProperty(BARCODE_WIDTH));
+		barcodeHeight = Integer.parseInt(System.getProperty(BARCODE_HEIGHT));
 		ItemModel itemModel = itemService.getById(id);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (null != itemModel) {
