@@ -6,7 +6,7 @@
 	        <button type="button" class="btn btn-info" ng-click="load(1)">Refresh</button>
         </div>
 		<div>
-			<ul class="pagination">
+			<ul class="pagination noselect">
 				<li ng-class="{disabled: currentPage==1}"><a aria-label="Previous" ng-click="currentPage > 1 && load(currentPage - 1)"><span aria-hidden="true">Previous</span></a></li>
 				<li ng-class="{active: page==currentPage}" ng-repeat="page in getNumber(pages)"><a ng-click="currentPage != page && load(page)">{{page}}</a></li>
 				<li ng-class="{disabled: currentPage==pages}"><a aria-label="Next" ng-click="currentPage < pages && load(currentPage + 1)"><span aria-hidden="true">Next</span></a></li>

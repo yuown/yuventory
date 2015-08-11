@@ -12,16 +12,16 @@
 }
 
 .modal-header-danger {
-    color: #fff;
-    padding: 9px 15px;
-    border-bottom: 1px solid #eee;
-    background-color: #be3a35;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #be3a35;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 div.barcodecontainer {
@@ -46,25 +46,38 @@ div.barcodecontainer {
 }
 
 .form-group input[type="checkbox"] {
-    display: none;
+	display: none;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label span {
-    width: 20px;
+.form-group input[type="checkbox"]+.btn-group>label span {
+	width: 20px;
 }
 
-.form-group input[type="checkbox"] + .btn-group > label span:first-child {
-    display: none;
-}
-.form-group input[type="checkbox"] + .btn-group > label span:last-child {
-    display: inline-block;   
+.form-group input[type="checkbox"]+.btn-group>label span:first-child {
+	display: none;
 }
 
-.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-    display: inline-block;
+.form-group input[type="checkbox"]+.btn-group>label span:last-child {
+	display: inline-block;
 }
-.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-    display: none;   
+
+.form-group input[type="checkbox"]:checked+.btn-group>label span:first-child
+	{
+	display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked+.btn-group>label span:last-child
+	{
+	display: none;
+}
+
+.noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 @media print {
@@ -76,15 +89,15 @@ div.barcodecontainer {
 	}
 	.section-to-print {
 		background-color: white;
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 15px;
-        font-size: 14px;
-        line-height: 18px;
+		height: 100%;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin: 0;
+		padding: 15px;
+		font-size: 14px;
+		line-height: 18px;
 	}
 	div.barcodecontainer {
 		border: 0px;
