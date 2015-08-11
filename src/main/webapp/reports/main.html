@@ -1,0 +1,90 @@
+<div ng-controller='MainReportsController' ng-init="init()">
+	<div class="col-md-12">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">Report For</span>
+				<select class="form-control" ng-options="reportType.id as reportType.name for reportType in reportsMeta.reportTypes" ng-model="reportsInput.reportType" ng-change="changeReportType()"></select>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">From</span>
+				<input type="text" class="form-control" datepicker-popup="{{format}}"
+					   ng-model="reports.startDate" is-open="status.sopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+					   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+					   close-text="Close" readonly="readonly" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open('start')">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+				</span>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">To</span>
+				<input type="text" class="form-control" datepicker-popup="{{format}}"
+					   ng-model="reports.endDate" is-open="status.eopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+					   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+					   close-text="Close" readonly="readonly" />
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="open('end')">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+				</span>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">Any Part of Item name</span>
+				<input type="text" class="form-control" ng-model="reportsInput.itemName" />
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">By Type</span>
+				<select class="form-control" ng-options="itemType as itemType for itemType in reportsMeta.itemTypes" ng-model="reportsInput.itemType">
+					<option value=''>All</option>
+				</select>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">By Category</span>
+				<select class="form-control" ng-options="category.id as category.name for category in reportsMeta.categories" ng-model="reportsInput.category">
+					<option value=''>All</option>
+				</select>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">{{reportsInput.supplierOrLent}}</span>
+				<select class="form-control" ng-options="supplier.id as supplier.name for supplier in reportsMeta.suppliers" ng-model="reportsInput.supplier">
+					<option value=''>All</option>
+				</select>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<p class="input-group">
+				<span class="input-group-addon">By StockType</span>
+				<select class="form-control" ng-options="stockType.id as stockType.name for stockType in reportsMeta.stockTypes" ng-model="reportsInput.stockType">
+					<option value=''>All</option>
+				</select>
+			</p>
+		</div>
+	</div>
+</div>

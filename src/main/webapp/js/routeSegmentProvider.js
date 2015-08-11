@@ -15,6 +15,9 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/stockTypes', 'home.stockTypes').
         when('/home/categories', 'home.categories').
         when('/home/reports', 'home.reports').
+        when('/home/reports/reportsMain', 'home.reports.reportsMain').
+        when('/home/reports/other1', 'home.reports.other1').
+        when('/home/reports/other2', 'home.reports.other2').
         when('/home/settings', 'home.settings').
         segment('login', {
             templateUrl : 'templates/login.html',
@@ -42,6 +45,18 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             segment('reports', {
                 templateUrl : 'reports/list.html'
             }).
+            within().
+	            segment('reportsMain', {
+	            	'default': true,
+	                templateUrl : 'reports/main.html'
+	            }).
+	            segment('other1', {
+	                templateUrl : 'reports/other1.html'
+	            }).
+	            segment('other2', {
+	                templateUrl : 'reports/other2.html'
+	            }).
+            up().
             segment('settings', {
                 templateUrl : 'settings/list.html'
             });

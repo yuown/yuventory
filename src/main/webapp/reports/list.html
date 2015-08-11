@@ -1,3 +1,13 @@
 <div ng-controller='ReportsController'>
-    <div class="alert alert-danger">Under Construction</div>
+    <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+    <div class="col-xs-2">
+    	<ul class="nav nav-pills nav-stacked">
+    		  <li role="presentation" ng-class="{active: isSegment('reportsMain')}"><a href="#/home/reports/reportsMain">Main</a></li>
+			  <li role="presentation" ng-class="{active: isSegment('other1')}" ng-show="false"><a href="#/home/reports/other1">Other1</a></li>
+			  <li role="presentation" ng-class="{active: isSegment('other2')}" ng-show="false"><a href="#/home/reports/other2">Other2</a></li>
+		</ul>
+    </div>
+    <div class="col-xs-10" app-view-segment="2">
+    	Content
+    </div>
 </div>
