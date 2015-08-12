@@ -49,7 +49,7 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
         
         var clonedRequest = angular.copy(request);
         AlertsService.confirmLending(clonedRequest, function(clonedRequest) {
-            AjaxService.call("items/", 'POST', clonedRequest).success(function(data, status, headers, config) {
+            AjaxService.call("items/lend", 'POST', clonedRequest).success(function(data, status, headers, config) {
                 $scope.searchItem();
             });
         });
@@ -61,7 +61,7 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
         AlertsService.confirmReturn(clonedRequest, function(clonedRequest) {
             clonedRequest.lendTo = null;
             clonedRequest.lendDescription = null;
-            AjaxService.call("items/", 'POST', clonedRequest).success(function(data, status, headers, config) {
+            AjaxService.call("items/getBack", 'POST', clonedRequest).success(function(data, status, headers, config) {
                 $scope.searchItem();
             });
         });
@@ -77,7 +77,7 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
                 });
             } else {
                 clonedRequest.sold = true;
-                AjaxService.call("items/", 'POST', clonedRequest).success(function(data, status, headers, config) {
+                AjaxService.call("items/sell", 'POST', clonedRequest).success(function(data, status, headers, config) {
                     $scope.searchItem();
                 });
             }

@@ -24,7 +24,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "id", insertable = false, updatable = false)),
         @AttributeOverride(name = "name", column = @Column(name = "name")),
-        @AttributeOverride(name = "date", column = @Column(name = "date")),
+        @AttributeOverride(name = "createDate", column = @Column(name = "create_date")),
+        @AttributeOverride(name = "updateDate", column = @Column(name = "update_date")),
         @AttributeOverride(name = "itemType", column = @Column(name = "type")),
         @AttributeOverride(name = "weight", column = @Column(name = "weight")),
         @AttributeOverride(name = "category", column = @Column(name = "category")),
@@ -38,41 +39,43 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 })
 public class Item extends BaseEntity<Integer> implements Serializable {
 
-    private static final long serialVersionUID = 4289151143888117381L;
-    
-    private String name;
-    
-    private String itemType;
-    
-    private double weight;
-    
-    private Category category;
-    
-    private Date date;
-    
-    private Supplier supplier;
-    
-    private StockType stockType;
-    
-    private User user;
-    
-    private Supplier lendTo;
-    
-    private Date lendDate;
-    
-    private String lendDescription;
-    
-    private Boolean sold;
+	private static final long serialVersionUID = 4289151143888117381L;
 
-    public String getName() {
-        return name;
-    }
+	private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private String itemType;
 
-    public String getItemType() {
+	private double weight;
+
+	private Category category;
+
+	private Date createDate;
+
+	private Date updateDate;
+
+	private Supplier supplier;
+
+	private StockType stockType;
+
+	private User user;
+
+	private Supplier lendTo;
+
+	private Date lendDate;
+
+	private String lendDescription;
+
+	private Boolean sold;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getItemType() {
 		return itemType;
 	}
 
@@ -89,19 +92,19 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 	}
 
 	@Override
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
-        return this.id;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Integer getId() {
+		return this.id;
+	}
 
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@ManyToOne
-    @JoinColumn(name = "category", nullable = false)
+	@JoinColumn(name = "category", nullable = false)
 	public Category getCategory() {
 		return category;
 	}
@@ -110,19 +113,19 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.category = category;
 	}
 
-    @ManyToOne
-    @JoinColumn(name = "supplier", nullable = false)
-    public Supplier getSupplier() {
-        return supplier;
-    }
+	@ManyToOne
+	@JoinColumn(name = "supplier", nullable = false)
+	public Supplier getSupplier() {
+		return supplier;
+	}
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "lend_to", nullable = true)
-    public Supplier getLendTo() {
+	@ManyToOne
+	@JoinColumn(name = "lend_to", nullable = true)
+	public Supplier getLendTo() {
 		return lendTo;
 	}
 
@@ -146,7 +149,7 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.lendDescription = lendDescription;
 	}
 
-	public Boolean isSold() {
+	public Boolean getSold() {
 		return sold == null ? false : sold;
 	}
 
@@ -154,9 +157,25 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.sold = sold == null ? false : sold;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	@ManyToOne
-    @JoinColumn(name = "stock_type", nullable = false)
-    public StockType getStockType() {
+	@JoinColumn(name = "stock_type", nullable = false)
+	public StockType getStockType() {
 		return stockType;
 	}
 
@@ -165,7 +184,7 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 	}
 
 	@ManyToOne
-    @JoinColumn(name = "user_entered", nullable = false)
+	@JoinColumn(name = "user_entered", nullable = false)
 	public User getUser() {
 		return user;
 	}
@@ -174,33 +193,25 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.user = user;
 	}
 
-	public Date getDate() {
-        return date;
-    }
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	@Override
+	public int hashCode() {
+		return (new HashCodeBuilder()).append(this.id).toHashCode();
+	}
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        return (new HashCodeBuilder()).append(this.id).toHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Item rhs = (Item) obj;
-        return (new EqualsBuilder()).append(this.id, rhs.id).isEquals();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item rhs = (Item) obj;
+		return (new EqualsBuilder()).append(this.id, rhs.id).isEquals();
+	}
 }

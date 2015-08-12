@@ -26,6 +26,10 @@ public class ItemModel extends Model {
 
 	private Boolean sold;
 
+	private Date createDate;
+
+	private Date updateDate;
+
 	public String getName() {
 		return name;
 	}
@@ -106,11 +110,27 @@ public class ItemModel extends Model {
 		this.lendDescription = lendDescription;
 	}
 
-	public Boolean isSold() {
+	public Boolean getSold() {
 		return sold;
 	}
 
 	public void setSold(Boolean sold) {
 		this.sold = sold;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 }

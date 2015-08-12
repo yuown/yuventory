@@ -9,13 +9,13 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
     'use strict';
     
     $scope.today = function() {
-		$scope.reports.startDate = new Date();
-		$scope.reports.endDate = new Date();
+		$scope.reportsInput.startDate = new Date();
+		$scope.reportsInput.endDate = new Date();
 	};
 	
 	$scope.clear = function() {
-		$scope.reports.startDate = null;
-		$scope.reports.endDate = null;
+		$scope.reportsInput.startDate = null;
+		$scope.reportsInput.endDate = null;
 	};
 
 	$scope.open = function(field) {
@@ -27,35 +27,16 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	};
 	
 	$scope.init = function() {
-		$scope.reports = { startDate: null, endDate: null, categories: []};
+	    $scope.reportsMeta = [];
 	    $scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd-MMMM-yyyy', 'shortDate' ];
 		$scope.format = $scope.formats[2];
 		$scope.status = { sopened: false, eopened: false };
-		$scope.reportsMeta = [];
-		
-		$scope.today();
-
-		$scope.reportsMeta.reportTypes = [ {
-			id : 'stock',
-			name : 'In Stock Items',
-			mode: 'Entry',
-			supplierOrLent: 'By Supplier'
-		}, {
-			id : 'sold',
-			name : 'Sold Items',
-			mode: 'Exit',
-			supplierOrLent: 'By Supplier'
-		}, {
-			id : 'lent',
-			name : 'Items Lent to others',
-			mode: 'Exit',
-			supplierOrLent: 'Items Lent to'
-		} ];
 		
 		$scope.reportsInput = {
-			reportType : $scope.reportsMeta.reportTypes[0].id,
-			supplierOrLent: $scope.reportsMeta.reportTypes[0].supplierOrLent
-		};
+            startDate: null,
+            endDate: null
+        };
+		$scope.today();
 		
 		AjaxService.call("meta/itemTypes/", 'GET').success(function(data, status, headers, config) {
 	    	$scope.reportsMeta.itemTypes = data;
@@ -69,22 +50,14 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	    	$scope.reportsMeta.suppliers = data;
 		});
 		
-		$scope.changeReportType();
+		AjaxService.call('stockTypes', 'GET').success(function(data, status, headers, config) {
+            $scope.reportsMeta.stockTypes = data;
+        });
 	};
 	
-	$scope.changeReportType = function() {
-		var mode = {};
-		for (var i in $scope.reportsMeta.reportTypes) {
-			if($scope.reportsMeta.reportTypes[i].id == $scope.reportsInput.reportType) {
-				mode = $scope.reportsMeta.reportTypes[i];
-				break;
-			}
-		}
-		
-		$scope.reportsInput.supplierOrLent = mode.supplierOrLent;
-		
-		AjaxService.call('stockTypes?method=' + mode.id, 'GET').success(function(data, status, headers, config) {
-            $scope.reportsMeta.stockTypes = data;
+	$scope.generateReport = function(reportsRequest) {
+	    AjaxService.call('reports/generate/', 'POST', reportsRequest).success(function(data, status, headers, config) {
+            //$scope.reportsMeta.stockTypes = data;
         });
 	};
 	

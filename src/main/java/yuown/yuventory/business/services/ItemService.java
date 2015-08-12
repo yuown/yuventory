@@ -1,5 +1,9 @@
 package yuown.yuventory.business.services;
 
+import java.util.Date;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +32,11 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	@Override
 	protected ItemsRepositoryService repoService() {
 		return itemsRepositoryService;
+	}
+	
+	@PostConstruct
+	public void init() {
+		setPageSizeToSystem();
 	}
 
 	@Override
@@ -84,5 +93,22 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	public void setPageSizeToSystem() {
 		ConfigurationModel pageSize = configurationService.getByName(ITEM_PAGE_SIZE);
 		setPageSizeToSystem(pageSize);
+	}
+
+	public ItemModel sell(ItemModel model) {
+		model.setSold(true);
+		model.setLendDate(new Date());
+		return super.save(model);
+	}
+
+	public ItemModel getBack(ItemModel model) {
+		model.setLendTo(0);
+		return super.save(model);
+	}
+
+	public ItemModel lend(ItemModel model) {
+		model.setSold(false);
+		model.setLendDate(new Date());
+		return super.save(model);
 	}
 }

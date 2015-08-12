@@ -8,7 +8,7 @@ yuventoryApp.controller('LoginController', [ '$scope', '$location', 'Authenticat
 		AuthenticationService.Login($scope.user, function(response, headers) {
 			if (response == 200) {
 				AuthenticationService.SetCredentials($scope.user.username, headers("YUOWN-KEY"));
-				$location.path('/home');
+				$location.path('/home/stockOut');
 			} else {
 				$scope.error = response.message;
 				$scope.dataLoading = false;

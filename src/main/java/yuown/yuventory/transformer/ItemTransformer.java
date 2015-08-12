@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.Item;
 import yuown.yuventory.jpa.services.CategoryRepositoryService;
+import yuown.yuventory.jpa.services.ItemsRepositoryService;
 import yuown.yuventory.jpa.services.StockTypeRepositoryService;
 import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.jpa.services.UserRepositoryService;
@@ -21,7 +22,7 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
 	@Autowired
 	private SupplierRepositoryService supplierRepositoryService;
-	
+
 	@Autowired
 	private CategoryRepositoryService categoryRepositoryService;
 
@@ -31,32 +32,58 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 	@Autowired
 	private UserRepositoryService userRepositoryService;
 
+	@Autowired
+	private ItemsRepositoryService itemsRepositoryService;
+
 	@Override
 	public Item transformFrom(ItemModel source) {
 		Item dest = null;
 		if (source != null) {
 			try {
-				dest = new Item();
-				BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
+				if (source.getId() != null) {
+					dest = itemsRepositoryService.findOne(source.getId());
+					dest.setUpdateDate(new Date());
+					BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
+
+					if (source.getLendTo() > 0) {
+						decideLending(source, dest);
+					} else {
+						decideLending(null, dest);
+					}
+
+				} else {
+					dest = new Item();
+					dest.setCreateDate(new Date());
+					BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
+
+					dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
+					dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
+					dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
+					dest.setUser(userRepositoryService.findOne(source.getUser()));
+
+					decideLending(null, dest);
+					dest.setSold(false);
+				}
+
 				dest.setName(dest.getName().toUpperCase());
-				dest.setSold(source.isSold());
-				dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
-				dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
-				dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
-				dest.setUser(userRepositoryService.findOne(source.getUser()));
-				if(source.getLendTo() > 0) {
-					dest.setLendTo(supplierRepositoryService.findOne(source.getLendTo()));
-					dest.setLendDate(source.getLendDate());
-					dest.setLendDescription(source.getLendDescription());
-				}
-				if(source.getId() != null) {
-					dest.setDate(new Date());
-				}
+
 			} catch (Exception e) {
 				dest = null;
 			}
 		}
 		return dest;
+	}
+
+	private void decideLending(ItemModel source, Item dest) {
+		if (source == null) {
+			dest.setLendDate(null);
+			dest.setLendDescription(null);
+			dest.setLendTo(null);
+		} else {
+			dest.setLendDate(source.getLendDate());
+			dest.setLendDescription(source.getLendDescription());
+			dest.setLendTo(supplierRepositoryService.findOne(source.getLendTo()));
+		}
 	}
 
 	@Override
@@ -70,10 +97,11 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest.setCategory(source.getCategory().getId());
 				dest.setStockType(source.getStockType().getId());
 				dest.setUser(source.getUser().getId());
-				dest.setSold(source.isSold());
-				if(source.getLendTo() != null) {
+				dest.setSold(source.getSold());
+				if (source.getLendTo() != null) {
 					dest.setLendTo(source.getLendTo().getId());
 					dest.setLendDescription(source.getLendDescription());
+					dest.setLendDate(source.getLendDate());
 				}
 			} catch (Exception e) {
 				dest = null;

@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
@@ -32,6 +34,11 @@ public class BarcodeService {
 	private int barcodeWidth;
 
 	private int barcodeHeight;
+	
+	@PostConstruct
+	public void init() {
+		setDimensionsToSystem();
+	}
 
 	public byte[] generateBarcodeFromItemID(Integer id) {
 		if(System.getProperty(BARCODE_WIDTH) == null || System.getProperty(BARCODE_HEIGHT) == null) {

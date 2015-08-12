@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.ItemService;
+import yuown.yuventory.business.services.SupplierService;
 import yuown.yuventory.entity.Item;
 import yuown.yuventory.model.ItemModel;
+import yuown.yuventory.model.SupplierModel;
 import yuown.yuventory.security.YuownTokenAuthenticationService;
 
 @RestController
@@ -33,6 +35,9 @@ public class ItemResourceImpl {
 	private ItemService itemService;
 
 	@Autowired
+	private SupplierService supplierService;
+
+	@Autowired
 	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
@@ -40,6 +45,105 @@ public class ItemResourceImpl {
 	public ItemModel save(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
 		return itemService.save(model);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/sell")
+	@ResponseBody
+	public ResponseEntity<ItemModel> sell(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
+		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.OK;
+
+		ItemModel itemFromDB = itemService.getById(model.getId());
+
+		if (null != itemFromDB) {
+			if (itemFromDB.getSold() == true) {
+				headers.add("errorMessage", "Item Already Sold, cannot sell Again!");
+				responseStatus = HttpStatus.BAD_REQUEST;
+			} else {
+				if (itemFromDB.getLendTo() > 0) {
+					SupplierModel supplier = supplierService.getById(itemFromDB.getLendTo());
+					headers.add("errorMessage", "Item Lent to '" + supplier.getName() + "', cannot sell until return back!");
+					responseStatus = HttpStatus.BAD_REQUEST;
+				} else {
+					if (model.getLendTo() == 0) {
+						headers.add("errorMessage", "Invalid Sell Selection!");
+						responseStatus = HttpStatus.BAD_REQUEST;
+					} else {
+						model = itemService.sell(model);
+					}
+				}
+			}
+		} else {
+			headers.add("errorMessage", "Item Not found!");
+		}
+
+		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/lend")
+	@ResponseBody
+	public ResponseEntity<ItemModel> lend(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
+		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.OK;
+
+		ItemModel itemFromDB = itemService.getById(model.getId());
+
+		if (null != itemFromDB) {
+			if (itemFromDB.getSold() == true) {
+				headers.add("errorMessage", "Item Already Sold, cannot lend to anyone!");
+				responseStatus = HttpStatus.BAD_REQUEST;
+			} else {
+				if (itemFromDB.getLendTo() > 0) {
+					SupplierModel supplier = supplierService.getById(itemFromDB.getLendTo());
+					headers.add("errorMessage", "Item Lent to '" + supplier.getName() + "', cannot lend until return back!");
+					responseStatus = HttpStatus.BAD_REQUEST;
+				} else {
+					if (model.getLendTo() == 0) {
+						headers.add("errorMessage", "Invalid Lending Selection!");
+						responseStatus = HttpStatus.BAD_REQUEST;
+					} else {
+						model = itemService.lend(model);
+					}
+				}
+			}
+		} else {
+			headers.add("errorMessage", "Item Not found!");
+		}
+
+		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/getBack")
+	@ResponseBody
+	public ResponseEntity<ItemModel> getBack(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
+		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.OK;
+
+		ItemModel itemFromDB = itemService.getById(model.getId());
+
+		if (null != itemFromDB) {
+			if (itemFromDB.getSold() == true) {
+				headers.add("errorMessage", "Item Sold, cannot get back!");
+				responseStatus = HttpStatus.BAD_REQUEST;
+			} else {
+				if (itemFromDB.getLendTo() == 0) {
+					headers.add("errorMessage", "Item Not Lent to anyone, don't have to back!");
+					responseStatus = HttpStatus.BAD_REQUEST;
+				} else {
+					model = itemService.getBack(model);
+				}
+			}
+		} else {
+			headers.add("errorMessage", "Item Not found!");
+		}
+
+		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
