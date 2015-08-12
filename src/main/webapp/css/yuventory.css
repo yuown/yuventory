@@ -61,13 +61,11 @@ div.barcodecontainer {
 	display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked+.btn-group>label span:first-child
-	{
+.form-group input[type="checkbox"]:checked+.btn-group>label span:first-child {
 	display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked+.btn-group>label span:last-child
-	{
+.form-group input[type="checkbox"]:checked+.btn-group>label span:last-child {
 	display: none;
 }
 

@@ -1,18 +1,32 @@
 package yuown.yuventory.business.services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import yuown.yuventory.entity.Category;
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.entity.Item_;
+import yuown.yuventory.entity.StockType;
+import yuown.yuventory.entity.Supplier;
 import yuown.yuventory.jpa.services.ItemsRepositoryService;
 import yuown.yuventory.model.ConfigurationModel;
 import yuown.yuventory.model.ItemModel;
+import yuown.yuventory.model.ReportRequestModel;
 import yuown.yuventory.transformer.ItemTransformer;
 
 @Service
@@ -33,7 +47,7 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	protected ItemsRepositoryService repoService() {
 		return itemsRepositoryService;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		setPageSizeToSystem();
@@ -70,7 +84,7 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 			pageSize = new ConfigurationModel();
 			pageSize.setName(ITEM_PAGE_SIZE);
 		}
-		if(size == null || size <= 0) {
+		if (size == null || size <= 0) {
 			size = 10;
 		}
 		pageSize.setValue(size);
@@ -97,7 +111,7 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 
 	public ItemModel sell(ItemModel model) {
 		model.setSold(true);
-		model.setLendDate(new Date());
+		model.setLendDate(new Date().getTime());
 		return super.save(model);
 	}
 
@@ -108,7 +122,80 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 
 	public ItemModel lend(ItemModel model) {
 		model.setSold(false);
-		model.setLendDate(new Date());
+		model.setLendDate(new Date().getTime());
 		return super.save(model);
+	}
+
+	public List<ItemModel> generateReport(final ReportRequestModel model) {
+		return transformer().transformTo(itemsRepositoryService.findAll(new Specification<Item>() {
+
+			@Override
+			public Predicate toPredicate(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				List<Predicate> predicates = new ArrayList<>();
+
+				if (StringUtils.isNotBlank(model.getItemName())) {
+					predicates.add(cb.like(root.get(Item_.name), "%" + model.getItemName().toUpperCase() + "%"));
+				}
+
+				if (StringUtils.isNotBlank(model.getItemType())) {
+					predicates.add(cb.equal(root.get(Item_.itemType), model.getItemType()));
+				}
+
+				if (model.getCategory() > 0) {
+					Category category = new Category();
+					category.setId(model.getCategory());
+					predicates.add(cb.equal(root.get(Item_.category), category));
+				}
+
+				if (model.getStockType() > 0) {
+					StockType stockType = new StockType();
+					stockType.setId(model.getStockType());
+					predicates.add(cb.equal(root.get(Item_.stockType), stockType));
+				}
+
+				if (model.getSupplier() > 0) {
+					Supplier supplier = new Supplier();
+					supplier.setId(model.getSupplier());
+					predicates.add(cb.equal(root.get(Item_.supplier), supplier));
+				}
+
+				if (model.getLent() > 0) {
+					Supplier lent = new Supplier();
+					lent.setId(model.getLent());
+					predicates.add(cb.equal(root.get(Item_.lendTo), lent));
+				}
+
+				if (null != model.getPurchaseStartDate() && null != model.getPurchaseEndDate()) {
+					predicates.add(cb.greaterThanOrEqualTo(root.get(Item_.createDate), getBeginTimeStampForDate(model.getPurchaseStartDate())));
+					predicates.add(cb.lessThanOrEqualTo(root.get(Item_.createDate), getEndTimeStampForDate(model.getPurchaseEndDate())));
+				}
+
+				if (null != model.getSellStartDate() && null != model.getSellEndDate()) {
+					predicates.add(cb.greaterThanOrEqualTo(root.get(Item_.lendDate), getBeginTimeStampForDate(model.getSellStartDate())));
+					predicates.add(cb.lessThanOrEqualTo(root.get(Item_.lendDate), getEndTimeStampForDate(model.getSellEndDate())));
+				}
+				return cb.and(predicates.toArray(new Predicate[0]));
+			}
+		}));
+	}
+
+	protected Long getBeginTimeStampForDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTimeInMillis();
+	}
+
+	protected Long getEndTimeStampForDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR, 11);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTimeInMillis();
 	}
 }

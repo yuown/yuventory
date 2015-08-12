@@ -17,7 +17,7 @@ import yuown.yuventory.model.ItemModel;
 @Component
 public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
-	private static final String[] FROM_EXCLUDES = new String[] { "supplier", "stockType", "user", "lendTo" };
+	private static final String[] FROM_EXCLUDES = new String[] { "supplier", "stockType", "user", "lendTo", "createDate", "lendDate" };
 	private static final String[] TO_EXCLUDES = new String[] { "supplier", "stockType", "user", "lendTo" };
 
 	@Autowired
@@ -42,8 +42,8 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 			try {
 				if (source.getId() != null) {
 					dest = itemsRepositoryService.findOne(source.getId());
-					dest.setUpdateDate(new Date());
 					BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
+					dest.setUpdateDate(new Date().getTime());
 
 					if (source.getLendTo() > 0) {
 						decideLending(source, dest);
@@ -53,8 +53,8 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
 				} else {
 					dest = new Item();
-					dest.setCreateDate(new Date());
 					BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
+					dest.setCreateDate(new Date().getTime());
 
 					dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
 					dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
@@ -66,7 +66,6 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				}
 
 				dest.setName(dest.getName().toUpperCase());
-
 			} catch (Exception e) {
 				dest = null;
 			}
@@ -76,7 +75,7 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
 	private void decideLending(ItemModel source, Item dest) {
 		if (source == null) {
-			dest.setLendDate(null);
+			dest.setLendDate(0);
 			dest.setLendDescription(null);
 			dest.setLendTo(null);
 		} else {

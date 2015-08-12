@@ -1,7 +1,5 @@
 package yuown.yuventory.model;
 
-import java.util.Date;
-
 public class ItemModel extends Model {
 
 	private String name;
@@ -20,15 +18,15 @@ public class ItemModel extends Model {
 
 	private int lendTo;
 
-	private Date lendDate;
+	private long lendDate;
 
 	private String lendDescription;
 
 	private Boolean sold;
 
-	private Date createDate;
+	private long createDate;
 
-	private Date updateDate;
+	private long updateDate;
 
 	public String getName() {
 		return name;
@@ -94,11 +92,11 @@ public class ItemModel extends Model {
 		this.lendTo = lendTo;
 	}
 
-	public Date getLendDate() {
+	public long getLendDate() {
 		return lendDate;
 	}
 
-	public void setLendDate(Date lendDate) {
+	public void setLendDate(long lendDate) {
 		this.lendDate = lendDate;
 	}
 
@@ -118,19 +116,19 @@ public class ItemModel extends Model {
 		this.sold = sold;
 	}
 
-	public Date getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
-	public Date getUpdateDate() {
+	public long getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(long updateDate) {
 		this.updateDate = updateDate;
 	}
 }

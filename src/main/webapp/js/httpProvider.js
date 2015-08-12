@@ -1,7 +1,7 @@
 yuventoryApp.factory('YuventoryHttpInterceptor', [ '$q', '$location', '$rootScope', function($q, $location, $rootScope) {
     return {
        'responseError': function(response) {
-           if (response.status === 500) {
+           if (response.status === 500 || response.status === 404  || response.status === 400) {
                $rootScope.errorMessage = response.headers("errorMessage");
                return $q.reject(response);
            } else if (response.status === 401) {

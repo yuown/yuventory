@@ -49,9 +49,9 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 
 	private Category category;
 
-	private Date createDate;
+	private long createDate;
 
-	private Date updateDate;
+	private long updateDate;
 
 	private Supplier supplier;
 
@@ -61,7 +61,7 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 
 	private Supplier lendTo;
 
-	private Date lendDate;
+	private long lendDate;
 
 	private String lendDescription;
 
@@ -133,11 +133,11 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.lendTo = lendTo;
 	}
 
-	public Date getLendDate() {
+	public long getLendDate() {
 		return lendDate;
 	}
 
-	public void setLendDate(Date lendDate) {
+	public void setLendDate(long lendDate) {
 		this.lendDate = lendDate;
 	}
 
@@ -157,19 +157,19 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 		this.sold = sold == null ? false : sold;
 	}
 
-	public Date getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
-	public Date getUpdateDate() {
+	public long getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(long updateDate) {
 		this.updateDate = updateDate;
 	}
 

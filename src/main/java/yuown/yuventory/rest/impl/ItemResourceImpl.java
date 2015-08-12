@@ -42,9 +42,28 @@ public class ItemResourceImpl {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
 	@ResponseBody
-	public ItemModel save(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
+	public ResponseEntity<ItemModel> save(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
-		return itemService.save(model);
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.BAD_REQUEST;
+
+		if (model.getCategory() == 0) {
+			headers.add("errormessage", "Invalid Category, please select valid Category or contact Admin!");
+		} else if (StringUtils.isBlank(model.getItemType())) {
+			headers.add("errormessage", "Invalid Item Type, please select valid Item Type or contact Admin!");
+		} else if (model.getStockType() == 0) {
+			headers.add("errormessage", "Invalid Stock Type, please select valid Stock Type or contact Admin!");
+		} else if (model.getSupplier() == 0) {
+			headers.add("errormessage", "Invalid Supplier, please select valid Supplier or contact Admin!");
+		} else if (model.getLendTo() > 0) {
+			headers.add("errormessage", "Invalid Lending while Purchasing, please contact Admin!");
+		} else {
+			model = itemService.save(model);
+			responseStatus = HttpStatus.OK;
+		}
+
+		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/sell")
@@ -162,7 +181,6 @@ public class ItemResourceImpl {
 		} else {
 			try {
 				itemService.removeById(id);
-				headers.add("errorMessage", "Item with ID " + id + " Deleted Successfully");
 				return new ResponseEntity<String>(headers, HttpStatus.OK);
 			} catch (Exception e) {
 				headers.add("errorMessage", "Item with ID " + id + " cannot be Deleted");

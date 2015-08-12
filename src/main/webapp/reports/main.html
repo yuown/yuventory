@@ -1,35 +1,90 @@
 <div ng-controller='MainReportsController' ng-init="init()">
 	<form ng-submit="generateReport(reportsInput)">
-		<div class="col-md-6">
-			<div class="form-group">
-				<p class="input-group">
-					<span class="input-group-addon">From</span>
-					<input type="text" class="form-control" datepicker-popup="{{format}}"
-						   ng-model="reportsInput.startDate" is-open="status.sopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
-						   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-						   close-text="Close" readonly="readonly" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open('start')">
-							<i class="glyphicon glyphicon-calendar"></i>
-						</button>
-					</span>
-				</p>
+		<div class="col-md-12">
+			<button type="button" class="btn btn-info" ng-click="togglePurchaseDate()">By Purchase Date</button>
+			<button type="button" class="btn btn-info" ng-click="toggleSellDate()">By Sell Date</button>
+		</div>
+		<hr class="col-md-12" />
+		<div collapse="reportsMeta.isPurchaseCollapsed">
+			<div class="col-md-2">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">Purchase</span>
+					</p>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">From</span>
+						<input type="text" class="form-control" datepicker-popup="{{format}}"
+							   ng-model="reportsInput.purchaseStartDate" is-open="status.psopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+							   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+							   close-text="Close" readonly="readonly" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open('purchaseStartDate')">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">To</span>
+						<input type="text" class="form-control" datepicker-popup="{{format}}"
+							   ng-model="reportsInput.purchaseEndDate" is-open="status.peopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+							   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+							   close-text="Close" readonly="readonly" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open('purchaseEndDate')">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
-			<div class="form-group">
-				<p class="input-group">
-					<span class="input-group-addon">To</span>
-					<input type="text" class="form-control" datepicker-popup="{{format}}"
-						   ng-model="reportsInput.endDate" is-open="status.eopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
-						   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
-						   close-text="Close" readonly="readonly" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open('end')">
-							<i class="glyphicon glyphicon-calendar"></i>
-						</button>
-					</span>
-				</p>
+		<div collapse="reportsMeta.isSellCollapsed">
+			<div class="col-md-2">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">Sell/ Lend</span>
+					</p>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">From</span>
+						<input type="text" class="form-control" datepicker-popup="{{format}}"
+							   ng-model="reportsInput.sellStartDate" is-open="status.ssopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+							   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+							   close-text="Close" readonly="readonly" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open('sellStartDate')">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<p class="input-group">
+						<span class="input-group-addon">To</span>
+						<input type="text" class="form-control" datepicker-popup="{{format}}"
+							   ng-model="reportsInput.sellEndDate" is-open="status.seopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+							   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+							   close-text="Close" readonly="readonly" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open('sellEndDate')">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -94,4 +149,35 @@
 		  <button type="submit" class='btn btn-warning'>Generate</button>
 		</div>
 	</form>
+	<hr class="col-md-12" />
+	<div class="col-md-12 table-responsive" ng-show="reportsOutput && reportsOutput.length > 0">
+		<a href='' ng-show="false" id="downloadCSV"></a>
+		<a class='btn btn-success' ng-if="reportsOutput && reportsOutput.length > 0" ng-click="downloadReport()">Download</a>
+		<table class="table table-hover">
+			<thead>
+				<tr class="info table-row">
+					<th>Name</th>
+					<th>Type</th>
+					<th>Weight</th>
+					<th>Category</th>
+					<th>Supplier</th>
+					<th>Lend/ Sold to</th>
+					<th>Stock Type</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in reportsOutput" class="table-row">
+					<td>{{item.name}}</td>
+					<td>{{item.itemType}}</td>
+					<td>{{item.weight}}</td>
+					<td>{{item.categoryDesc}}</td>
+					<td>{{item.supplierDesc}}</td>
+					<td>{{item.lendToDesc}}</td>
+					<td>{{item.stockTypeDesc}}</td>
+					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? item.status = 'In Stock' : (item.sold == true ? item.status = 'Item Sold' : item.status = 'Item Lent')}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

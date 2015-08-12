@@ -37,19 +37,21 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 );
 
+delimiter $$
+
 CREATE TABLE `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
   `weight` double DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
-  `create_date` varchar(45) DEFAULT NULL,
-  `update_date` varchar(45) DEFAULT NULL,
+  `create_date` bigint(20) DEFAULT '0',
+  `update_date` bigint(20) DEFAULT '0',
   `stock_type` int(11) DEFAULT NULL,
   `user_entered` int(11) DEFAULT NULL,
   `supplier` int(11) DEFAULT NULL,
   `lend_to` int(11) DEFAULT NULL,
-  `lend_date` varchar(45) DEFAULT NULL,
+  `lend_date` bigint(20) DEFAULT '0',
   `lend_description` varchar(200) DEFAULT NULL,
   `sold` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
