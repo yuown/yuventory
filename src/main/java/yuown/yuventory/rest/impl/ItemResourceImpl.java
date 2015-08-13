@@ -193,7 +193,7 @@ public class ItemResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<ItemModel>> getAll(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+	public ResponseEntity<List<ItemModel>> getAll(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
 		HttpHeaders headers = new HttpHeaders();
 		PageImpl<Item> pagedItems = itemService.getAll(page, size);
 		List<ItemModel> items = itemService.transformer().transformTo(pagedItems.getContent());

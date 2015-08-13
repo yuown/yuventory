@@ -6,14 +6,16 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+	<security:global-method-security secured-annotations="enabled" />
+	
     <security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/users/login">
     	<security:intercept-url pattern="/rest/users/login" />
         <security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
         <security:custom-filter ref="yuownLoginFilter" position="FIRST" />
     </security:http>
     
-	<security:http use-expressions="true" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
-		<security:intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
+	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
+		<security:intercept-url pattern="/rest/**" />
 		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
 		<security:custom-filter ref="yuownAuthenticationFilter" before="CSRF_FILTER" />
 	</security:http>

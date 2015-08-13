@@ -59,7 +59,7 @@ public class StockTypeResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<StockTypeModel> getAll(@RequestParam("method") String method, @RequestParam("remove") String remove) {
+	public List<StockTypeModel> getAll(@RequestParam(value = "method", required = false) String method, @RequestParam(value = "remove", required = false) String remove) {
 		if (StringUtils.isBlank(method)) {
 			return stockTypeService.getAll();
 		} else {
