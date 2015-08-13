@@ -1,8 +1,7 @@
 package yuown.yuventory.business.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import yuown.yuventory.entity.User;
@@ -11,29 +10,29 @@ import yuown.yuventory.model.UserModel;
 import yuown.yuventory.transformer.UserTransformer;
 
 @Service
-public class UserService extends AbstractServiceImpl<Integer, UserModel, User, UserRepositoryService, UserTransformer> implements UserDetailsService {
+public class UserService extends AbstractServiceImpl<Integer, UserModel, User, UserRepositoryService, UserTransformer> {
 
-    @Autowired
-    private UserRepositoryService userRepositoryService;
+	@Autowired
+	private UserRepositoryService userRepositoryService;
 
-    @Autowired
-    private UserTransformer userTransformer;
+	@Autowired
+	private UserTransformer userTransformer;
 
-    @Override
-    protected UserRepositoryService repoService() {
-        return userRepositoryService;
-    }
+	@Autowired
+	private JdbcUserDetailsManager jdbcUserDetailsManager;
 
-    @Override
-    protected UserTransformer transformer() {
-        return userTransformer;
-    }
+	@Override
+	protected UserRepositoryService repoService() {
+		return userRepositoryService;
+	}
 
-    public UserModel loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User userFromDB = userRepositoryService.findByUsername(userName);
-        if(null == userFromDB) {
-            throw new UsernameNotFoundException("User " + userName + " doesn't Exists");
-        }
-        return transformer().transformTo(userFromDB);
-    }
+	@Override
+	protected UserTransformer transformer() {
+		return userTransformer;
+	}
+
+	public UserModel getByUsername(String name) {
+		org.springframework.security.core.userdetails.User userFromDB = (org.springframework.security.core.userdetails.User) jdbcUserDetailsManager.loadUserByUsername(name);
+		return transformer().transformTo(userFromDB);
+	}
 }

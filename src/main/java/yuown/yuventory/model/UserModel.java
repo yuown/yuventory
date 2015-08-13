@@ -1,16 +1,12 @@
 package yuown.yuventory.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import yuown.yuventory.security.YuownGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserModel extends Model implements UserDetails {
+import yuown.yuventory.security.YuownGrantedAuthority;
+
+public class UserModel extends Model {
 
 	private static final long serialVersionUID = 2733430016846177569L;
 
@@ -22,9 +18,9 @@ public class UserModel extends Model implements UserDetails {
 
 	private String fullName;
 
-	private ArrayList<YuownGrantedAuthority> authorities;
-
 	private long expires;
+
+	private ArrayList<YuownGrantedAuthority> authorities;
 
 	public String getPassword() {
 		return password;
@@ -54,10 +50,6 @@ public class UserModel extends Model implements UserDetails {
 		this.fullName = fullName;
 	}
 
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
-	}
-
 	public String getUsername() {
 		return this.username;
 	}
@@ -77,15 +69,19 @@ public class UserModel extends Model implements UserDetails {
 		return this.enabled;
 	}
 
-	public void setAuthorities(ArrayList<YuownGrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
-
 	public void setExpires(long l) {
 		this.expires = l;
 	}
 
 	public long getExpires() {
 		return expires;
+	}
+
+	public void setAuthorities(ArrayList<YuownGrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
+	public ArrayList<YuownGrantedAuthority> getAuthorities() {
+		return authorities;
 	}
 }

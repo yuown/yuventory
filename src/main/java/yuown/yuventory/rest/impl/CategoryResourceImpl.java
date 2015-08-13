@@ -2,11 +2,10 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +18,13 @@ import yuown.yuventory.business.services.CategoryService;
 import yuown.yuventory.model.CategoryModel;
 
 @RestController
-@RequestMapping(value = "/categories", produces = { MediaType.APPLICATION_JSON })
+@RequestMapping(value = "/categories", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class CategoryResourceImpl {
 
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public CategoryModel save(@RequestBody CategoryModel model) {
 		return categoryService.save(model);

@@ -3,20 +3,20 @@ package yuown.yuventory.rest.impl;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +28,7 @@ import yuown.yuventory.model.SupplierModel;
 import yuown.yuventory.security.YuownTokenAuthenticationService;
 
 @RestController
-@RequestMapping(value = "/items", produces = { MediaType.APPLICATION_JSON })
+@RequestMapping(value = "/items", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class ItemResourceImpl {
 
 	@Autowired
@@ -40,7 +40,7 @@ public class ItemResourceImpl {
 	@Autowired
 	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON })
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public ResponseEntity<ItemModel> save(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
@@ -66,7 +66,7 @@ public class ItemResourceImpl {
 		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/sell")
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/sell")
 	@ResponseBody
 	public ResponseEntity<ItemModel> sell(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
@@ -83,7 +83,8 @@ public class ItemResourceImpl {
 			} else {
 				if (itemFromDB.getLendTo() > 0) {
 					SupplierModel supplier = supplierService.getById(itemFromDB.getLendTo());
-					headers.add("errorMessage", "Item Lent to '" + supplier.getName() + "', cannot sell until return back!");
+					headers.add("errorMessage",
+							"Item Lent to '" + supplier.getName() + "', cannot sell until return back!");
 					responseStatus = HttpStatus.BAD_REQUEST;
 				} else {
 					if (model.getLendTo() == 0) {
@@ -101,7 +102,7 @@ public class ItemResourceImpl {
 		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/lend")
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/lend")
 	@ResponseBody
 	public ResponseEntity<ItemModel> lend(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
@@ -118,7 +119,8 @@ public class ItemResourceImpl {
 			} else {
 				if (itemFromDB.getLendTo() > 0) {
 					SupplierModel supplier = supplierService.getById(itemFromDB.getLendTo());
-					headers.add("errorMessage", "Item Lent to '" + supplier.getName() + "', cannot lend until return back!");
+					headers.add("errorMessage",
+							"Item Lent to '" + supplier.getName() + "', cannot lend until return back!");
 					responseStatus = HttpStatus.BAD_REQUEST;
 				} else {
 					if (model.getLendTo() == 0) {
@@ -136,7 +138,7 @@ public class ItemResourceImpl {
 		return new ResponseEntity<ItemModel>(model, headers, responseStatus);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, value = "/getBack")
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/getBack")
 	@ResponseBody
 	public ResponseEntity<ItemModel> getBack(@RequestBody ItemModel model, @Context HttpServletRequest httpRequest) {
 		model.setUser(yuownTokenAuthenticationService.getUser(httpRequest));
@@ -191,7 +193,7 @@ public class ItemResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<ItemModel>> getAll(@QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+	public ResponseEntity<List<ItemModel>> getAll(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
 		HttpHeaders headers = new HttpHeaders();
 		PageImpl<Item> pagedItems = itemService.getAll(page, size);
 		List<ItemModel> items = itemService.transformer().transformTo(pagedItems.getContent());

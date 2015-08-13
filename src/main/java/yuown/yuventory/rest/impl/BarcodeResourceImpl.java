@@ -48,7 +48,8 @@ public class BarcodeResourceImpl {
 			headers.add("errorMessage", "Invalid Update for Barcode Dimensions");
 			return new ResponseEntity<Map<String, Integer>>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		if (!dimensions.containsKey(BarcodeService.BARCODE_WIDTH) || !dimensions.containsKey(BarcodeService.BARCODE_HEIGHT)) {
+		if (!dimensions.containsKey(BarcodeService.BARCODE_WIDTH)
+				|| !dimensions.containsKey(BarcodeService.BARCODE_HEIGHT)) {
 			headers.add("errorMessage", "Invalid Update for Barcode Dimensions");
 			return new ResponseEntity<Map<String, Integer>>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

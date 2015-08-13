@@ -1,8 +1,10 @@
 package yuown.yuventory.transformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.User;
@@ -45,5 +47,22 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 			}
 		}
 		return dest;
+	}
+
+	public UserModel transformTo(org.springframework.security.core.userdetails.User userFromDB) {
+		UserModel dest = new UserModel();
+		dest.setUsername(userFromDB.getUsername());
+		dest.setPassword(userFromDB.getPassword());
+		dest.setEnabled(userFromDB.isEnabled());
+		dest.setAuthorities(transformAuthorities(userFromDB.getAuthorities()));
+		return dest;
+	}
+
+	private ArrayList<YuownGrantedAuthority> transformAuthorities(Collection<GrantedAuthority> authoritiesFromDB) {
+		ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
+		for (GrantedAuthority grantedAuthority : authoritiesFromDB) {
+			authorities.add(new YuownGrantedAuthority(grantedAuthority.getAuthority()));
+		}
+		return authorities;
 	}
 }

@@ -7,14 +7,15 @@
             http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/users/login">
+    	<security:intercept-url pattern="/rest/users/login" />
         <security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
-        <security:custom-filter ref="yuownLoginFilter" before="FORM_LOGIN_FILTER" />
+        <security:custom-filter ref="yuownLoginFilter" position="FIRST" />
     </security:http>
     
 	<security:http use-expressions="true" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
 		<security:intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
 		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
-		<security:custom-filter ref="yuownAuthenticationFilter" before="FORM_LOGIN_FILTER" />
+		<security:custom-filter ref="yuownAuthenticationFilter" before="CSRF_FILTER" />
 	</security:http>
 	
     <bean id="yuownLoginFilter" class="yuown.yuventory.security.YuownLoginFilter">
@@ -28,10 +29,14 @@
 	<bean id="yuownAuthenticationSuccessHandler" class="yuown.yuventory.security.YuownAuthenticationSuccessHandler" />
 	<bean id="yuownAuthenticationDeniedHandler" class="yuown.yuventory.security.YuownAuthenticationDeniedHandler" />
 
+	<bean id="jdbcUserDetailsManager" class="org.springframework.security.provisioning.JdbcUserDetailsManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 	
 	<security:authentication-manager alias="yuownAuthenticationManagerForRest">
-		<security:authentication-provider user-service-ref="userService" />
+		<security:authentication-provider user-service-ref="jdbcUserDetailsManager" />
 	</security:authentication-manager>
 
 </beans>

@@ -19,10 +19,9 @@
 		<spring-data-commons.version>1.10.1.RELEASE</spring-data-commons.version>
 		<com.fasterxml.jackson.jaxrs.version>2.6.0</com.fasterxml.jackson.jaxrs.version>
 		<spring-data-envers.version>0.2.0.RELEASE</spring-data-envers.version>
-		<spring.security.version>4.0.1.RELEASE</spring.security.version>
+		<spring.security.version>4.0.2.RELEASE</spring.security.version>
 		<slf4j-api.version>1.7.12</slf4j-api.version>
 		<com.google.zxing.version>3.2.0</com.google.zxing.version>
-		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
 		<javax.servlet.api.version>3.1.0</javax.servlet.api.version>
 	</properties>
 	<dependencies>
@@ -101,11 +100,6 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-taglibs</artifactId> -->
-		<!-- <version>${spring.security.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -147,65 +141,15 @@
 			<version>${com.google.zxing.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector-java.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-autoconfigure</artifactId> -->
-<!-- 			<version>1.2.5.RELEASE</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-web</artifactId> -->
-<!-- 			<version>1.2.5.RELEASE</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-data-jpa</artifactId> -->
-<!-- 			<version>1.2.5.RELEASE</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
-<!-- 			<version>1.2.5.RELEASE</version> -->
-<!-- 		</dependency> -->
-
-
 	</dependencies>
 	<build>
 		<finalName>yuventory</finalName>
 		<plugins>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-antrun-plugin</artifactId> -->
-			<!-- <version>1.8</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <phase>clean</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>run</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <target> -->
-			<!-- <delete dir="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps" -->
-			<!-- includeemptydirs="true" /> -->
-			<!-- <delete -->
-			<!-- file="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps\yuventory.war" 
-				/> -->
-			<!-- </target> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
@@ -225,7 +169,15 @@
 							</includes>
 						</resource>
 					</webResources>
-					<!-- <outputDirectory>C:\Kiran\Installed\apache-tomcat-7.0.55\webapps</outputDirectory> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
