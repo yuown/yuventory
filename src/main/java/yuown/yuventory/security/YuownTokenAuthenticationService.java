@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.model.UserModel;
@@ -43,7 +44,8 @@ public class YuownTokenAuthenticationService {
 		if (token != null) {
 			final UserModel user = yuownTokenHandler.parseUserFromToken(token);
 			if (user != null) {
-				return new YuownAuthentication(user);
+				User authenticateuser = new User(user.getUsername(), user.getPassword(), user.getAuthorities());
+				return new YuownAuthentication(authenticateuser);
 			}
 		}
 		return null;

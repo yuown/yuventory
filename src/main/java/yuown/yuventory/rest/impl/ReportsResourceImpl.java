@@ -2,13 +2,10 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +24,9 @@ public class ReportsResourceImpl {
 	@Autowired
 	private ItemService itemService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON }, produces = { MediaType.APPLICATION_JSON }, value = "/generate")
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/generate")
 	@ResponseBody
-	public ResponseEntity<List<ItemModel>> sell(@RequestBody ReportRequestModel model, @Context HttpServletRequest httpRequest) {
+	public ResponseEntity<List<ItemModel>> sell(@RequestBody ReportRequestModel model) {
 		HttpHeaders headers = new HttpHeaders();
 		HttpStatus responseStatus = HttpStatus.OK;
 

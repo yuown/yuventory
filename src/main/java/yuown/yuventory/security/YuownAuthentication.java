@@ -4,18 +4,17 @@ import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
-import yuown.yuventory.model.UserModel;
+import org.springframework.security.core.userdetails.User;
 
 public class YuownAuthentication implements Authentication {
 
 	private static final long serialVersionUID = 2640815854559046081L;
 
-	private UserModel user;
+	private User user;
 
 	private boolean authenticated = true;
 
-	public YuownAuthentication(UserModel user) {
+	public YuownAuthentication(User user) {
 		this.user = user;
 	}
 
@@ -35,7 +34,7 @@ public class YuownAuthentication implements Authentication {
 	}
 
 	@Override
-	public UserModel getDetails() {
+	public User getDetails() {
 		return user;
 	}
 
