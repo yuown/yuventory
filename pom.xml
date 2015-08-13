@@ -86,21 +86,21 @@
 			<artifactId>spring-data-envers</artifactId>
 			<version>${spring-data-envers.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.security</groupId> -->
-<!-- 			<artifactId>spring-security-core</artifactId> -->
-<!-- 			<version>${spring.security.version}</version> -->
-<!-- 		</dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-web</artifactId> -->
-		<!-- <version>${spring.security.version}</version> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.security</groupId> -->
-		<!-- <artifactId>spring-security-config</artifactId> -->
-		<!-- <version>${spring.security.version}</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>org.springframework.security</groupId> -->
 		<!-- <artifactId>spring-security-taglibs</artifactId> -->
@@ -158,53 +158,54 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
-			<version>1.2.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>1.2.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>1.2.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-			<version>1.2.5.RELEASE</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-autoconfigure</artifactId> -->
+<!-- 			<version>1.2.5.RELEASE</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-web</artifactId> -->
+<!-- 			<version>1.2.5.RELEASE</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-data-jpa</artifactId> -->
+<!-- 			<version>1.2.5.RELEASE</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 			<version>1.2.5.RELEASE</version> -->
+<!-- 		</dependency> -->
 
 
 	</dependencies>
 	<build>
 		<finalName>yuventory</finalName>
 		<plugins>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-antrun-plugin</artifactId> -->
-<!-- 				<version>1.8</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<phase>clean</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>run</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<target> -->
-<!-- 								<delete dir="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps" -->
-<!-- 									includeemptydirs="true" /> -->
-<!-- 								<delete -->
-<!-- 									file="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps\yuventory.war" /> -->
-<!-- 							</target> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-antrun-plugin</artifactId> -->
+			<!-- <version>1.8</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <phase>clean</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>run</goal> -->
+			<!-- </goals> -->
+			<!-- <configuration> -->
+			<!-- <target> -->
+			<!-- <delete dir="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps" -->
+			<!-- includeemptydirs="true" /> -->
+			<!-- <delete -->
+			<!-- file="C:\Kiran\Installed\apache-tomcat-7.0.55\webapps\yuventory.war" 
+				/> -->
+			<!-- </target> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
@@ -224,7 +225,7 @@
 							</includes>
 						</resource>
 					</webResources>
-<!-- 					<outputDirectory>C:\Kiran\Installed\apache-tomcat-7.0.55\webapps</outputDirectory> -->
+					<!-- <outputDirectory>C:\Kiran\Installed\apache-tomcat-7.0.55\webapps</outputDirectory> -->
 				</configuration>
 			</plugin>
 		</plugins>
