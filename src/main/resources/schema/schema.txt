@@ -70,3 +70,33 @@ CREATE TABLE `items` (
   CONSTRAINT `items2stock_type` FOREIGN KEY (`stock_type`) REFERENCES `stock_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `items2supplier` FOREIGN KEY (`supplier`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+);
+
+CREATE TABLE `groups` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `group_authorities` (
+  `group_id` bigint(20) unsigned NOT NULL,
+  `authority` varchar(50) NOT NULL,
+  KEY `group_id` (`group_id`),
+  CONSTRAINT `group_authorities_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
+);
+
+CREATE TABLE `group_members` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `group_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`),
+  CONSTRAINT `group_members_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
+);
