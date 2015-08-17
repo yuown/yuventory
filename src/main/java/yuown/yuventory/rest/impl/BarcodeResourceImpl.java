@@ -23,7 +23,7 @@ public class BarcodeResourceImpl {
 	@Autowired
 	private BarcodeService barcodeService;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+	@RequestMapping(value = "/print/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<byte[]> generateBarcodeFromItemID(@PathVariable("id") Integer id) {
 		byte[] barcodeImage = barcodeService.generateBarcodeFromItemID(id);
 		if (null != barcodeImage && barcodeImage.length > 0) {

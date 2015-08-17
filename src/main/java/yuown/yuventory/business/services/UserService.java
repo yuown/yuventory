@@ -33,6 +33,8 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 
 	public UserModel getByUsername(String name) {
 		org.springframework.security.core.userdetails.User userFromDB = (org.springframework.security.core.userdetails.User) jdbcUserDetailsManager.loadUserByUsername(name);
-		return transformer().transformTo(userFromDB);
+		UserModel user = transformer().transformTo(userFromDB);
+		user.setId(userRepositoryService.findByUsername(name).getId());
+		return user;
 	}
 }

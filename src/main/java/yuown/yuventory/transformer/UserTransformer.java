@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.User;
@@ -13,6 +15,9 @@ import yuown.yuventory.security.YuownGrantedAuthority;
 
 @Component
 public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
+
+	@Autowired
+	private JdbcUserDetailsManager jdbcUserDetailsManager;
 
 	private static final String[] FROM_EXCLUDES = new String[] {};
 	private static final String[] TO_EXCLUDES = new String[] {};
@@ -40,7 +45,8 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 				dest = new UserModel();
 				BeanUtils.copyProperties(source, dest, TO_EXCLUDES);
 				ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
-				authorities.add(new YuownGrantedAuthority("ROLE_USER"));
+				authorities.add(new YuownGrantedAuthority("ROLE_DATAENTRY"));
+				authorities.add(new YuownGrantedAuthority("ROLE_VIEW_ITEMS"));
 				dest.setAuthorities(authorities);
 			} catch (Exception e) {
 				dest = null;

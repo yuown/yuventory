@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -48,11 +47,6 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		return itemsRepositoryService;
 	}
 
-	@PostConstruct
-	public void init() {
-		setPageSizeToSystem();
-	}
-
 	@Override
 	public ItemTransformer transformer() {
 		return itemTransformer;
@@ -89,24 +83,6 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		}
 		pageSize.setValue(size);
 		configurationService.save(pageSize);
-		setPageSizeToSystem(pageSize);
-	}
-
-	public void setPageSizeToSystem(ConfigurationModel pageSize) {
-		try {
-			System.setProperty(ITEM_PAGE_SIZE, Integer.toString(pageSize.getValue()));
-		} catch (Exception e) {
-			System.setProperty(ITEM_PAGE_SIZE, "10");
-			ConfigurationModel newPageSize = new ConfigurationModel();
-			newPageSize.setName(ITEM_PAGE_SIZE);
-			newPageSize.setValue(10);
-			configurationService.save(newPageSize);
-		}
-	}
-
-	public void setPageSizeToSystem() {
-		ConfigurationModel pageSize = configurationService.getByName(ITEM_PAGE_SIZE);
-		setPageSizeToSystem(pageSize);
 	}
 
 	public ItemModel sell(ItemModel model) {

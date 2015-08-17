@@ -29,7 +29,7 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
             supplier: null,
             category: null
         };
-        AjaxService.call("barcode/" + $scope.request.id, 'GET').success(function(data, status, headers, config) {
+        AjaxService.call("barcode/print/" + $scope.request.id, 'GET').success(function(data, status, headers, config) {
             $scope.barcode = data;
         });
         
@@ -89,7 +89,7 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         	$scope.barcode = "";
         } else {
         	$scope.title = "Edit Item";
-        	AjaxService.call("barcode/" + $scope.request.id, 'GET').success(function(data, status, headers, config) {
+        	AjaxService.call("barcode/print/" + $scope.request.id, 'GET').success(function(data, status, headers, config) {
                 $scope.barcode = data;
             });
         }
@@ -116,7 +116,7 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
         AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
             $scope.request = data;
             $scope.request.currCategory=getObjectFromId($scope.categories, $scope.request.category)['name'];
-            AjaxService.call("barcode/" + data.id, 'GET').success(function(data, status, headers, config) {
+            AjaxService.call("barcode/print/" + data.id, 'GET').success(function(data, status, headers, config) {
         		$scope.barcode = data;
         	});
             $scope.load($scope.currentPage);

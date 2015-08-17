@@ -9,7 +9,7 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
 	    	        $scope.errorMessage = '';
     	    		$scope.search.hasResult = true;
     	            $scope.request = data;
-    	            AjaxService.call("barcode/" + $scope.search.id, 'GET').success(function(data, status, headers, config) {
+    	            AjaxService.call("barcode/print/" + $scope.search.id, 'GET').success(function(data, status, headers, config) {
     	        		$scope.barcode = data;
     	        	});
     	            

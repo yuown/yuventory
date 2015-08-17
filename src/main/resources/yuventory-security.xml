@@ -6,18 +6,49 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:global-method-security secured-annotations="enabled" />
+	<security:global-method-security secured-annotations="enabled" authentication-manager-ref="yuownAuthenticationManagerForRest" />
 	
     <security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/users/login">
     	<security:intercept-url pattern="/rest/users/login" />
         <security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
         <security:custom-filter ref="yuownLoginFilter" position="FIRST" />
+        <security:csrf disabled="true" />
     </security:http>
     
-	<security:http use-expressions="false" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
-		<security:intercept-url pattern="/rest/**" />
+	<security:http use-expressions="true" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
+
+		<security:intercept-url pattern="/rest/barcode/dimensions" access="hasRole('ROLE_SETTINGS')" />
+		<security:intercept-url pattern="/rest/barcode/print/*" access="hasRole('ROLE_PRINT')" method="GET" />
+		
+		<security:intercept-url pattern="/rest/categories/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/categories" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/categories/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        
+		<security:intercept-url pattern="/rest/items/*" access="hasRole('ROLE_VIEW_ITEMS')" method="GET" />
+		<security:intercept-url pattern="/rest/items/sell" access="hasRole('ROLE_LENDER')" method="POST" />
+		<security:intercept-url pattern="/rest/items/lend" access="hasRole('ROLE_LENDER')" method="POST" />
+		<security:intercept-url pattern="/rest/items/getBack" access="hasRole('ROLE_ITEM_RETURNER')" method="POST" />
+		<security:intercept-url pattern="/rest/items" access="hasRole('ROLE_SELLER')" method="DELETE" />
+		
+		<security:intercept-url pattern="/rest/items/pageSize" access="hasRole('ROLE_SETTINGS')" />
+		
+		<security:intercept-url pattern="/rest/meta/*" access="hasRole('ROLE_DATAENTRY')" />
+        
+        <security:intercept-url pattern="/rest/reports/generate/*" access="hasRole('ROLE_REPORTS')" method="POST" />
+        
+        <security:intercept-url pattern="/rest/stockTypes/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/stockTypes" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/stockTypes/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        
+        <security:intercept-url pattern="/rest/suppliers/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/suppliers" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/suppliers/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        
+        <security:intercept-url pattern="/rest/users/**" access="hasRole('ROLE_USER_MANAGER')" />
+		
 		<security:access-denied-handler ref="yuownAuthenticationDeniedHandler" />
 		<security:custom-filter ref="yuownAuthenticationFilter" before="CSRF_FILTER" />
+		<security:csrf disabled="true" />
 	</security:http>
 	
     <bean id="yuownLoginFilter" class="yuown.yuventory.security.YuownLoginFilter">
@@ -33,10 +64,12 @@
 
 	<bean id="jdbcUserDetailsManager" class="org.springframework.security.provisioning.JdbcUserDetailsManager">
 		<property name="dataSource" ref="dataSource" />
+		<property name="enableGroups" value="true" />
+		<property name="enableAuthorities" value="false" />
+<!-- 		<property name="rolePrefix" value="${YUOWNROLE}" /> -->
+		<property name="AuthenticationManager" ref="yuownAuthenticationManagerForRest" />
 	</bean>
-
 	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-	
 	<security:authentication-manager alias="yuownAuthenticationManagerForRest">
 		<security:authentication-provider user-service-ref="jdbcUserDetailsManager" />
 	</security:authentication-manager>

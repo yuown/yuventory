@@ -4,19 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
+
+import yuown.yuventory.model.ConfigurationModel;
+import yuown.yuventory.model.ItemModel;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.Code128Writer;
-
-import yuown.yuventory.model.ConfigurationModel;
-import yuown.yuventory.model.ItemModel;
 
 @Service
 public class BarcodeService {
@@ -34,15 +32,10 @@ public class BarcodeService {
 	private int barcodeWidth;
 
 	private int barcodeHeight;
-	
-	@PostConstruct
-	public void init() {
-		setDimensionsToSystem();
-	}
 
 	public byte[] generateBarcodeFromItemID(Integer id) {
-		if(System.getProperty(BARCODE_WIDTH) == null || System.getProperty(BARCODE_HEIGHT) == null) {
-			setDimensionsToSystem();
+		if (System.getProperty(BARCODE_WIDTH) == null || System.getProperty(BARCODE_HEIGHT) == null) {
+			configurationService.saveSettingsToSystem();
 		}
 		barcodeWidth = Integer.parseInt(System.getProperty(BARCODE_WIDTH));
 		barcodeHeight = Integer.parseInt(System.getProperty(BARCODE_HEIGHT));
@@ -51,8 +44,7 @@ public class BarcodeService {
 		if (null != itemModel) {
 			BitMatrix bitMatrix;
 			try {
-				bitMatrix = new Code128Writer().encode(id.toString(), BarcodeFormat.CODE_128, barcodeWidth,
-						barcodeHeight, null);
+				bitMatrix = new Code128Writer().encode(id.toString(), BarcodeFormat.CODE_128, barcodeWidth, barcodeHeight, null);
 				MatrixToImageWriter.writeToStream(bitMatrix, "png", baos);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -93,26 +85,5 @@ public class BarcodeService {
 		height.setValue(dimensions.get(BARCODE_HEIGHT));
 		configurationService.save(width);
 		configurationService.save(height);
-
-		setDimensionsToSystem(width, height);
-	}
-
-	public void setDimensionsToSystem(ConfigurationModel width, ConfigurationModel height) {
-		int barcodeWidth = 0;
-		int barcodeHeight = 0;
-		if (width != null) {
-			barcodeWidth = width.getValue();
-		}
-		if (height != null) {
-			barcodeHeight = height.getValue();
-		}
-		System.setProperty(BARCODE_WIDTH, Integer.toString(barcodeWidth));
-		System.setProperty(BARCODE_HEIGHT, Integer.toString(barcodeHeight));
-	}
-
-	public void setDimensionsToSystem() {
-		ConfigurationModel width = configurationService.getByName(BARCODE_WIDTH);
-		ConfigurationModel height = configurationService.getByName(BARCODE_HEIGHT);
-		setDimensionsToSystem(width, height);
 	}
 }

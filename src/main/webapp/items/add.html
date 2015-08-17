@@ -44,15 +44,13 @@
 	        <div class="form-group" ng-show="barcode">
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
-                    <div class="section-to-print">
-	                    <div class="barcodecontainer">
-	                        <img src="data:image/png;base64,{{barcode}}" />
-	                        <div class="barcodecaption">
-	                            <span class="barcodecaption1">{{request.weight}} gm</span>
-	                            <span class="barcodecaption2">{{request.currCategory}}</span>
-	                        </div>
-	                    </div>
-	                </div>
+                    <div class="barcodecontainer section-to-print">
+                        <img src="data:image/png;base64,{{barcode}}" />
+                        <div class="barcodecaption">
+                            <span class="barcodecaption1">{{request.weight}} gm</span>
+                            <span class="barcodecaption2">{{request.currCategory}}</span>
+                        </div>
+                    </div>
                 </div>
 	        </div>
         </form>
