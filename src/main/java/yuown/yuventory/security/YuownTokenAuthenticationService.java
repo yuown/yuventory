@@ -36,6 +36,8 @@ public class YuownTokenAuthenticationService {
 		String encryptedToken = yuownTokenHandler.createTokenForUser(user);
 		if (StringUtils.isNotBlank(encryptedToken)) {
 			response.addHeader(AUTH_HEADER_NAME, encryptedToken);
+			response.addHeader("USER_FULLNAME", user.getFullName());
+			response.addHeader("USER_ROLES", user.getAuthorities().toString());
 		}
 	}
 
