@@ -3,9 +3,9 @@
 		<div class="row">
 		  <form>
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" ng-value="search.id" />
+				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" ng-value="search.id" ng-readonly="true" />
 				<span class="input-group-btn">
-					<button class="btn btn-default glyphicon glyphicon-search" type="rest" ng-click="searchItem(true)"></button>
+					<button class="btn btn-default glyphicon glyphicon-search" type="button" ng-hide="true" ng-click="searchItem(true)"></button>
 					<button class="btn btn-default glyphicon glyphicon-remove" type="submit" ng-click="clearSearch()"></button>
 				</span>
 			</div>
