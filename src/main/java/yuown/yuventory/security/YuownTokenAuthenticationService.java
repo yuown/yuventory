@@ -7,9 +7,13 @@ import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import yuown.yuventory.model.UserModel;
 
@@ -26,9 +30,12 @@ public class YuownTokenAuthenticationService {
 
 	private final YuownTokenHandler yuownTokenHandler;
 
+	private ObjectMapper objectMapper;
+
 	@Autowired
-	public YuownTokenAuthenticationService(@Value("${token.secret}") String secret) {
+	public YuownTokenAuthenticationService(@Value("${token.secret}") String secret, MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter) {
 		yuownTokenHandler = new YuownTokenHandler(DatatypeConverter.parseBase64Binary(secret));
+		objectMapper = mappingJackson2HttpMessageConverter.getObjectMapper();
 	}
 
 	public void addAuthentication(HttpServletResponse response, UserModel user) {
@@ -37,7 +44,11 @@ public class YuownTokenAuthenticationService {
 		if (StringUtils.isNotBlank(encryptedToken)) {
 			response.addHeader(AUTH_HEADER_NAME, encryptedToken);
 			response.addHeader("USER_FULLNAME", user.getFullName());
-			response.addHeader("USER_ROLES", user.getAuthorities().toString());
+			try {
+				response.addHeader("USER_ROLES", objectMapper.writeValueAsString(user.getAuthorities()));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

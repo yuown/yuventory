@@ -9,9 +9,14 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 		});
 	};
 
-	service.SetCredentials = function(username, authdata, roles) {
+	service.SetCredentials = function(username, authdata, r) {
 	    service.ClearCredentials();
 		if (authdata != null && authdata != '' && authdata != 'null' && authdata != undefined) {
+			var roles = [];
+			var rolesArray = JSON.parse(r);
+			for(var i = 0; i < rolesArray.length; i++) {
+				roles.push(rolesArray[i].authority);
+			}
 			$rootScope.globals = {
 				currentUser : {
 					username : username,
@@ -32,13 +37,17 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 		$cookieStore.remove('globals');
 		$http.defaults.headers.common['YUOWN-KEY'] = '';
 	};
-
+	
+	service.getRoles = function() {
+		return $rootScope.globals.roles;
+	};
+	
 	return service;
 } ]);
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8080/yuventory/rest/";
+	var serverUrl = "http://localhost:8090/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
@@ -61,4 +70,36 @@ yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope
         	return serverUrl;
         }
     };
+} ]);
+
+yuventoryApp.directive('access', ['AuthenticationService', function(AuthenticationService) {
+	return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var makeVisible = function () {
+                    element.removeClass('hidden');
+                },
+                makeHidden = function () {
+                    element.addClass('hidden');
+                },
+                determineVisibility = function (resetFirst) {
+                    var result;
+                    if (resetFirst) {
+                        makeVisible();
+                    }
+
+                    result = AuthenticationService.authorize(true, roles, attrs.accessPermissionType);
+                    if (result === jcs.modules.auth.enums.authorised.authorised) {
+                        makeVisible();
+                    } else {
+                        makeHidden();
+                    }
+                },
+                roles = attrs.access.split(',');
+
+            if (roles.length > 0) {
+                determineVisibility(true);
+            }
+        }
+      };
 } ]);
