@@ -1,7 +1,7 @@
-<div ng-controller='StockTypesController' ng-init="load()">
+<div ng-controller='StockTypesController' ng-init="load()" access="ROLE_REFERENCE_ENTRY,ROLE_DATAENTRY">
     <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <div>
-        <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
+        <button type="button" class="btn btn-primary" ng-click="add()" access="ROLE_REFERENCE_ENTRY">Add</button>
         <button type="button" class="btn btn-info" ng-click="load()">Refresh</button>
     </div>
 	<div class="table-responsive">
@@ -10,16 +10,16 @@
 				<tr class="info table-row">
 					<th>Name</th>
 					<th>Mode</th>
-					<th>Actions</th>
+					<th access="ROLE_REFERENCE_ENTRY">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="stockType in stockTypes" class="table-row">
 					<td>{{stockType.name}}</td>
 					<td>{{stockType.method}}</td>
-					<td>
-						<button type='button' class='btn btn-success' ng-click="add(stockType)">Edit</button>
-						<button type='button' class='btn btn-danger' ng-click="deleteRecord(stockType)">Delete</button>
+					<td access="ROLE_REFERENCE_ENTRY">
+						<button type='button' class='btn btn-success' ng-click="add(stockType)" access="ROLE_REFERENCE_ENTRY">Edit</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteRecord(stockType)" access="ROLE_REFERENCE_ENTRY">Delete</button>
 					</td>
 				</tr>
 			</tbody>

@@ -1,5 +1,5 @@
-<div ng-controller='MainReportsController' ng-init="init()">
-	<form ng-submit="generateReport(reportsInput)">
+<div ng-controller='MainReportsController' ng-init="init()" access="ROLE_REPORTS">
+	<form ng-submit="generateReport(reportsInput)" access="ROLE_REPORTS">
 		<div class="col-md-12">
 			<button type="button" class="btn btn-info" ng-click="togglePurchaseDate()">By Purchase Date</button>
 			<button type="button" class="btn btn-info" ng-click="toggleSellDate()">By Sell Date</button>
@@ -145,12 +145,12 @@
                 </p>
             </div>
         </div>
-		<div class="pull-right">
+		<div class="pull-right" access="ROLE_REPORTS">
 		  <button type="submit" class='btn btn-warning'>Generate</button>
 		</div>
 	</form>
 	<hr class="col-md-12" />
-	<div class="col-md-12 table-responsive" ng-show="reportsOutput && reportsOutput.length > 0">
+	<div class="col-md-12 table-responsive" ng-show="reportsOutput && reportsOutput.length > 0" access="ROLE_REPORTS">
 		<a href='' ng-show="false" id="downloadCSV"></a>
 		<a class='btn btn-success' ng-if="reportsOutput && reportsOutput.length > 0" ng-click="downloadReport()">Download</a>
 		<table class="table table-hover">

@@ -38,8 +38,19 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 		$http.defaults.headers.common['YUOWN-KEY'] = '';
 	};
 	
-	service.getRoles = function() {
-		return $rootScope.globals.roles;
+	service.hasAccess = function(role) {
+	    var allowed = false;
+	    var rolesToCheck = $rootScope.globals.currentUser.roles;
+	    toBreak: 
+	        for(var i = 0; i < rolesToCheck.length; i++) {
+    	        for(var j = 0; j < role.length; j++) {
+        	        if(rolesToCheck[i] == role[j].trim()) {
+        	            allowed = true;
+        	            break toBreak;
+        	        }
+    	        }
+    	    }
+		return allowed;
 	};
 	
 	return service;
@@ -47,7 +58,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8090/yuventory/rest/";
+	var serverUrl = "http://localhost:8080/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
@@ -88,16 +99,16 @@ yuventoryApp.directive('access', ['AuthenticationService', function(Authenticati
                         makeVisible();
                     }
 
-                    result = AuthenticationService.authorize(true, roles, attrs.accessPermissionType);
-                    if (result === jcs.modules.auth.enums.authorised.authorised) {
+                    result = AuthenticationService.hasAccess(role);
+                    if (result === true) {
                         makeVisible();
                     } else {
                         makeHidden();
                     }
                 },
-                roles = attrs.access.split(',');
+                role = attrs.access.split(",");
 
-            if (roles.length > 0) {
+            if (role != null && role.length > 0) {
                 determineVisibility(true);
             }
         }

@@ -1,4 +1,4 @@
-<div ng-controller='SettingsController' ng-init="refreshSettings()">
+<div ng-controller='SettingsController' ng-init="refreshSettings()" access="ROLE_SETTINGS">
 	<div class="panel-body">
 		<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
 		<div class="divider">

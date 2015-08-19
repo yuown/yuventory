@@ -13,5 +13,6 @@ yuventoryApp.run(['$rootScope', '$location', '$cookieStore', '$http', function($
 		if ($location.path() == '/login' && $rootScope.globals.currentUser) {
 			$location.path('/home/stockOut');
 		}
+		
 	});
 } ]);

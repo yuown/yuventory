@@ -8,7 +8,7 @@ yuventoryApp.controller('LoginController', [ '$scope', '$location', 'Authenticat
 		AuthenticationService.Login($scope.user, function(response, headers) {
 			if (response == 200) {
 				AuthenticationService.SetCredentials($scope.user.username, headers("YUOWN-KEY"), headers("USER_ROLES"));
-				$location.path('/home/stockOut');
+				$location.path('/home');
 			} else {
 				$scope.error = response.message;
 				$scope.dataLoading = false;
@@ -20,8 +20,6 @@ yuventoryApp.controller('LoginController', [ '$scope', '$location', 'Authenticat
 
 yuventoryApp.controller('HomeController', [ '$scope', '$routeSegment', '$location', 'AuthenticationService', function($scope, $routeSegment, $location, AuthenticationService) {
     'use strict';
-    
-    console.log("Roles: " + $scope.globals.currentUser);
     
     $scope.isSegment = function(segment) {
         return $routeSegment.name.endsWith(segment);

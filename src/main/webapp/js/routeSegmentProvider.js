@@ -27,7 +27,6 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         }).
         within().
 	        segment('stockOut', {
-	            'default': 'true',
 	            templateUrl : 'sell/search.html'
 	        }).
             segment('stockIn', {

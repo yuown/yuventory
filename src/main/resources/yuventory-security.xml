@@ -17,32 +17,32 @@
     
 	<security:http use-expressions="true" create-session="stateless" entry-point-ref="yuownAuthenticationEntryPoint" authentication-manager-ref="yuownAuthenticationManagerForRest" pattern="/rest/**">
 
-		<security:intercept-url pattern="/rest/barcode/dimensions" access="hasRole('ROLE_SETTINGS')" />
-		<security:intercept-url pattern="/rest/barcode/print/*" access="hasRole('ROLE_PRINT')" method="GET" />
+		<security:intercept-url pattern="/rest/barcode/dimensions/**" access="hasRole('ROLE_SETTINGS')" />
+		<security:intercept-url pattern="/rest/barcode/print/**" access="hasRole('ROLE_PRINT')" method="GET" />
 		
-		<security:intercept-url pattern="/rest/categories/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
-        <security:intercept-url pattern="/rest/categories" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
-        <security:intercept-url pattern="/rest/categories/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+		<security:intercept-url pattern="/rest/categories/**" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/categories/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/categories/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
         
-		<security:intercept-url pattern="/rest/items/*" access="hasRole('ROLE_VIEW_ITEMS')" method="GET" />
-		<security:intercept-url pattern="/rest/items/sell" access="hasRole('ROLE_LENDER')" method="POST" />
-		<security:intercept-url pattern="/rest/items/lend" access="hasRole('ROLE_LENDER')" method="POST" />
-		<security:intercept-url pattern="/rest/items/getBack" access="hasRole('ROLE_ITEM_RETURNER')" method="POST" />
-		<security:intercept-url pattern="/rest/items" access="hasRole('ROLE_SELLER')" method="DELETE" />
+		<security:intercept-url pattern="/rest/items/**" access="hasRole('ROLE_VIEW_ITEMS')" method="GET" />
+		<security:intercept-url pattern="/rest/items/sell/**" access="hasRole('ROLE_LENDER')" method="POST" />
+		<security:intercept-url pattern="/rest/items/lend/**" access="hasRole('ROLE_LENDER')" method="POST" />
+		<security:intercept-url pattern="/rest/items/getBack/**" access="hasRole('ROLE_ITEM_RETURNER')" method="POST" />
+		<security:intercept-url pattern="/rest/items/**" access="hasRole('ROLE_SELLER')" method="DELETE" />
 		
-		<security:intercept-url pattern="/rest/items/pageSize" access="hasRole('ROLE_SETTINGS')" />
+		<security:intercept-url pattern="/rest/items/pageSize/**" access="hasRole('ROLE_SETTINGS')" />
 		
-		<security:intercept-url pattern="/rest/meta/*" access="hasRole('ROLE_DATAENTRY')" />
+		<security:intercept-url pattern="/rest/meta/**" access="hasRole('ROLE_DATAENTRY')" />
         
-        <security:intercept-url pattern="/rest/reports/generate/*" access="hasRole('ROLE_REPORTS')" method="POST" />
+        <security:intercept-url pattern="/rest/reports/generate/**" access="hasRole('ROLE_REPORTS')" method="POST" />
         
-        <security:intercept-url pattern="/rest/stockTypes/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
-        <security:intercept-url pattern="/rest/stockTypes" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
-        <security:intercept-url pattern="/rest/stockTypes/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        <security:intercept-url pattern="/rest/stockTypes/**" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/stockTypes/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/stockTypes/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
         
-        <security:intercept-url pattern="/rest/suppliers/*" access="hasRole('ROLE_DATAENTRY')" method="GET" />
-        <security:intercept-url pattern="/rest/suppliers" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
-        <security:intercept-url pattern="/rest/suppliers/*" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        <security:intercept-url pattern="/rest/suppliers/**" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/suppliers/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/suppliers/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
         
         <security:intercept-url pattern="/rest/users/**" access="hasRole('ROLE_USER_MANAGER')" />
 		

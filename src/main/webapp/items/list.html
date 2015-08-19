@@ -2,8 +2,8 @@
     <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <nav>
     	<div>
-	        <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
-	        <button type="button" class="btn btn-info" ng-click="load(1)">Refresh</button>
+	        <button type="button" class="btn btn-primary" ng-click="add()" access="ROLE_DATAENTRY">Add</button>
+	        <button type="button" class="btn btn-info" ng-click="load(1)" access="ROLE_VIEW_ITEMS">Refresh</button>
         </div>
 		<div>
 			<ul class="pagination noselect">
@@ -19,17 +19,17 @@
 				<tr class="info table-row">
 					<th>Name</th>
 					<th>Status</th>
-					<th>Actions</th>
+					<th access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_SELLER">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in items" class="table-row">
 					<td>{{item.name}}</td>
 					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Sold' : 'Item Lent')}}</td>
-					<td>
-					    <button type='button' class='btn btn-warning' ng-click="view(item)">View</button>
-						<button type='button' class='btn btn-success' ng-click="add(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false">Edit</button>
-						<button type='button' class='btn btn-danger' ng-click="deleteRecord(item)">Delete</button>
+					<td access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_SELLER">
+					    <button type='button' class='btn btn-warning' ng-click="view(item)" access="ROLE_VIEW_ITEMS">View</button>
+						<button type='button' class='btn btn-success' ng-click="add(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false" access="ROLE_DATAENTRY">Edit</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteRecord(item)" access="ROLE_SELLER">Delete</button>
 					</td>
 				</tr>
 			</tbody>

@@ -41,7 +41,7 @@
                     <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="request.stockType"></select>
                 </div>
             </div>
-	        <div class="form-group" ng-show="barcode">
+	        <div class="form-group" ng-show="barcode" access="ROLE_PRINT">
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
                     <div class="barcodecontainer section-to-print">
@@ -58,6 +58,6 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
         <button type="submit" class="btn btn-primary" form="addForm">Save</button>
-        <button class="glyphicon glyphicon-print btn btn-warning" onclick="window.print()" ng-show="request.id"></button>
+        <button class="glyphicon glyphicon-print btn btn-warning" onclick="window.print()" ng-show="request.id" access="ROLE_PRINT"></button>
     </div>
 </div>

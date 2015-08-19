@@ -3,7 +3,7 @@
         <h4 class="modal-title">View Item</h4>
     </div>
     <div class="modal-body">
-        <form ng-submit="save(request)" id="addForm">
+        <form ng-submit="save(request)" id="addForm" access="ROLE_VIEW_ITEMS">
 	        <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Item Name</span>
@@ -40,7 +40,7 @@
                     <input class="form-control" type="text" ng-model="request.supplierDesc" readonly="readonly" />
                 </div>
             </div>
-            <div class="form-group" ng-if="barcode">
+            <div class="form-group" ng-if="barcode" access="ROLE_PRINT">
                 <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
                     <div class="section-to-print">
