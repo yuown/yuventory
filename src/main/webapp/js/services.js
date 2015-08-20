@@ -58,7 +58,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8080/yuventory/rest/";
+	var serverUrl = "http://localhost:8090/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
@@ -114,3 +114,40 @@ yuventoryApp.directive('access', ['AuthenticationService', function(Authenticati
         }
       };
 } ]);
+
+yuventoryApp.directive('switch', ['$parse', function($parse) {
+    return {
+		require: "?ngModel",
+		scope: {
+			value: '=ngModel'
+		},
+        restrict: 'E',
+        template: function(elem, attrs) {
+        	return    "<div class='btn-group' ng-click='toggle()'>" +
+					  	"<button type='button' class='btn btn-info' data-f='1'>" + attrs.enableText + "</button>" +
+					  	"<button type='button' class='btn btn-warning' data-f='0'>" + attrs.disableText + "</button>" +
+					  "</div>";
+        },
+        link: function(scope, element, attributes, ngModelController) {
+        	ngModelController.$render = function() {
+        		element.find('div').text(ngModelController.$viewValue);
+            };
+
+            // update the model then the view
+            function updateModel(offset) {
+                // call $parsers pipeline then update $modelValue
+                ngModelController.$setViewValue(ngModelController.$viewValue);
+                // update the local view
+                ngModelController.$render();
+            }
+
+            // update the value when user clicks the buttons
+            scope.decrement = function() {
+                updateModel(-1);
+            };
+            scope.increment = function() {
+                updateModel(+1);
+            };
+        }
+    };
+}] );

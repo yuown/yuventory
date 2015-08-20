@@ -42,6 +42,7 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 	}
 	
 	public UserModel createUser(UserModel fromClient) {
+		fromClient.getAuthorities().removeAll(fromClient.getAuthorities());
 		UserDetails user = transformer().transformToSecurityUser(fromClient);
 		jdbcUserDetailsManager.createUser(user);
 		return fromClient;
