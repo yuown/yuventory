@@ -115,39 +115,33 @@ yuventoryApp.directive('access', ['AuthenticationService', function(Authenticati
       };
 } ]);
 
-yuventoryApp.directive('switch', ['$parse', function($parse) {
+yuventoryApp.directive('switch', function() {
     return {
-		require: "?ngModel",
-		scope: {
-			value: '=ngModel'
-		},
+		require: "ngModel",
         restrict: 'E',
         template: function(elem, attrs) {
-        	return    "<div class='btn-group' ng-click='toggle()'>" +
+        	return    "" +
 					  	"<button type='button' class='btn btn-info' data-f='1'>" + attrs.enableText + "</button>" +
 					  	"<button type='button' class='btn btn-warning' data-f='0'>" + attrs.disableText + "</button>" +
-					  "</div>";
+					  "";
         },
         link: function(scope, element, attributes, ngModelController) {
         	ngModelController.$render = function() {
-        		element.find('div').text(ngModelController.$viewValue);
+        		if(ngModelController.$viewValue == true) {
+        			element.find('[data-f=1]').show();
+        			element.find('[data-f=0]').hide();
+        		} else {
+        			element.find('[data-f=0]').show();
+        			element.find('[data-f=1]').hide();
+        		}
             };
-
-            // update the model then the view
-            function updateModel(offset) {
-                // call $parsers pipeline then update $modelValue
-                ngModelController.$setViewValue(ngModelController.$viewValue);
-                // update the local view
+            function toggle() {
+                ngModelController.$setViewValue(!ngModelController.$viewValue);
                 ngModelController.$render();
-            }
-
-            // update the value when user clicks the buttons
-            scope.decrement = function() {
-                updateModel(-1);
             };
-            scope.increment = function() {
-                updateModel(+1);
-            };
+            element.on('click', function(event) {
+            	toggle();
+            });
         }
     };
-}] );
+});
