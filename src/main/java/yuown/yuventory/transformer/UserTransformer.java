@@ -44,10 +44,6 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 			try {
 				dest = new UserModel();
 				BeanUtils.copyProperties(source, dest, TO_EXCLUDES);
-				ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
-				authorities.add(new YuownGrantedAuthority("ROLE_DATAENTRY"));
-				authorities.add(new YuownGrantedAuthority("ROLE_VIEW_ITEMS"));
-				dest.setAuthorities(authorities);
 			} catch (Exception e) {
 				dest = null;
 			}
@@ -55,12 +51,17 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 		return dest;
 	}
 
-	public UserModel transformTo(org.springframework.security.core.userdetails.User userFromDB) {
+	public UserModel transformFromSecurityUser(org.springframework.security.core.userdetails.User userFromDB) {
 		UserModel dest = new UserModel();
 		dest.setUsername(userFromDB.getUsername());
 		dest.setPassword(userFromDB.getPassword());
 		dest.setEnabled(userFromDB.isEnabled());
 		dest.setAuthorities(transformAuthorities(userFromDB.getAuthorities()));
+		return dest;
+	}
+	
+	public org.springframework.security.core.userdetails.User transformToSecurityUser(UserModel userFromClient) {
+		org.springframework.security.core.userdetails.User dest = new org.springframework.security.core.userdetails.User(userFromClient.getUsername(), userFromClient.getPassword(), userFromClient.getAuthorities());
 		return dest;
 	}
 

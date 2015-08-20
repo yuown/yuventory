@@ -24,12 +24,12 @@
                 </li>
 	            <li ng-class="{active: isSegment('unifiedReport')}" access="ROLE_REPORTS"><a href="#/home/reports/unifiedReport">Reports</a></li>
 	            <li ng-class="{active: isSegment('settings')}" access="ROLE_SETTINGS"><a href="#/home/settings">Settings</a></li>
-	            <li class="dropdown" access="ROLE_USER_MANAGER">
+	            <li class="dropdown" ng-class="{active: isSegment('users')}" access="ROLE_USER_MANAGER">
 	              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users/ Roles <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
-	                <li role="separator" class="divider"></li>
-	                <li class="dropdown-header">Manage Users</li>
-	                <li><a>Manage</a></li>
+<!-- 	                <li role="separator" class="divider"></li> -->
+<!-- 	                <li class="dropdown-header">Manage Users</li> -->
+	                <li ng-class="{active: isSegment('users')}"><a href="#/home/users">Users</a></li>
 	              </ul>
 	            </li>
 	          </ul>

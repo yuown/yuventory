@@ -1,5 +1,4 @@
 <div ng-controller='SellController' ng-init="init()">
-    <button type="button" class="btn btn-info" ng-click="startReading()">Start Barcode Reading</button><br /><br />
 	<div class="container">
 		<div class="row">
 		  <form>
@@ -19,7 +18,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">{{request.name}}</h3>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER,ROLE_VIEW_ITEMS">
 			<div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Item ID</span>
@@ -95,10 +94,10 @@
 	            </div>
 	        </div>
 		</div>
-		<div class="panel-footer" ng-hide="request.sold">
-			<button class="btn btn-success" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="lendItem(request)">Lend Item</button>
-			<button class="btn btn-success" ng-if="request.lendTo != null && request.lendTo > 0" ng-click="getItemBack(request)">Get back Item</button>
-			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)">Sell Item</button>
+		<div class="panel-footer" ng-hide="request.sold" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
+			<button class="btn btn-success" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="lendItem(request)" access="ROLE_LENDER">Lend Item</button>
+			<button class="btn btn-success" ng-if="request.lendTo != null && request.lendTo > 0" ng-click="getItemBack(request)" access="ROLE_ITEM_RETURNER">Get back Item</button>
+			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)" access="ROLE_LENDER,ROLE_SELLER">Sell Item</button>
 		</div>
 	</div>
 </div>

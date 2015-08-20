@@ -9,7 +9,6 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
             $("#yuventoryBarcode").val(parseInt(data));
             $scope.searchItem(false);
         });
-        
     };
     
     $scope.searchItem = function(manual) {

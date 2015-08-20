@@ -1,6 +1,7 @@
 package yuown.yuventory.business.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +34,16 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 
 	public UserModel getByUsername(String name) {
 		org.springframework.security.core.userdetails.User userFromDB = (org.springframework.security.core.userdetails.User) jdbcUserDetailsManager.loadUserByUsername(name);
-		UserModel user = transformer().transformTo(userFromDB);
+		UserModel user = transformer().transformFromSecurityUser(userFromDB);
 		User dbUser = userRepositoryService.findByUsername(name);
 		user.setId(dbUser.getId());
 		user.setFullName(dbUser.getFullName());
 		return user;
+	}
+	
+	public UserModel createUser(UserModel fromClient) {
+		UserDetails user = transformer().transformToSecurityUser(fromClient);
+		jdbcUserDetailsManager.createUser(user);
+		return fromClient;
 	}
 }
