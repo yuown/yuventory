@@ -45,27 +45,27 @@ div.barcodecontainer {
 	overflow: hidden;
 }
 
-.form-group input[type="checkbox"] {
+.form-group input[data-chk="checkbox"] {
 	display: none;
 }
 
-.form-group input[type="checkbox"]+.btn-group>label span {
+.form-group input[data-chk="checkbox"]+.btn-group>label span {
 	width: 20px;
 }
 
-.form-group input[type="checkbox"]+.btn-group>label span:first-child {
+.form-group input[data-chk="checkbox"]+.btn-group>label span:first-child {
 	display: none;
 }
 
-.form-group input[type="checkbox"]+.btn-group>label span:last-child {
+.form-group input[data-chk="checkbox"]+.btn-group>label span:last-child {
 	display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked+.btn-group>label span:first-child {
+.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:first-child {
 	display: inline-block;
 }
 
-.form-group input[type="checkbox"]:checked+.btn-group>label span:last-child {
+.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:last-child {
 	display: none;
 }
 

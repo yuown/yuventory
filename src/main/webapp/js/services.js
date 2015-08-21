@@ -6,6 +6,8 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	service.Login = function(user, callback) {
 		AjaxService.call('users/login', 'POST', user).success(function(data, status, headers, config) {
 			callback(status, headers);
+		}).error(function(data, status, headers, config) {
+			callback(data);
 		});
 	};
 
@@ -58,7 +60,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8080/yuventory/rest/";
+	var serverUrl = "http://localhost:8090/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {

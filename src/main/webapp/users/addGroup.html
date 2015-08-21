@@ -1,0 +1,19 @@
+<div ng-controller="AddGroupController"> 
+    <div class="modal-header modal-header-primary">
+        <h4 class="modal-title">Add Group</h4>
+    </div>
+    <div class="modal-body">
+        <form ng-submit="save(group)" id="addForm">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Name</span>
+	                <input class="form-control" type="text" placeholder="Enter Category Name" value="{{group.name}}" ng-model="group.name" required="required" maxlength="10" />
+	            </div>
+	        </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
+        <button type="submit" class="btn btn-primary" form="addForm">Save</button>
+    </div>
+</div>

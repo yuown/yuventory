@@ -1,5 +1,6 @@
 package yuown.yuventory.security;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 
 public class YuownGrantedAuthority implements GrantedAuthority {
@@ -26,5 +27,10 @@ public class YuownGrantedAuthority implements GrantedAuthority {
 	@Override
 	public String toString() {
 		return authority;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return StringUtils.equals(this.getAuthority(), ((YuownGrantedAuthority) other).getAuthority());
 	}
 }

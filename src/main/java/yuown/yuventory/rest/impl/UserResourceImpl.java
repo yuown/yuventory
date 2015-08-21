@@ -26,8 +26,20 @@ public class UserResourceImpl {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public UserModel save(@RequestBody UserModel model) {
-		return userService.save(model);
+	public ResponseEntity<String> save(@RequestBody UserModel model) {
+		UserModel user = userService.findByUsername(model.getUsername());
+		if (null != user) {
+			return new ResponseEntity<String>("User with username " + model.getUsername() + " already exists, use a unique username", HttpStatus.BAD_REQUEST);
+		} else {
+			try {
+				userService.createUser(user);
+				return new ResponseEntity<String>("User with username " + model.getUsername() + " Created Successfully", HttpStatus.OK);
+			} catch (Exception e) {
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("errorMessage", "User with username " + model.getUsername() + " cannot be Created");
+				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -43,7 +55,7 @@ public class UserResourceImpl {
 			return new ResponseEntity<String>("User with ID " + id + " Not Found", HttpStatus.NOT_FOUND);
 		} else {
 			try {
-				userService.removeById(id);
+				userService.removeUser(user);
 				return new ResponseEntity<String>("User with ID " + id + " Deleted Successfully", HttpStatus.OK);
 			} catch (Exception e) {
 				HttpHeaders headers = new HttpHeaders();
@@ -65,13 +77,13 @@ public class UserResourceImpl {
 		user.setPassword(null);
 		return user;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/enable")
 	@ResponseBody
 	public ResponseEntity<String> enable(@RequestBody UserModel model) {
 		UserModel user = userService.getById(model.getId());
 		if (null == user) {
-			return new ResponseEntity<String>("Inavlid User, Not Found in the System", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Invalid User, Not Found in the System", HttpStatus.NOT_FOUND);
 		} else {
 			try {
 				userService.enable(model);
@@ -82,5 +94,53 @@ public class UserResourceImpl {
 				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/groups/authorities", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public List<String> getAllAuthorities() {
+		return userService.getAllAuthorities();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/groups")
+	@ResponseBody
+	public List<String> getGroups() {
+		return userService.getGroups();
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups")
+	public void createGroup(@RequestBody String groupName) {
+		userService.createGroup(groupName);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/{groupName}")
+	public void deleteGroup(@PathVariable("groupName") String groupName) {
+		userService.deleteGroup(groupName);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
+	@ResponseBody
+	public List<String> findGroupAuthorities(@PathVariable("groupName") String groupName) {
+		return userService.findGroupAuthorities(groupName);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
+	public void addGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody List<String> authorities) {
+		userService.addGroupAuthority(groupName, authorities);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
+	public void removeGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody List<String> authorities) {
+		userService.removeGroupAuthority(groupName, authorities);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
+	public void addUserToGroup(@RequestBody String username, @PathVariable("groupName") String groupName) {
+		userService.addUserToGroup(username, groupName);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
+	public void removeUserFromGroup(@RequestBody String username, @PathVariable("groupName") String groupName) {
+		userService.removeUserFromGroup(username, groupName);
 	}
 }

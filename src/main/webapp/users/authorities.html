@@ -1,0 +1,18 @@
+<div ng-controller="GroupAuthoritiesController"> 
+    <div class="modal-header modal-header-primary">
+        <h4 class="modal-title">Edit Group Authorities</h4>
+    </div>
+    <div class="modal-body">
+        <form ng-submit="saveAuthorities(group, authorities)" id="addForm" class="form-inline">
+	        <p ng-repeat="authority in authorities">
+            	<label class="checkbox">
+            		<input type="checkbox" ng-model="authority.selected"> {{authority.name}}
+            	</label>
+	        </p>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
+        <button type="submit" class="btn btn-primary" form="addForm">Save</button>
+    </div>
+</div>
