@@ -18,7 +18,7 @@
 					<td access="ROLE_REFERENCE_ENTRY">
 						<button type='button' class='btn btn-success' ng-click="add(user)" access="ROLE_USER_MANAGER">Edit</button>
 						<button type='button' class='btn btn-danger' ng-click="deleteRecord(user)" access="ROLE_USER_MANAGER">Delete</button>
-						<switch ng-model="request.enabled" ng-value="request.enabled" enable-text="Enable" disable-text="Disable" />
+						<switch ng-model="user.enabled" enable-text="Enable" disable-text="Disable" callback="enableUser(user)" />
 					</td>
 				</tr>
 			</tbody>

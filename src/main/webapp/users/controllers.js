@@ -28,6 +28,11 @@ yuventoryApp.controller('UsersController', [ '$scope', 'AjaxService', '$modal', 
         });
     };
     
+    $scope.enableUser =  function (user) {
+        console.log(user.enabled);
+        AjaxService.call('users/enable', 'POST', user);
+    };
+
 } ]);
 
 yuventoryApp.controller('AddUserController', [ '$scope', 'AjaxService', function($scope, AjaxService) {

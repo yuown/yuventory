@@ -65,4 +65,22 @@ public class UserResourceImpl {
 		user.setPassword(null);
 		return user;
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/enable")
+	@ResponseBody
+	public ResponseEntity<String> enable(@RequestBody UserModel model) {
+		UserModel user = userService.getById(model.getId());
+		if (null == user) {
+			return new ResponseEntity<String>("Inavlid User, Not Found in the System", HttpStatus.NOT_FOUND);
+		} else {
+			try {
+				userService.enable(model);
+				return new ResponseEntity<String>("User with ID " + user.getId() + " Updated Successfully", HttpStatus.OK);
+			} catch (Exception e) {
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("errorMessage", "User with ID " + user.getId() + " cannot be Updated");
+				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
 }

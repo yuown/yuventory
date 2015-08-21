@@ -58,7 +58,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8090/yuventory/rest/";
+	var serverUrl = "http://localhost:8080/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
@@ -119,25 +119,30 @@ yuventoryApp.directive('switch', function() {
     return {
 		require: "ngModel",
         restrict: 'E',
+        scope: {
+            callback: '&callback'
+        },
         template: function(elem, attrs) {
         	return    "" +
 					  	"<button type='button' class='btn btn-info' data-f='1'>" + attrs.enableText + "</button>" +
 					  	"<button type='button' class='btn btn-warning' data-f='0'>" + attrs.disableText + "</button>" +
 					  "";
         },
-        link: function(scope, element, attributes, ngModelController) {
+        link: function(scope, element, attrs, ngModelController) {
         	ngModelController.$render = function() {
+        	    var effect = 'drop';
         		if(ngModelController.$viewValue == true) {
-        			element.find('[data-f=1]').show();
-        			element.find('[data-f=0]').hide();
+        			jQuery(element.find('[data-f=0]')).show(effect)
+        			jQuery(element.find('[data-f=1]')).hide(effect);
         		} else {
-        			element.find('[data-f=0]').show();
-        			element.find('[data-f=1]').hide();
+        			jQuery(element.find('[data-f=0]')).hide(effect);
+                    jQuery(element.find('[data-f=1]')).show(effect);
         		}
             };
             function toggle() {
                 ngModelController.$setViewValue(!ngModelController.$viewValue);
                 ngModelController.$render();
+                scope.callback();
             };
             element.on('click', function(event) {
             	toggle();
