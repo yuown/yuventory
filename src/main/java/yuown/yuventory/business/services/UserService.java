@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,9 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 
 	@Value("#{'${SUPER_USERS}'.split(',')}")
 	private List<String> SUPER_USERS;
+
+	@Value("#{'${SUPER_GROUPS}'.split(',')}")
+	private List<String> SUPER_GROUPS;
 
 	@Value("#{'${yuventory.valid.roles}'.split(',')}")
 	private List<String> ALL_ROLES;
@@ -46,8 +48,7 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 	}
 
 	public UserModel getByUsername(String name) {
-		org.springframework.security.core.userdetails.User userFromDB = (org.springframework.security.core.userdetails.User) jdbcUserDetailsManager
-				.loadUserByUsername(name);
+		org.springframework.security.core.userdetails.User userFromDB = (org.springframework.security.core.userdetails.User) jdbcUserDetailsManager.loadUserByUsername(name);
 		UserModel user = transformer().transformFromSecurityUser(userFromDB);
 		User dbUser = userRepositoryService.findByUsername(name);
 		user.setId(dbUser.getId());
@@ -60,9 +61,8 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 	}
 
 	public void createUser(UserModel fromClient) throws Exception {
-		fromClient.getAuthorities().removeAll(fromClient.getAuthorities());
-		UserDetails user = transformer().transformToSecurityUser(fromClient);
-		jdbcUserDetailsManager.createUser(user);
+		fromClient.setId(userRepositoryService.findMaxId() + 1);
+		userRepositoryService.save(transformer().transformFrom(fromClient));
 	}
 
 	public void removeUser(UserModel fromClient) {
@@ -98,7 +98,9 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 	}
 
 	public List<String> getGroups() {
-		return jdbcUserDetailsManager.findAllGroups();
+		List<String> allGroups = jdbcUserDetailsManager.findAllGroups();
+		allGroups.removeAll(SUPER_GROUPS);
+		return allGroups;
 	}
 
 	public void createGroup(String groupName) {
@@ -119,16 +121,24 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 		return authorities;
 	}
 
-	public void addGroupAuthority(String groupName, List<String> authoritiesFromClient) {
+	public void addOrRemoveGroupAuthority(String groupName, List<String> authoritiesFromClient) {
+		List<String> authoritiesFromClientCopy = new ArrayList<String>();
+		for (String string : authoritiesFromClient) {
+			authoritiesFromClientCopy.add(string);
+		}
+		List<String> current = findGroupAuthorities(groupName);
+		authoritiesFromClient.removeAll(current);
 		for (String authority : authoritiesFromClient) {
 			jdbcUserDetailsManager.addGroupAuthority(groupName, new YuownGrantedAuthority(authority));
 		}
-	}
-
-	public void removeGroupAuthority(String groupName, List<String> authorities) {
-		for (String authority : authorities) {
+		current.removeAll(authoritiesFromClientCopy);
+		for (String authority : current) {
 			jdbcUserDetailsManager.removeGroupAuthority(groupName, new YuownGrantedAuthority(authority));
 		}
+	}
+	
+	public List<String> findUsersIngroup(String groupName) {
+		return jdbcUserDetailsManager.findUsersInGroup(groupName);
 	}
 
 	public void addUserToGroup(String username, String groupName) {

@@ -14,8 +14,8 @@ import yuown.yuventory.security.YuownGrantedAuthority;
 @Component
 public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 
-	private static final String[] FROM_EXCLUDES = new String[] {};
-	private static final String[] TO_EXCLUDES = new String[] {};
+	private static final String[] FROM_EXCLUDES = new String[] {"authorities"};
+	private static final String[] TO_EXCLUDES = new String[] {"authorities"};
 
 	@Override
 	public User transformFrom(UserModel source) {

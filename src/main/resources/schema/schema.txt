@@ -88,9 +88,12 @@ CREATE TABLE `groups` (
 CREATE TABLE `group_authorities` (
   `group_id` bigint(20) unsigned NOT NULL,
   `authority` varchar(50) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `group_authorities_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
-);
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `group_members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

@@ -32,7 +32,7 @@ public class UserResourceImpl {
 			return new ResponseEntity<String>("User with username " + model.getUsername() + " already exists, use a unique username", HttpStatus.BAD_REQUEST);
 		} else {
 			try {
-				userService.createUser(user);
+				userService.createUser(model);
 				return new ResponseEntity<String>("User with username " + model.getUsername() + " Created Successfully", HttpStatus.OK);
 			} catch (Exception e) {
 				HttpHeaders headers = new HttpHeaders();
@@ -126,12 +126,12 @@ public class UserResourceImpl {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
 	public void addGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody List<String> authorities) {
-		userService.addGroupAuthority(groupName, authorities);
+		userService.addOrRemoveGroupAuthority(groupName, authorities);
 	}
-
-	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
-	public void removeGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody List<String> authorities) {
-		userService.removeGroupAuthority(groupName, authorities);
+	
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
+	public List<String> addUserToGroup(@PathVariable("groupName") String groupName) {
+		return userService.findUsersIngroup(groupName);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
@@ -140,7 +140,7 @@ public class UserResourceImpl {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
-	public void removeUserFromGroup(@RequestBody String username, @PathVariable("groupName") String groupName) {
+	public void removeUserFromGroup(@PathVariable("userName") String username, @PathVariable("groupName") String groupName) {
 		userService.removeUserFromGroup(username, groupName);
 	}
 }

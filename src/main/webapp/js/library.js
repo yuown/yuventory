@@ -7,6 +7,15 @@ function getObjectFromId(array, id) {
 	}
 }
 
+function contains(array, obj, fieldName) {
+    for (var int = 0; int < array.length; int++) {
+        var every = array[int];
+        if (every[fieldName] == obj[fieldName]) {
+            return true;
+        }
+    }
+}
+
 function json2csv(dataArray) {
 	var output = '';
 	for (var i = 0; i < dataArray.length; i++) {

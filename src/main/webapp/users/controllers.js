@@ -90,13 +90,22 @@ yuventoryApp.controller('GroupsController', [ '$scope', 'AjaxService', '$modal',
     };
     
     $scope.getAllAuthorities = function() {
-    	AjaxService.call('users/groups/authorities', 'GET').success(function(data, status, headers, config) {
+        AjaxService.call('users/groups/authorities', 'GET').success(function(data, status, headers, config) {
             $scope.authorities = [];
-        	for(var i = 0; i < data.length; i++) {
-        		$scope.authorities.push({"name": data[i], "selected": false});
-        	}
+            for(var i = 0; i < data.length; i++) {
+                $scope.authorities.push({"name": data[i]});
+            }
         });
     };
+    
+    $scope.showGroupUsers = function(group) {
+        $scope.group = group;
+        $scope.addDialog = $modal.open({
+            templateUrl : 'users/groupUsers.html',
+            scope : $scope
+        });
+    };
+    
 }] );
 
 yuventoryApp.controller('AddGroupController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
@@ -114,9 +123,63 @@ yuventoryApp.controller('GroupAuthoritiesController', [ '$scope', 'AjaxService',
     'use strict';
 
     $scope.saveAuthorities = function(groupName, authorities) {
-        AjaxService.call('users/groups', 'POST', request.name).success(function(data, status, headers, config) {
+        var authsToSave = [];
+        for(var i=0;i<authorities.length;i++) {
+            if(authorities[i].selected == true) {
+                authsToSave.push(authorities[i].name)
+            }
+        }
+        AjaxService.call('users/groups/auth/' + groupName.name, 'POST', authsToSave).success(function(data, status, headers, config) {
             $scope.addDialog.dismiss('cancel');
             $scope.load();
         });
     };
 } ]);
+
+yuventoryApp.controller('GroupUsersController', [ '$scope', 'AjaxService', '$modal', function($scope, AjaxService, $modal) {
+    
+    $scope.loadGroupUsers = function() {
+        AjaxService.call('users/groups/user/' + $scope.group.name, 'GET').success(function(data, status, headers, config) {
+            $scope.groupUsers = [];
+            for(var i = 0; i < data.length; i++) {
+                $scope.groupUsers.push({"username": data[i]});
+            }
+        });
+    };
+    
+    $scope.addUserToGroup = function(currentUsers) {
+        $scope.currentUsers = currentUsers;
+        $scope.addUserToGroupPopup = $modal.open({
+            templateUrl : 'users/groupUsersPopup.html',
+            scope : $scope
+        });
+    };
+    
+    $scope.removeUserFromGroup = function(groupName, selecteduser) {
+        AjaxService.call('users/groups/user/' + groupName, 'DELETE', selecteduser).success(function(data, status, headers, config) {
+            $scope.loadGroupUsers();
+        });
+    };
+}] );
+
+yuventoryApp.controller('AddUserToGroupController', [ '$scope', 'AjaxService', '$modal', function($scope, AjaxService, $modal) {
+    
+    $scope.loadUsersList = function() {
+        AjaxService.call('users', 'GET').success(function(data, status, headers, config) {
+            $scope.users = [];
+            for(var j = 0; j < data.length; j++) {
+                if(!contains($scope.currentUsers, data[j], 'username')) {
+                    $scope.users.push(data[j]);
+                }
+            }
+        });
+    };
+    
+    $scope.confirmAddUserToGroup = function(selecteduser) {
+        AjaxService.call('users/groups/user/' + $scope.group.name, 'POST', selecteduser).success(function(data, status, headers, config) {
+            $scope.addUserToGroupPopup.dismiss('cancel');
+            $scope.loadGroupUsers();
+        });
+    };
+    
+}] );

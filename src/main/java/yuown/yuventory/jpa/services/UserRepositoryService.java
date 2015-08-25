@@ -42,4 +42,8 @@ public class UserRepositoryService extends AbstractRepositoryService<UserReposit
     public User findByUsername(String userName) {
         return repository().findByUsername(userName);
     }
+    
+    public Integer findMaxId() {
+    	return repository().findMaxId();
+    }
 }

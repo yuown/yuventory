@@ -1,0 +1,30 @@
+<div ng-controller="GroupUsersController" ng-init="loadGroupUsers()" access="ROLE_USER_MANAGER">
+	<div class="modal-header modal-header-primary">
+		<h4 class="modal-title">Add/Remove Group Users</h4>
+	</div>
+	<div class="modal-body">
+	    <button type='button' class='btn btn-success' ng-click="addUserToGroup(groupUsers)" access="ROLE_USER_MANAGER">Add user</button>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr class="info table-row">
+						<th>username</th>
+						<th access="ROLE_USER_MANAGER">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="groupUser in groupUsers" class="table-row">
+						<td>{{groupUser.username}}</td>
+						<td access="ROLE_REFERENCE_ENTRY">
+							<button type='button' class='btn btn-danger' ng-click="removeUserFromGroup(group.name, groupUser.username)" access="ROLE_USER_MANAGER">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
+	</div>
+</div>
+        

@@ -1,0 +1,21 @@
+<div ng-controller="AddUserToGroupController" ng-init="loadUsersList()"> 
+    <div class="modal-header modal-header-primary">
+        <h4 class="modal-title">Add User to group</h4>
+    </div>
+    <div class="modal-body">
+	    <form ng-submit="confirmAddUserToGroup(selectedUser)" id="formConfirmAddUser2Group">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Reason</span>
+	                <select class="form-control" ng-options="user.username as user.username for user in users" ng-model="selectedUser" ng-required="true">
+	                   <option value="">Select a User</option>
+	                </select>
+	            </div>
+	        </div>
+	    </form>
+	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="addUserToGroupPopup.dismiss('cancel')"> No</button>
+        <button type="submit" class="btn btn-success btn-large glyphicon glyphicon-ok" form="formConfirmAddUser2Group"> Yes</button>
+    </div>
+</div>
