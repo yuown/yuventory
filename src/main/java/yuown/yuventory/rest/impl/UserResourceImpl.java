@@ -140,7 +140,7 @@ public class UserResourceImpl {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
-	public void removeUserFromGroup(@PathVariable("userName") String username, @PathVariable("groupName") String groupName) {
+	public void removeUserFromGroup(@RequestBody String username, @PathVariable("groupName") String groupName) {
 		userService.removeUserFromGroup(username, groupName);
 	}
 }
