@@ -60,7 +60,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 
 yuventoryApp.factory('AjaxService', [ '$rootScope', '$http', function($rootScope, $http) {
 	
-	var serverUrl = "http://localhost:8090/yuventory/rest/";
+	var serverUrl = "http://localhost:8080/yuventory/rest/";
 	
     return {
         call : function(url, method, params) {
