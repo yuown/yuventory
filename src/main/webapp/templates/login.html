@@ -1,6 +1,6 @@
 <div ng-controller='LoginController' class='well'>
 		<div class='container'>
-			<form class="form-horizontal">
+			<form class="form-horizontal" ng-submit="login(user)">
 				<div class='row'>
 					<div class="panel panel-info">
 						<div class="panel-heading">Login to yuventory</div>
@@ -12,18 +12,18 @@
 								<div class="form-group">
 									<div class="input-group input-group-lg">
 										<div class="input-group-addon">Username</div>
-										<input type="text" class="form-control" id="userId" placeholder="Enter User ID" ng-model="user.username">
+										<input type="text" class="form-control" id="userId" placeholder="Enter User ID" ng-model="user.username" title="Enter valid Username" required />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group input-group-lg">
 										<div class="input-group-addon">Password</div>
-										<input type="password" class="form-control" id="password" placeholder="Enter Password" ng-model="user.password">
+										<input type="password" class="form-control" id="password" placeholder="Enter Password" ng-model="user.password" title="Enter valid Password" required />
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="input-group pull-right">
-										<button type="submit" class="form-control input-lg btn btn-info" ng-click="login(user)">Login</button>
+										<button type="submit" class="form-control input-lg btn btn-info">Login</button>
 									</div>
 								</div>
 							</div>

@@ -1,4 +1,4 @@
-<div ng-controller='GroupsController' ng-init="load()" access="ROLE_USER_MANAGER">
+<div ng-controller='GroupsController' ng-init="loadGroups()" access="ROLE_USER_MANAGER">
     <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <div>
         <button type="button" class="btn btn-primary" ng-click="add()" access="ROLE_USER_MANAGER">Add</button>
@@ -16,7 +16,7 @@
 				<tr ng-repeat="group in groups" class="table-row">
 					<td>{{group.name}}</td>
 					<td access="ROLE_REFERENCE_ENTRY">
-						<button type='button' class='btn btn-danger' ng-click="deleteRecord(group)" access="ROLE_USER_MANAGER">Delete</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteGroup(group)" access="ROLE_USER_MANAGER">Delete</button>
 						<button type='button' class='btn btn-warning' ng-click="editAuthorities(group)" access="ROLE_USER_MANAGER">Authorities</button>
 						<button type='button' class='btn' ng-click="showGroupUsers(group)" access="ROLE_USER_MANAGER">View Users</button>
 					</td>

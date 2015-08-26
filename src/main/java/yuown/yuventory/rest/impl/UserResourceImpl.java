@@ -24,18 +24,19 @@ public class UserResourceImpl {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
 	@ResponseBody
 	public ResponseEntity<String> save(@RequestBody UserModel model) {
 		UserModel user = userService.findByUsername(model.getUsername());
+		HttpHeaders headers = new HttpHeaders();
 		if (null != user) {
-			return new ResponseEntity<String>("User with username " + model.getUsername() + " already exists, use a unique username", HttpStatus.BAD_REQUEST);
+			headers.add("errorMessage", "User with username " + model.getUsername() + " already exists, use a unique username");
+			return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
 		} else {
 			try {
 				userService.createUser(model);
 				return new ResponseEntity<String>("User with username " + model.getUsername() + " Created Successfully", HttpStatus.OK);
 			} catch (Exception e) {
-				HttpHeaders headers = new HttpHeaders();
 				headers.add("errorMessage", "User with username " + model.getUsername() + " cannot be Created");
 				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -48,17 +49,18 @@ public class UserResourceImpl {
 		return userService.getById(id);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, produces = { MediaType.TEXT_PLAIN_VALUE }, value = "/{id}")
 	public ResponseEntity<String> removeById(@PathVariable("id") int id) {
 		UserModel user = userService.getById(id);
+		HttpHeaders headers = new HttpHeaders();
 		if (null == user) {
-			return new ResponseEntity<String>("User with ID " + id + " Not Found", HttpStatus.NOT_FOUND);
+			headers.add("errorMessage", "User with ID " + id + " Not Found");
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
 		} else {
 			try {
 				userService.removeUser(user);
 				return new ResponseEntity<String>("User with ID " + id + " Deleted Successfully", HttpStatus.OK);
 			} catch (Exception e) {
-				HttpHeaders headers = new HttpHeaders();
 				headers.add("errorMessage", "User with ID " + id + " cannot be Deleted");
 				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -78,7 +80,7 @@ public class UserResourceImpl {
 		return user;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/enable")
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE }, value = "/enable")
 	@ResponseBody
 	public ResponseEntity<String> enable(@RequestBody UserModel model) {
 		UserModel user = userService.getById(model.getId());
@@ -113,7 +115,7 @@ public class UserResourceImpl {
 		userService.createGroup(groupName);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/{groupName}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/groups/{groupName}")
 	public void deleteGroup(@PathVariable("groupName") String groupName) {
 		userService.deleteGroup(groupName);
 	}

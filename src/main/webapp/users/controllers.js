@@ -29,8 +29,7 @@ yuventoryApp.controller('UsersController', [ '$scope', 'AjaxService', '$modal', 
     };
     
     $scope.enableUser =  function (user) {
-        console.log(user.enabled);
-        AjaxService.call('users/enable', 'POST', user);
+        AjaxService.call('users/enable', 'POST', user).success(function(data, status, headers, config) {});
     };
 
 } ]);
@@ -49,7 +48,7 @@ yuventoryApp.controller('AddUserController', [ '$scope', 'AjaxService', function
 yuventoryApp.controller('GroupsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
 	'use strict';
 	
-	$scope.load = function() {
+	$scope.loadGroups = function() {
         AjaxService.call('users/groups', 'GET').success(function(data, status, headers, config) {
         	$scope.groups = [];
         	for(var i = 0; i < data.length; i++) {
@@ -106,6 +105,13 @@ yuventoryApp.controller('GroupsController', [ '$scope', 'AjaxService', '$modal',
         });
     };
     
+    $scope.deleteGroup = function(group) {
+        AlertsService.confirm('Are you sure to delete this group ?', function() {
+            AjaxService.call('users/groups/' + group.name, 'DELETE').success(function(data, status, headers, config) {
+                $scope.loadGroups();
+            });
+        });
+    };
 }] );
 
 yuventoryApp.controller('AddGroupController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
@@ -114,7 +120,7 @@ yuventoryApp.controller('AddGroupController', [ '$scope', 'AjaxService', functio
     $scope.save = function(request) {
         AjaxService.call('users/groups', 'POST', request.name).success(function(data, status, headers, config) {
             $scope.addDialog.dismiss('cancel');
-            $scope.load();
+            $scope.loadGroups();
         });
     };
 } ]);
@@ -131,7 +137,7 @@ yuventoryApp.controller('GroupAuthoritiesController', [ '$scope', 'AjaxService',
         }
         AjaxService.call('users/groups/auth/' + groupName.name, 'POST', authsToSave).success(function(data, status, headers, config) {
             $scope.addDialog.dismiss('cancel');
-            $scope.load();
+            $scope.loadGroups();
         });
     };
 } ]);
