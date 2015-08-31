@@ -38,10 +38,15 @@ yuventoryApp.controller('AddUserController', [ '$scope', 'AjaxService', function
     'use strict';
 
     $scope.save = function(request) {
-        AjaxService.call('users', 'POST', request).success(function(data, status, headers, config) {
-            $scope.addDialog.dismiss('cancel');
-            $scope.load();
-        });
+        $scope.errorMessage = ""
+        if(request.password != request.confirmPassword) {
+            $scope.errorMessage = "Passwords don't match, Please match them and submit again";
+        } else {
+            AjaxService.call('users', 'POST', request).success(function(data, status, headers, config) {
+                $scope.addDialog.dismiss('cancel');
+                $scope.load();
+            });
+        }
     };
 } ]);
 

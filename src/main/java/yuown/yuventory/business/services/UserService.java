@@ -154,4 +154,8 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 			jdbcUserDetailsManager.removeUserFromGroup(username, groupName);
 		}
 	}
+
+	public void updateUser(UserModel model) {
+		userRepositoryService.save(transformer().transformFrom(model));
+	}
 }

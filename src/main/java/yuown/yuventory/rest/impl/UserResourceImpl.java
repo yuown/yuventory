@@ -30,8 +30,8 @@ public class UserResourceImpl {
 		UserModel user = userService.findByUsername(model.getUsername());
 		HttpHeaders headers = new HttpHeaders();
 		if (null != user) {
-			headers.add("errorMessage", "User with username " + model.getUsername() + " already exists, use a unique username");
-			return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+			userService.updateUser(model);
+			return new ResponseEntity<String>("User with username " + model.getUsername() + " Updated Successfully", HttpStatus.OK);
 		} else {
 			try {
 				userService.createUser(model);
