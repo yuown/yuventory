@@ -16,11 +16,12 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/categories', 'home.categories').
         when('/home/reports', 'home.reports').
         when('/home/reports/unifiedReport', 'home.reports.unifiedReport').
-        when('/home/reports/other1', 'home.reports.other1').
+        when('/home/reports/balanceSheet', 'home.reports.balanceSheet').
         when('/home/reports/other2', 'home.reports.other2').
         when('/home/settings', 'home.settings').
         when('/home/users', 'home.users').
         when('/home/groups', 'home.groups').
+        when('/home/aboutMe', 'home.aboutMe').
         segment('login', {
             templateUrl : 'templates/login.html',
         }).
@@ -51,8 +52,8 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
 	            	'default': true,
 	                templateUrl : 'reports/main.html'
 	            }).
-	            segment('other1', {
-	                templateUrl : 'reports/other1.html'
+	            segment('balanceSheet', {
+	                templateUrl : 'reports/balanceSheet.html'
 	            }).
 	            segment('other2', {
 	                templateUrl : 'reports/other2.html'
@@ -66,6 +67,9 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             }).
             segment('groups', {
                 templateUrl : 'users/groupsList.html'
+            }).
+            segment('aboutMe', {
+                templateUrl : 'about/me.html'
             });
 
     $routeProvider.otherwise({redirectTo: '/login'}); 

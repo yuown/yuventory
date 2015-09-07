@@ -1,6 +1,7 @@
 package yuown.yuventory.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,5 +34,16 @@ public class ReportsResourceImpl {
 		List<ItemModel> items = itemService.generateReport(model);
 
 		return new ResponseEntity<List<ItemModel>>(items, headers, responseStatus);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/balanceSheet")
+	@ResponseBody
+	public ResponseEntity<Map<String, Double>> balanceSheet() {
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.OK;
+
+		Map<String, Double> balanceSheet = itemService.generateBalanceSheet();
+
+		return new ResponseEntity<Map<String, Double>>(balanceSheet, headers, responseStatus);
 	}
 }

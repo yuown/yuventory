@@ -127,3 +127,14 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	};
 	
 } ]);
+
+yuventoryApp.controller('BalanceSheetController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    'use strict';
+    
+    $scope.generateReport = function() {
+        AjaxService.call('reports/balanceSheet', 'POST').success(function(data, status, headers, config) {
+            $scope.reportsOutput = data;
+        });
+    };
+    
+} ]);

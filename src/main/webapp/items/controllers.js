@@ -127,4 +127,10 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
         $scope.request.currCategory=getObjectFromId($scope.categories, $scope.request.category)['name'];
     };
     
+    $scope.init = function() {
+        AjaxService.call('items/names', 'GET').success(function(data, status, headers, config) {
+            $scope.newItemNames = data;
+        });
+    };
+    
 } ]);

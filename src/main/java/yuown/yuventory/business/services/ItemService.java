@@ -3,7 +3,10 @@ package yuown.yuventory.business.services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -153,6 +156,17 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 				return cb.and(predicates.toArray(new Predicate[0]));
 			}
 		}));
+	}
+	
+	public Map<String, Double> generateBalanceSheet() {
+		Map<String, Double> output = new HashMap<String, Double>();
+		output.put("goldWeight", itemsRepositoryService.findWeightSumByType("Gold"));
+		output.put("silverWeight", itemsRepositoryService.findWeightSumByType("Silver"));
+		return output;
+	}
+	
+	public Set<String> findAllItemNames() {
+		return repoService().findAllItemNames();
 	}
 
 	protected Long getBeginTimeStampForDate(Date date) {

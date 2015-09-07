@@ -1,6 +1,7 @@
 package yuown.yuventory.rest.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -212,5 +213,11 @@ public class ItemResourceImpl {
 	@ResponseBody
 	public Integer getPageSize() {
 		return itemService.getPageSize();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/names")
+	@ResponseBody
+	public Set<String> getAllItemNames() {
+		return itemService.findAllItemNames();
 	}
 }

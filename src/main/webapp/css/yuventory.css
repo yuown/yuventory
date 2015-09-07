@@ -54,19 +54,23 @@ div.barcodecontainer {
 	width: 20px;
 }
 
-.form-group input[data-chk="checkbox"]+.btn-group>label span:first-child {
+.form-group input[data-chk="checkbox"]+.btn-group>label span:first-child
+	{
 	display: none;
 }
 
-.form-group input[data-chk="checkbox"]+.btn-group>label span:last-child {
+.form-group input[data-chk="checkbox"]+.btn-group>label span:last-child
+	{
 	display: inline-block;
 }
 
-.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:first-child {
+.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:first-child
+	{
 	display: inline-block;
 }
 
-.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:last-child {
+.form-group input[data-chk="checkbox"]:checked+.btn-group>label span:last-child
+	{
 	display: none;
 }
 
@@ -79,6 +83,11 @@ div.barcodecontainer {
 	user-select: none;
 }
 
+@page {
+	size: 6cm 1.3cm;
+	margin: 0.1mm 0.1mm 0.1mm 0.1mm;
+}
+
 @media print {
 	body * {
 		visibility: hidden;
@@ -88,15 +97,15 @@ div.barcodecontainer {
 	}
 	.section-to-print {
 		background-color: white;
-		height: 100%;
-		width: 100%;
+/* 		height: 100%; */
+/* 		width: 100%; */
 		position: fixed;
 		top: 0;
 		left: 0;
 		margin: 0;
-		padding: 15px;
-		font-size: 14px;
-		line-height: 18px;
+		padding: 1px;
+		font-size: 8px;
+		line-height: 12px;
 	}
 	div.barcodecontainer {
 		border: 0px;

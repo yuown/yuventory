@@ -1,4 +1,4 @@
-<div ng-controller="AddItemController"> 
+<div ng-controller="AddItemController" ng-init="init()"> 
     <div class="modal-header modal-header-primary">
         <h4 class="modal-title">{{title}}</h4>
     </div>
@@ -8,7 +8,10 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Name</span>
-	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" />
+	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" list="newNames" />
+	                <datalist id="newNames">
+	                   <option ng-repeat="newItem in newItemNames" ng-value="newItem">{{newItem}}</option>
+	                </datalist>
 	            </div>
 	        </div>
 	        <div class="form-group">

@@ -29,7 +29,7 @@
             onReceive:false, // Callback after receive a char (scanned char in parameter)
             timeBeforeScanTest:100, // Wait duration (ms) after keypress event to check if scanning is finished
             avgTimeByChar:30, // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning
-            minLength:6, // Minimum length for a scanning
+            minLength:3, // Minimum length for a scanning
             endChar:[9,13], // Chars to remove and means end of scanning
             stopPropagation:false, // Stop immediate propagation on keypress event
             preventDefault:false // Prevent default action on keypress event
