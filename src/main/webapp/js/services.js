@@ -11,7 +11,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 		});
 	};
 
-	service.SetCredentials = function(username, authdata, r) {
+	service.SetCredentials = function(username, authdata, r, fullName) {
 	    service.ClearCredentials();
 		if (authdata != null && authdata != '' && authdata != 'null' && authdata != undefined) {
 			var roles = [];
@@ -23,7 +23,8 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 				currentUser : {
 					username : username,
 					authdata : authdata,
-					roles: roles
+					roles: roles,
+					fullName: fullName
 				}
 			};
 
