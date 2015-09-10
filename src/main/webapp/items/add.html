@@ -50,9 +50,8 @@
                     <div class="barcodecontainer section-to-print">
                         <img src="data:image/png;base64,{{barcode}}" />
                         <div class="barcodecaption">
-                            <span class="col-xs-6">{{request.weight}} gm</span>
-                            <span class="col-xs-3">{{request.currCategory}}</span>
-                            <span class="col-xs-3">{{request.id}}</span>
+                            <span class="barcodecaption1">{{request.weight}} gm</span>
+                            <span class="barcodecaption2">{{request.currCategory}}</span>
                         </div>
                     </div>
                 </div>
@@ -62,6 +61,6 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
         <button type="submit" class="btn btn-primary" form="addForm">Save</button>
-        <button class="glyphicon glyphicon-print btn btn-warning" onclick="window.print()" ng-show="request.id" access="ROLE_PRINT"></button>
+        <button class="glyphicon glyphicon-print btn btn-warning" ng-click="printBarcode()" ng-show="request.id" access="ROLE_PRINT"></button>
     </div>
 </div>

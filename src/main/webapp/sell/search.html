@@ -3,9 +3,9 @@
 		<div class="row">
 		  <form>
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" id='yuventoryBarcode' ng-readonly="true" />
+				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" id='yuventoryBarcode' />
 				<span class="input-group-btn">
-					<button class="btn btn-default glyphicon glyphicon-search" type="button" ng-click="searchItem(true)" ng-show="false"></button>
+					<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="searchItem(true)"></button>
 					<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="clearSearch()"></button>
 				</span>
 			</div>
@@ -62,9 +62,8 @@
 	                    <div class="barcodecontainer">
 	                        <img src="data:image/png;base64,{{barcode}}" ng-if="barcode" />
 	                        <div class="barcodecaption">
-	                            <span class="col-xs-6">{{request.weight}} gm</span>
-	                            <span class="col-xs-3">{{request.categoryDesc}}</span>
-	                            <span class="col-xs-3">{{request.id}}</span>
+	                            <span class="barcodecaption1">{{request.weight}} gm</span>
+	                            <span class="barcodecaption2">{{request.categoryDesc}}</span>
 	                        </div>
 	                    </div>
 	                </div>

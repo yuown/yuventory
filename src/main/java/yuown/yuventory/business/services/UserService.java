@@ -172,6 +172,6 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 		} else {
 			model.setPassword(fromHeader.getPassword());
 		}
-		userRepositoryService.save(transformer().transformFrom(model));
+		updateUser(model);
 	}
 }

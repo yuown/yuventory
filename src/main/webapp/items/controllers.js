@@ -133,4 +133,9 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
         });
     };
     
+    $scope.printBarcode = function() {
+    	window.print();
+    	$scope.addDialog.dismiss('cancel');
+    };
+    
 } ]);
