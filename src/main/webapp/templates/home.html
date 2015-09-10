@@ -1,5 +1,5 @@
 <div ng-controller='HomeController'>
-    <nav class="navbar navbar-default in" data-toggle="collapse" data-target=".navbar-collapse"><!--  navbar-fixed-top  -->
+    <nav class="navbar navbar-default"><!--  navbar-fixed-top  -->
 		<div ng-controller="MenuController" class="container">
 	       <div class="navbar-header">
 	         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
@@ -37,7 +37,7 @@
 	            <li class="dropdown" ng-class="{active: isSegment('changePwd')}">
                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{globals.currentUser.fullName}} <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li ng-class="{active: isSegment('changePwd')}"><a href="#/home/users">Chane Password</a></li>
+                    <li ng-class="{active: isSegment('changePwd')}"><a href="#/home/changeProfile">Change Profile</a></li>
                     <li><a href="#" ng-click="logout()">Logout</a></li>
                   </ul>
                 </li>

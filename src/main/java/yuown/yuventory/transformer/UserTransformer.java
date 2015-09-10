@@ -24,7 +24,6 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 			try {
 				dest = new User();
 				BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
-				dest.setFullName(dest.getFullName().toUpperCase());
 			} catch (Exception e) {
 				dest = null;
 			}

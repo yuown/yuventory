@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -136,7 +137,7 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 			jdbcUserDetailsManager.removeGroupAuthority(groupName, new YuownGrantedAuthority(authority));
 		}
 	}
-	
+
 	public List<String> findUsersIngroup(String groupName) {
 		return jdbcUserDetailsManager.findUsersInGroup(groupName);
 	}
@@ -156,6 +157,21 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 	}
 
 	public void updateUser(UserModel model) {
+		userRepositoryService.save(transformer().transformFrom(model));
+	}
+
+	public void updateUser(UserModel model, UserModel fromHeader) {
+		model.setEnabled(true);
+		if (StringUtils.isNotEmpty(model.getFullName())) {
+			model.setFullName(model.getFullName().toUpperCase());
+		} else {
+			model.setFullName(fromHeader.getFullName());
+		}
+		if (StringUtils.isNotEmpty(model.getPassword())) {
+			model.setPassword(model.getPassword());
+		} else {
+			model.setPassword(fromHeader.getPassword());
+		}
 		userRepositoryService.save(transformer().transformFrom(model));
 	}
 }

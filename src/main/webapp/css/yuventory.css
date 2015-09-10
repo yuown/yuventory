@@ -42,7 +42,7 @@ div.barcodecontainer {
 }
 
 .barcodecaption2 {
-	display: block;
+/* 	display: block; */
 	overflow: hidden;
 }
 

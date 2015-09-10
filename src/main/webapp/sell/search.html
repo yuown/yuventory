@@ -62,8 +62,9 @@
 	                    <div class="barcodecontainer">
 	                        <img src="data:image/png;base64,{{barcode}}" ng-if="barcode" />
 	                        <div class="barcodecaption">
-	                            <span class="barcodecaption1">{{request.weight}} gm</span>
-	                            <span class="barcodecaption2">{{request.categoryDesc}}</span>
+	                            <span class="col-xs-6">{{request.weight}} gm</span>
+	                            <span class="col-xs-3">{{request.categoryDesc}}</span>
+	                            <span class="col-xs-3">{{request.id}}</span>
 	                        </div>
 	                    </div>
 	                </div>

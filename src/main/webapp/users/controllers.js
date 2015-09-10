@@ -194,3 +194,28 @@ yuventoryApp.controller('AddUserToGroupController', [ '$scope', 'AjaxService', '
     };
     
 }] );
+
+yuventoryApp.controller('ChangeUserController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
+    'use strict';
+    
+    $scope.request = {};
+    
+    $scope.init = function(request) {
+        request.fullName = $scope.globals.currentUser.fullName;
+    };
+    
+    $scope.save = function(request) {
+        $scope.errorMessage = "";
+        $scope.message = ""; 
+        if(request.password != request.confirmPassword) {
+            $scope.errorMessage = "Passwords don't match, Please match them and submit again";
+        } else {
+            request.username = $scope.globals.currentUser.username;
+            AjaxService.call('users/profile', 'POST', request).success(function(data, status, headers, config) {
+                $scope.message = data;
+            }).error(function(data, status, headers, config) {
+                $scope.errorMessage = data;
+            });
+        }
+    };
+} ]);

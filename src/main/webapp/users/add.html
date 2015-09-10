@@ -1,4 +1,4 @@
-<div ng-controller="AddUserController" ng-init="request.confirmPassword = request.password"> 
+<div ng-controller="AddUserController" ng-init="request.confirmPassword = request.password">
     <div class="modal-header modal-header-primary">
         <h4 class="modal-title">{{title}}</h4>
     </div>
@@ -20,13 +20,13 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Password</span>
-                    <input class="form-control" type="password" placeholder="New Password" value="{{request.password}}" ng-model="request.password" required="required" maxlength="45" />
+                    <input class="form-control" type="password" placeholder="New Password" value="{{request.password}}" ng-model="request.password" required="required" maxlength="16" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Confirm Password</span>
-                    <input class="form-control" type="password" placeholder="Confirm New Password" value="{{request.confirmPassword}}" ng-model="request.confirmPassword" required="required" maxlength="45" />
+                    <input class="form-control" type="password" placeholder="Confirm New Password" value="{{request.confirmPassword}}" ng-model="request.confirmPassword" required="required" maxlength="16" />
                 </div>
             </div>
         </form>

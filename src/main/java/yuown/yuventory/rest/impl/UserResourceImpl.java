@@ -2,6 +2,10 @@ package yuown.yuventory.rest.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import yuown.yuventory.business.services.UserService;
 import yuown.yuventory.model.UserModel;
+import yuown.yuventory.security.YuownTokenAuthenticationService;
 
 @RestController
 @RequestMapping(value = "/users", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -23,6 +28,9 @@ public class UserResourceImpl {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
 	@ResponseBody
@@ -40,6 +48,32 @@ public class UserResourceImpl {
 				headers.add("errorMessage", "User with username " + model.getUsername() + " cannot be Created");
 				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+		}
+	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
+	@ResponseBody
+	public ResponseEntity<String> profileUpdate(@RequestBody UserModel model, @Context HttpServletRequest request) {
+		UserModel user = userService.findByUsername(model.getUsername());
+		HttpHeaders headers = new HttpHeaders();
+		if (null != user) {
+			UserModel fromHeader = yuownTokenAuthenticationService.getUserObject(request);
+			if (fromHeader != null) {
+				if (StringUtils.equals(fromHeader.getUsername(), model.getUsername())) {
+					model.setId(user.getId());
+					userService.updateUser(model, fromHeader);
+				} else {
+					headers.add("errorMessage", "Invalid User Update");
+					return new ResponseEntity<String>("Invalid User Update", HttpStatus.BAD_REQUEST);
+				}
+			} else {
+				headers.add("errorMessage", "Invalid User");
+				return new ResponseEntity<String>("Invalid User", HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<String>("User " + model.getUsername() + " Updated Successfully", HttpStatus.OK);
+		} else {
+			headers.add("errorMessage", "User cannot be Updated");
+			return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -119,7 +153,7 @@ public class UserResourceImpl {
 	public void deleteGroup(@PathVariable("groupName") String groupName) {
 		userService.deleteGroup(groupName);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/auth/{groupName}")
 	@ResponseBody
 	public List<String> findGroupAuthorities(@PathVariable("groupName") String groupName) {
@@ -130,7 +164,7 @@ public class UserResourceImpl {
 	public void addGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody List<String> authorities) {
 		userService.addOrRemoveGroupAuthority(groupName, authorities);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/groups/user/{groupName}")
 	public List<String> addUserToGroup(@PathVariable("groupName") String groupName) {
 		return userService.findUsersIngroup(groupName);

@@ -29,6 +29,8 @@ public class BarcodeService {
 
 	public static final String BARCODE_HEIGHT = "barcode_height";
 
+	private static final String ZERO = "0";
+
 	private int barcodeWidth;
 
 	private int barcodeHeight;
@@ -44,7 +46,13 @@ public class BarcodeService {
 		if (null != itemModel) {
 			BitMatrix bitMatrix;
 			try {
-				bitMatrix = new Code128Writer().encode(id.toString(), BarcodeFormat.CODE_128, barcodeWidth, barcodeHeight, null);
+				String idAsString = id.toString();
+				if(id < 10) {
+					idAsString = ZERO + idAsString;
+				} else if(id < 100) {
+					idAsString = ZERO + ZERO + idAsString;
+				}
+				bitMatrix = new Code128Writer().encode(idAsString , BarcodeFormat.CODE_128, barcodeWidth, barcodeHeight, null);
 				MatrixToImageWriter.writeToStream(bitMatrix, "png", baos);
 			} catch (Exception e) {
 				e.printStackTrace();

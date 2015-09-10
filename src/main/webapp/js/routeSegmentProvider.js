@@ -20,6 +20,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/reports/other2', 'home.reports.other2').
         when('/home/settings', 'home.settings').
         when('/home/users', 'home.users').
+        when('/home/changeProfile', 'home.changeProfile').
         when('/home/groups', 'home.groups').
         when('/home/aboutMe', 'home.aboutMe').
         segment('login', {
@@ -64,6 +65,9 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             }).
             segment('users', {
                 templateUrl : 'users/list.html'
+            }).
+            segment('changeProfile', {
+                templateUrl : 'users/changeProfile.html'
             }).
             segment('groups', {
                 templateUrl : 'users/groupsList.html'

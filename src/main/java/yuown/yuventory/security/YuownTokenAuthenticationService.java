@@ -74,4 +74,15 @@ public class YuownTokenAuthenticationService {
 		}
 		return -1;
 	}
+	
+	public UserModel getUserObject(HttpServletRequest httpRequest) {
+		final String token = httpRequest.getHeader(AUTH_HEADER_NAME);
+		if (token != null) {
+			final UserModel user = yuownTokenHandler.parseUserFromToken(token);
+			if (user != null) {
+				return user;
+			}
+		}
+		return null;
+	}
 }
