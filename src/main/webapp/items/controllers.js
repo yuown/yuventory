@@ -1,4 +1,4 @@
-yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', '$location', function($scope, AjaxService, $modal, AlertsService, $location) {
     'use strict';
     
     $scope.currentPage = 1;
@@ -105,6 +105,13 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
                 $scope.load($scope.currentPage);
             });
         });
+    };
+    
+    $scope.showInStockOut = function(item) {
+    	$scope.globals.search = {
+    			id : item.id
+    		};
+    	$location.path('/home/stockOut');
     };
     
 } ]);

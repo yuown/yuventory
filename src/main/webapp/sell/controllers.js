@@ -2,13 +2,19 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
     'use strict';
     
     $scope.init = function() {
-        $scope.search = {};
+		$scope.search = {};
         
         $(document.body).scannerDetection(function(data){
             $scope.search.id = parseInt(data);
             $("#yuventoryBarcode").val(parseInt(data));
             $scope.searchItem(false);
         });
+        
+        if($scope.globals.search && $scope.globals.search.id) {
+        	$scope.search.id = $scope.globals.search.id;
+        	$scope.searchItem(false);
+        	$scope.globals.search = {};
+        }
     };
     
     $scope.searchItem = function(manual) {

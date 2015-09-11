@@ -188,4 +188,15 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTimeInMillis();
 	}
+
+	public PageImpl<Item> search(String name, Integer page, Integer size) {
+		if (page == null || page < 0) {
+			page = 0;
+		}
+		Integer fromSystem = Integer.parseInt(System.getProperty(ITEM_PAGE_SIZE));
+		if (size == null || (size < 0 || size > fromSystem)) {
+			size = fromSystem;
+		}
+		return repoService().findAllByName(name, new PageRequest(page, size));
+	}
 }

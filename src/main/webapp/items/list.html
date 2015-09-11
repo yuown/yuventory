@@ -21,7 +21,7 @@
 					<th>Name</th>
 					<th>Weight</th>
 					<th>Status</th>
-					<th access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_SELLER">Actions</th>
+					<th access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,10 +30,11 @@
 					<td>{{item.name}}</td>
 					<td>{{item.weight}}</td>
 					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Sold' : 'Item Lent')}}</td>
-					<td access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_SELLER">
+					<td access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
 					    <button type='button' class='btn btn-warning' ng-click="view(item)" access="ROLE_VIEW_ITEMS">View</button>
 						<button type='button' class='btn btn-success' ng-click="add(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false" access="ROLE_DATAENTRY">Edit</button>
 						<button type='button' class='btn btn-danger' ng-click="deleteRecord(item)" access="ROLE_SELLER">Delete</button>
+						<button type='button' class='btn btn-info' ng-click="showInStockOut(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">Stock Out</button>
 					</td>
 				</tr>
 			</tbody>
