@@ -59,8 +59,8 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	
 	$scope.init = function() {
 	    $scope.reportsMeta = [];
-	    $scope.reportsMeta.isPurchaseCollapsed = false;
-	    $scope.reportsMeta.isSellCollapsed = false;
+	    $scope.reportsMeta.isPurchaseCollapsed = true;
+	    $scope.reportsMeta.isSellCollapsed = true;
 	    $scope.formats = [ 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd-MMMM-yyyy', 'shortDate' ];
 		$scope.format = $scope.formats[2];
 		$scope.status = { psopened: false, peopened: false, ssopened: false, seopened: false };

@@ -3,8 +3,12 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     
     $scope.currentPage = 1;
 
-    $scope.load = function(pageNumber) {
-        AjaxService.call('items?page=' + (pageNumber - 1), 'GET').success(function(data, status, headers, config) {
+    $scope.load = function(pageNumber, itemName) {
+    	var itemNameParam = '';
+    	if(itemName) {
+    		itemNameParam = '&name=' + itemName;
+    	}
+        AjaxService.call('items?page=' + (pageNumber - 1) + itemNameParam, 'GET').success(function(data, status, headers, config) {
         	$scope.totalItems = headers("totalItems");
         	$scope.pages = headers("pages");
         	$scope.currentPage = pageNumber;

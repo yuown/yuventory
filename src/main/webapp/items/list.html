@@ -5,6 +5,20 @@
 	        <button type="button" class="btn btn-primary" ng-click="add()" access="ROLE_DATAENTRY">Add</button>
 	        <button type="button" class="btn btn-info" ng-click="load(1)" access="ROLE_VIEW_ITEMS">Refresh</button>
         </div>
+        <br />
+        <div class="container">
+			<div class="row">
+			  <form>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Item name like" ng-model="search.name" />
+					<span class="input-group-btn">
+						<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="load(1, search.name)"></button>
+						<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="search.name=''"></button>
+					</span>
+				</div>
+			  </form>
+			</div>
+		</div>
 		<div>
 			<ul class="pagination noselect">
 				<li ng-class="{disabled: currentPage==1}"><a aria-label="Previous" ng-click="currentPage > 1 && load(currentPage - 1)"><span aria-hidden="true">Previous</span></a></li>
