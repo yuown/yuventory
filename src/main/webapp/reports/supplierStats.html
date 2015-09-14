@@ -1,0 +1,19 @@
+<div ng-controller='SupplierStatisticsController' access="ROLE_REPORTS" ng-init="supplierStats()">
+	<div ng-show="supplierStatsOutput" access="ROLE_REPORTS">
+	   <div class="col-xs-12">
+	       <div class="col-xs-6 alert goldbar">Gold: {{goldTotal}} grams</div>
+	       <div class="col-xs-6 alert silverbar">Silver: {{silverTotal}} grams</div>
+	   </div>
+       <div class="bar-seperator col-xs-12" ng-repeat="(eachKey, eachVal) in supplierStatsOutput">
+	       <div class="bar-header col-xs-2">{{eachVal.supplier}}</div>
+	       <div class="col-xs-10">
+	           <div>
+	               <div style="width: {{eachVal.gold*100/goldTotal}}%" class="alert goldbar">{{eachVal.gold}} grams</div>
+	           </div>
+	           <div>
+	               <div style="width: {{eachVal.silver*100/silverTotal}}%" class="alert silverbar">{{eachVal.silver}} grams</div>
+	           </div>
+	       </div>
+       </div>
+	</div>
+</div>

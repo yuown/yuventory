@@ -1,5 +1,7 @@
 package yuown.yuventory.business.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +28,9 @@ public class SupplierService extends AbstractServiceImpl<Integer, SupplierModel,
     protected SupplierTransformer transformer() {
         return supplierTransformer;
     }
+    
+    @Override
+    public List<SupplierModel> getAll() {
+		return transformer().transformTo(repoService().findAllByOrderByNameDesc());
+	}
 }

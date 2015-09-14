@@ -1,0 +1,19 @@
+<div ng-controller='ItemsCountController' access="ROLE_REPORTS" ng-init="itemsCountFetch()">
+	<div class="table-responsive" ng-show="itemsCount" access="ROLE_REPORTS">
+	   <div class="alert alert-warning">Items other than Stock Out and Lent</div>
+		<table class="table table-hover">
+			<thead>
+				<tr class="info table-row">
+					<th>Item Name</th>
+					<th>Count</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="table-row" ng-repeat="(eachKey, eachVal) in itemsCount">
+					<td>{{eachVal[0]}}</td>
+					<td>{{eachVal[1]}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

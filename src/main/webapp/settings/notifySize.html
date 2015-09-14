@@ -1,0 +1,19 @@
+<div ng-controller="ItemsizeController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">Items count to show in Notifier</h4>
+    </div>
+    <div class="modal-body">
+    	<form id="formPageSize" ng-submit="submitOption('yes', itemsSizeCallback)">
+	        <div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Items count to show in Notifier (Minimum: 1)</span>
+	                <input type="number" ng-model="settings.itemNotifySize" class="form-control" min="1" />
+	            </div>
+	        </div>
+        </form>
+	</div>
+    <div class="modal-footer">
+        <a class="btn btn-danger btn-large" ng-click="submitOption('no')"><i class="glyphicon glyphicon-remove"></i> No</a>
+        <button class="btn btn-success btn-large" type="submit" form="formPageSize"><i class="glyphicon glyphicon-ok"></i> Yes</button>
+    </div>
+</div>

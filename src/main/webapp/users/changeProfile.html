@@ -15,13 +15,13 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">New Password</span>
-                    <input class="form-control" type="password" placeholder="New Password" value="{{request.password}}" ng-model="request.password" required="required" maxlength="16" />
+                    <input class="form-control" type="password" placeholder="New Password" value="{{request.password}}" ng-model="request.password" maxlength="16" ng-required="request.confirmPassword != null && request.confirmPassword.trim() != ''" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Confirm New Password</span>
-                    <input class="form-control" type="password" placeholder="Confirm New Password" value="{{request.confirmPassword}}" ng-model="request.confirmPassword" required="required" maxlength="16" />
+                    <input class="form-control" type="password" placeholder="Confirm New Password" value="{{request.confirmPassword}}" ng-model="request.confirmPassword" maxlength="16" ng-required="request.password != null && request.password.trim() != ''" />
                 </div>
             </div>
         </form>

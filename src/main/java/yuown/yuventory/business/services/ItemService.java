@@ -26,18 +26,29 @@ import yuown.yuventory.entity.Item_;
 import yuown.yuventory.entity.StockType;
 import yuown.yuventory.entity.Supplier;
 import yuown.yuventory.jpa.services.ItemsRepositoryService;
+import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.model.ConfigurationModel;
 import yuown.yuventory.model.ItemModel;
 import yuown.yuventory.model.ReportRequestModel;
+import yuown.yuventory.model.SupplierStatsModel;
 import yuown.yuventory.transformer.ItemTransformer;
 
 @Service
 public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, ItemsRepositoryService, ItemTransformer> {
 
+	private static final String SILVER = "Silver";
+
+	private static final String GOLD = "Gold";
+
 	private static final String ITEM_PAGE_SIZE = "item_pagesize";
+	
+	private static final String ITEM_NOTIFY_COUNT = "item_notify_count";
 
 	@Autowired
 	private ItemsRepositoryService itemsRepositoryService;
+	
+	@Autowired
+	private SupplierRepositoryService supplierRepositoryService;
 
 	@Autowired
 	private ItemTransformer itemTransformer;
@@ -160,8 +171,8 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	
 	public Map<String, Double> generateBalanceSheet() {
 		Map<String, Double> output = new HashMap<String, Double>();
-		output.put("goldWeight", itemsRepositoryService.findWeightSumByType("Gold"));
-		output.put("silverWeight", itemsRepositoryService.findWeightSumByType("Silver"));
+		output.put("goldWeight", itemsRepositoryService.findWeightSumByType(GOLD));
+		output.put("silverWeight", itemsRepositoryService.findWeightSumByType(SILVER));
 		return output;
 	}
 	
@@ -197,6 +208,54 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		if (size == null || (size < 0 || size > fromSystem)) {
 			size = fromSystem;
 		}
-		return repoService().findAllByName(name, new PageRequest(page, size));
+		return repoService().findAllByNameLike(name.toUpperCase(), new PageRequest(page, size));
+	}
+	
+	public List<SupplierStatsModel> supplierStats() {
+		List<SupplierStatsModel> stats = new ArrayList<SupplierStatsModel>();
+		
+		List<Supplier> allSuppliers = supplierRepositoryService.findAll();
+		for (Supplier quriedSupplier : allSuppliers) {
+			SupplierStatsModel eachStat = new SupplierStatsModel();
+			double d = 0.0;
+			try {
+				d = itemsRepositoryService.findWeightSumByType(GOLD, quriedSupplier);
+				eachStat.setGold(d);
+				d = itemsRepositoryService.findWeightSumByType(SILVER, quriedSupplier);
+				eachStat.setSilver(d);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			eachStat.setSupplier(quriedSupplier.getName());
+			stats.add(eachStat);
+		}
+		return stats;
+	}
+	
+	public List<Map<String, Integer>> getItemsCount() {
+		Long itemNotifyCount = Long.parseLong(System.getProperty(ITEM_NOTIFY_COUNT));
+		return repoService().findItemsCount(itemNotifyCount);
+	}
+
+	public void setNotifySize(Integer size) {
+		ConfigurationModel pageSize = configurationService.getByName(ITEM_NOTIFY_COUNT);
+		if (pageSize == null) {
+			pageSize = new ConfigurationModel();
+			pageSize.setName(ITEM_NOTIFY_COUNT);
+		}
+		if (size == null || size <= 0) {
+			size = 1;
+		}
+		pageSize.setValue(size);
+		configurationService.save(pageSize);
+	}
+	
+	public Integer getNotifySize() {
+		ConfigurationModel pageSize = configurationService.getByName(ITEM_NOTIFY_COUNT);
+		Integer size = 1;
+		if (pageSize != null) {
+			size = pageSize.getValue();
+		}
+		return size;
 	}
 }

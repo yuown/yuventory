@@ -29,7 +29,7 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 			};
 
 			$http.defaults.headers.common['YUOWN-KEY'] = authdata;
-			$cookieStore.put('globals', $rootScope.globals);
+			service.updateCookie();
 		} else{
 			$rootScope.errorMessage = "Failed to Login, due to a Server Error, Please contact Administrator!";
 		}
@@ -54,6 +54,10 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
     	        }
     	    }
 		return allowed;
+	};
+	
+	service.updateCookie = function() {
+	    $cookieStore.put('globals', $rootScope.globals);
 	};
 	
 	return service;

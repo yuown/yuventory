@@ -195,7 +195,7 @@ yuventoryApp.controller('AddUserToGroupController', [ '$scope', 'AjaxService', '
     
 }] );
 
-yuventoryApp.controller('ChangeUserController', [ '$scope', 'AjaxService', function($scope, AjaxService) {
+yuventoryApp.controller('ChangeUserController', [ '$scope', 'AjaxService', 'AuthenticationService', function($scope, AjaxService, AuthenticationService) {
     'use strict';
     
     $scope.request = {};
@@ -213,6 +213,8 @@ yuventoryApp.controller('ChangeUserController', [ '$scope', 'AjaxService', funct
             request.username = $scope.globals.currentUser.username;
             AjaxService.call('users/profile', 'POST', request).success(function(data, status, headers, config) {
                 $scope.message = data;
+                $scope.globals.currentUser.fullName = request.fullName;
+                AuthenticationService.updateCookie();
             }).error(function(data, status, headers, config) {
                 $scope.errorMessage = data;
             });

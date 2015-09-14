@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import yuown.yuventory.business.services.ItemService;
 import yuown.yuventory.model.ItemModel;
 import yuown.yuventory.model.ReportRequestModel;
+import yuown.yuventory.model.SupplierStatsModel;
 
 @RestController
 @RequestMapping(value = "/reports")
@@ -36,7 +37,7 @@ public class ReportsResourceImpl {
 		return new ResponseEntity<List<ItemModel>>(items, headers, responseStatus);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/balanceSheet")
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/balanceSheet")
 	@ResponseBody
 	public ResponseEntity<Map<String, Double>> balanceSheet() {
 		HttpHeaders headers = new HttpHeaders();
@@ -45,5 +46,16 @@ public class ReportsResourceImpl {
 		Map<String, Double> balanceSheet = itemService.generateBalanceSheet();
 
 		return new ResponseEntity<Map<String, Double>>(balanceSheet, headers, responseStatus);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/supplierStats")
+	@ResponseBody
+	public ResponseEntity<List<SupplierStatsModel>> supplierStats() {
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus responseStatus = HttpStatus.OK;
+
+		List<SupplierStatsModel> supplierStats = itemService.supplierStats();
+
+		return new ResponseEntity<List<SupplierStatsModel>>(supplierStats, headers, responseStatus);
 	}
 }

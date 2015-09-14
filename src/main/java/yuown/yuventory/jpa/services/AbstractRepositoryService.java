@@ -17,7 +17,7 @@ public abstract class AbstractRepositoryService<R extends BaseRepository<E, ID>,
 	public List<E> findAll() {
 		return repository().findAllByOrderByIdDesc();
 	}
-
+	
 	public PageImpl<E> findAll(PageRequest pageRequest) {
 		return repository().findAllByOrderByIdDesc(pageRequest);
 	}

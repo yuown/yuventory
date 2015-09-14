@@ -132,8 +132,37 @@ yuventoryApp.controller('BalanceSheetController', [ '$scope', 'AjaxService', '$m
     'use strict';
     
     $scope.generateReport = function() {
-        AjaxService.call('reports/balanceSheet', 'POST').success(function(data, status, headers, config) {
+        AjaxService.call('reports/balanceSheet', 'GET').success(function(data, status, headers, config) {
             $scope.reportsOutput = data;
+        });
+    };
+    
+} ]);
+
+yuventoryApp.controller('SupplierStatisticsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    'use strict';
+    
+    $scope.supplierStats = function() {
+        AjaxService.call('reports/supplierStats', 'GET').success(function(data, status, headers, config) {
+            $scope.supplierStatsOutput = data;
+            $scope.goldTotal = 0;
+            $scope.silverTotal = 0;
+            for(var i = 0; i < data.length; i++) {
+                var each = data[i];
+                    $scope.goldTotal += each.gold;
+                    $scope.silverTotal += each.silver;
+            }
+        });
+    };
+    
+} ]);
+
+yuventoryApp.controller('ItemsCountController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    'use strict';
+    
+    $scope.itemsCountFetch = function() {
+        AjaxService.call('items/itemsCount', 'GET').success(function(data, status, headers, config) {
+            $scope.itemsCount = data;
         });
     };
     

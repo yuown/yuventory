@@ -8,6 +8,10 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     	if(itemName) {
     		itemNameParam = '&name=' + itemName;
     	}
+    	AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
+            $scope.categories = data;
+        });
+    	
         AjaxService.call('items?page=' + (pageNumber - 1) + itemNameParam, 'GET').success(function(data, status, headers, config) {
         	$scope.totalItems = headers("totalItems");
         	$scope.pages = headers("pages");
@@ -113,10 +117,14 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     
     $scope.showInStockOut = function(item) {
     	$scope.globals.search = {
-    			id : item.id
-    		};
+			id : item.id
+		};
     	$location.path('/home/stockOut');
     };
+    
+    $scope.getCategoryName = function(id) {
+        return getObjectFromId($scope.categories, id)['name'];
+    }
     
 } ]);
 
@@ -139,6 +147,7 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
     $scope.init = function() {
+        $scope.onemore = true;
         AjaxService.call('items/names', 'GET').success(function(data, status, headers, config) {
             $scope.newItemNames = data;
         });
@@ -147,6 +156,9 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     $scope.printBarcode = function() {
     	window.print();
     	$scope.addDialog.dismiss('cancel');
+    	if($scope.onemore == true) {
+            $scope.add();
+        }
     };
     
 } ]);

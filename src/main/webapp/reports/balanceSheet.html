@@ -1,20 +1,10 @@
 <div ng-controller='BalanceSheetController' access="ROLE_REPORTS" ng-init="generateReport()">
-	<div class="col-md-12 table-responsive" ng-show="reportsOutput" access="ROLE_REPORTS">
-		<table class="table table-hover">
-			<thead>
-				<tr class="info table-row">
-					<th>Type</th>
-					<th>Gold</th>
-					<th>Silver</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="table-row">
-					<td>Weight</td>
-					<td>{{reportsOutput.goldWeight}} grams</td>
-					<td>{{reportsOutput.silverWeight}} grams</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="col-xs-12" ng-show="reportsOutput" access="ROLE_REPORTS">
+	    <div>
+	        <div style="width: {{reportsOutput.goldWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert goldbar">{{reportsOutput.goldWeight}} grams</div>
+	    </div>
+	    <div>
+	        <div style="width: {{reportsOutput.silverWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert silverbar">{{reportsOutput.silverWeight}} grams</div>
+	    </div>
 	</div>
 </div>

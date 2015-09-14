@@ -1,6 +1,7 @@
 package yuown.yuventory.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -222,9 +223,26 @@ public class ItemResourceImpl {
 		return itemService.getPageSize();
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, value = "/notifySize")
+	public void setNotifySize(@RequestBody Integer size) {
+		itemService.setNotifySize(size);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/notifySize")
+	@ResponseBody
+	public Integer getNotifySize() {
+		return itemService.getNotifySize();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/names")
 	@ResponseBody
 	public Set<String> getAllItemNames() {
 		return itemService.findAllItemNames();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/itemsCount")
+	@ResponseBody
+	public List<Map<String, Integer>> getItemsCount() {
+		return itemService.getItemsCount();
 	}
 }

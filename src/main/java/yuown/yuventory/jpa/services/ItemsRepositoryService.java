@@ -1,6 +1,7 @@
 package yuown.yuventory.jpa.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.entity.Supplier;
 import yuown.yuventory.jpa.repository.ItemsRepository;
 
 @Service("itemsRepositoryService")
 public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepository, Item, Integer> {
+	
+	public static final String PERCENT = "%";
 
 	@Autowired
 	private ItemsRepository repository;
@@ -50,7 +54,15 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 		return repository().findAllItemNames();
 	}
 	
-	public PageImpl<Item> findAllByName(String name, Pageable pageRequest) {
-		return repository().findAllByName(name, pageRequest);
+	public PageImpl<Item> findAllByNameLike(String name, Pageable pageRequest) {
+		return repository().findAllByNameLike(PERCENT + name + PERCENT, pageRequest);
+	}
+	
+	public Double findWeightSumByType(String type, Supplier supplier) {
+		return repository().sumByWeightByItemTypeSupplier(type, supplier);
+	}
+
+	public List<Map<String, Integer>> findItemsCount(Long itemNotifyCount) {
+		return repository().findItemsCount(false, itemNotifyCount);
 	}
 }

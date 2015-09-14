@@ -97,7 +97,7 @@
 		<div class="panel-footer" ng-hide="request.sold" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
 			<button class="btn btn-success" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="lendItem(request)" access="ROLE_LENDER">Lend Item</button>
 			<button class="btn btn-success" ng-if="request.lendTo != null && request.lendTo > 0" ng-click="getItemBack(request)" access="ROLE_ITEM_RETURNER">Get back Item</button>
-			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)" access="ROLE_LENDER,ROLE_SELLER">Sell Item</button>
+			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)" access="ROLE_LENDER,ROLE_SELLER">Stock Out Item</button>
 		</div>
 	</div>
 </div>

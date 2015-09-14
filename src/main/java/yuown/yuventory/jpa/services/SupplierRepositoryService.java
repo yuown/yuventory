@@ -38,4 +38,8 @@ public class SupplierRepositoryService extends AbstractRepositoryService<Supplie
 	public Supplier save(Supplier entity) {
 		return super.save(entity);
 	}
+	
+	public List<Supplier> findAllByOrderByNameDesc() {
+		return repository().findAllByOrderByNameDesc();
+	}
 }
