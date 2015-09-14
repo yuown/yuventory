@@ -106,7 +106,11 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 
 	public void createGroup(String groupName) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		jdbcUserDetailsManager.createGroup(groupName, authorities);
+		List<String> allGroups = jdbcUserDetailsManager.findAllGroups();
+		groupName = groupName.toUpperCase();
+		if(!allGroups.contains(groupName)) {
+			jdbcUserDetailsManager.createGroup(groupName, authorities);
+		}
 	}
 
 	public void deleteGroup(String groupName) {

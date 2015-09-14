@@ -171,8 +171,19 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	
 	public Map<String, Double> generateBalanceSheet() {
 		Map<String, Double> output = new HashMap<String, Double>();
-		output.put("goldWeight", itemsRepositoryService.findWeightSumByType(GOLD));
-		output.put("silverWeight", itemsRepositoryService.findWeightSumByType(SILVER));
+		double d = 0.0;
+		try {
+			d = itemsRepositoryService.findWeightSumByType(GOLD);
+		} catch (Exception e) {
+			d = 0.0;
+		}
+		output.put("goldWeight", d);
+		try {
+			d = itemsRepositoryService.findWeightSumByType(SILVER);
+		} catch (Exception e) {
+			d = 0.0;
+		}
+		output.put("silverWeight", d);
 		return output;
 	}
 	
@@ -220,12 +231,16 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 			double d = 0.0;
 			try {
 				d = itemsRepositoryService.findWeightSumByType(GOLD, quriedSupplier);
-				eachStat.setGold(d);
-				d = itemsRepositoryService.findWeightSumByType(SILVER, quriedSupplier);
-				eachStat.setSilver(d);
 			} catch (Exception e) {
-				e.printStackTrace();
+				d = 0.0;
 			}
+			eachStat.setGold(d);
+			try {
+				d = itemsRepositoryService.findWeightSumByType(SILVER, quriedSupplier);
+			} catch (Exception e) {
+				d = 0.0;
+			}
+			eachStat.setSilver(d);
 			eachStat.setSupplier(quriedSupplier.getName());
 			stats.add(eachStat);
 		}
@@ -233,7 +248,10 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 	}
 	
 	public List<Map<String, Integer>> getItemsCount() {
-		Long itemNotifyCount = Long.parseLong(System.getProperty(ITEM_NOTIFY_COUNT));
+		Long itemNotifyCount = 1L;
+		try {
+			itemNotifyCount = Long.parseLong(System.getProperty(ITEM_NOTIFY_COUNT));
+		} catch (Exception e) { }
 		return repoService().findItemsCount(itemNotifyCount);
 	}
 

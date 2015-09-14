@@ -58,4 +58,10 @@ public class ReportsResourceImpl {
 
 		return new ResponseEntity<List<SupplierStatsModel>>(supplierStats, headers, responseStatus);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/itemsCount")
+	@ResponseBody
+	public List<Map<String, Integer>> getItemsCount() {
+		return itemService.getItemsCount();
+	}
 }

@@ -161,7 +161,7 @@ yuventoryApp.controller('ItemsCountController', [ '$scope', 'AjaxService', '$mod
     'use strict';
     
     $scope.itemsCountFetch = function() {
-        AjaxService.call('items/itemsCount', 'GET').success(function(data, status, headers, config) {
+        AjaxService.call('reports/itemsCount', 'GET').success(function(data, status, headers, config) {
             $scope.itemsCount = data;
         });
     };

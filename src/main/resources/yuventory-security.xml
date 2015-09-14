@@ -34,7 +34,7 @@
 		
 		<security:intercept-url pattern="/rest/meta/**" access="hasRole('ROLE_DATAENTRY')" />
         
-        <security:intercept-url pattern="/rest/reports/generate/**" access="hasRole('ROLE_REPORTS')" method="POST" />
+        <security:intercept-url pattern="/rest/reports/**" access="hasRole('ROLE_REPORTS')" />
         
         <security:intercept-url pattern="/rest/stockTypes/**" access="hasRole('ROLE_DATAENTRY')" method="GET" />
         <security:intercept-url pattern="/rest/stockTypes/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />

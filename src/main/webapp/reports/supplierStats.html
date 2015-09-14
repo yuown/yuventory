@@ -8,10 +8,10 @@
 	       <div class="bar-header col-xs-2">{{eachVal.supplier}}</div>
 	       <div class="col-xs-10">
 	           <div>
-	               <div style="width: {{eachVal.gold*100/goldTotal}}%" class="alert goldbar">{{eachVal.gold}} grams</div>
+	               <div style="width: {{eachVal.gold*100/(goldTotal==0?1:goldTotal)}}%" class="alert goldbar">{{eachVal.gold}} grams</div>
 	           </div>
 	           <div>
-	               <div style="width: {{eachVal.silver*100/silverTotal}}%" class="alert silverbar">{{eachVal.silver}} grams</div>
+	               <div style="width: {{eachVal.silver*100/(silverTotal==0?1:silverTotal)}}%" class="alert silverbar">{{eachVal.silver}} grams</div>
 	           </div>
 	       </div>
        </div>

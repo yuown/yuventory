@@ -1,7 +1,6 @@
 package yuown.yuventory.rest.impl;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -238,11 +237,5 @@ public class ItemResourceImpl {
 	@ResponseBody
 	public Set<String> getAllItemNames() {
 		return itemService.findAllItemNames();
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/itemsCount")
-	@ResponseBody
-	public List<Map<String, Integer>> getItemsCount() {
-		return itemService.getItemsCount();
 	}
 }

@@ -47,7 +47,7 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	}
 
 	public Double findWeightSumByType(String type) {
-		return repository().findAllWeightByItemType(type);
+		return repository().findAllWeightByItemType(false, type);
 	}
 	
 	public Set<String> findAllItemNames() {
@@ -59,7 +59,7 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	}
 	
 	public Double findWeightSumByType(String type, Supplier supplier) {
-		return repository().sumByWeightByItemTypeSupplier(type, supplier);
+		return repository().sumByWeightByItemTypeSupplier(false, type, supplier);
 	}
 
 	public List<Map<String, Integer>> findItemsCount(Long itemNotifyCount) {
