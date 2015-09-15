@@ -48,10 +48,11 @@
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
                     <div class="barcodecontainer section-to-print">
-                        <img src="data:image/png;base64,{{barcode}}" />
-                        <div class="barcodecaption">
-                            <span class="barcodecaption1">{{request.weight}} gm</span>
-                            <span class="barcodecaption2">{{request.currCategory}}</span>
+                        <img src="data:image/png;base64,{{barcode}}" style="float: left;" />
+                        <div class="barcodecaption col-xs-12" style="float: left; clear: left;">
+                            <span class="col-xs-6">{{request.weight}} gm</span>
+                            <span class="col-xs-3">{{request.currCategory}}</span>
+							<span class="col-xs-3">{{request.id}}</span>
                         </div>
                     </div>
                 </div>

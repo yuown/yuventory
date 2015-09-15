@@ -1,0 +1,30 @@
+@page {
+	size: 6cm 1.3cm;
+	margin: 0.1mm 0.1mm 0.1mm 0.1mm;
+}
+
+@media print {
+	body * {
+		visibility: hidden;
+		display: none;
+	}
+	.section-to-print, .section-to-print * {
+		visibility: visible;
+	}
+	.section-to-print {
+		background-color: white;
+		/* 		height: 100%; */
+		/* 		width: 100%; */
+		position: fixed;
+		top: 0;
+		left: 0;
+		margin: 0;
+		padding: 1px;
+		font-size: 8px;
+		line-height: 12px;
+	}
+	div.barcodecontainer {
+		border: 0px;
+		padding: 0px;
+	}
+}

@@ -171,7 +171,8 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
     $scope.printBarcode = function() {
-    	window.print();
+    	// window.print();
+    	$.printPreview.loadPrintPreview();
     	$scope.addDialog.dismiss('cancel');
     	if($scope.onemore == true) {
             $scope.add();
