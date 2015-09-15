@@ -65,4 +65,8 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	public List<Map<String, Integer>> findItemsCount(Long itemNotifyCount) {
 		return repository().findItemsCount(false, itemNotifyCount);
 	}
+
+	public List<Item> getLentItems() {
+		return repository().findAllByLendToNotNullOrderByLendToDesc();
+	}
 }

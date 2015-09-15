@@ -1,0 +1,31 @@
+<div ng-controller='ItemsController' access="ROLE_REPORTS" ng-init="loadLentItems()">
+	<div ng-show="lentItems" access="ROLE_REPORTS">
+	   <div class="table-responsive">
+	        <table class="table table-hover">
+	            <thead>
+	                <tr class="info table-row">
+	                    <th>Item ID</th>
+	                    <th>Name</th>
+	                    <th>Weight</th>
+	                    <th>Category</th>
+	                    <th>Lent to</th>
+	                    <th access="ROLE_VIEW_ITEMS,ROLE_ITEM_RETURNER">Actions</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr ng-repeat="item in lentItems" class="table-row">
+	                    <td>{{item.id}}</td>
+	                    <td>{{item.name}}</td>
+	                    <td>{{item.weight}}</td>
+	                    <td>{{getCategoryName(item.category)}}</td>
+	                    <td>{{(getSupplierName(item.supplier))}}</td>
+	                    <td access="ROLE_VIEW_ITEMS,ROLE_ITEM_RETURNER">
+	                        <button type='button' class='btn btn-warning' ng-click="view(item)" access="ROLE_VIEW_ITEMS">View</button>
+	                        <button type='button' class='btn btn-success' ng-click="showInStockOut(item)" ng-show="(item.lendTo != null) && item.sold == false" access="ROLE_ITEM_RETURNER">Get back Item</button>
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	   </div>
+	</div>
+</div>

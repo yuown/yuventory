@@ -126,6 +126,23 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         return getObjectFromId($scope.categories, id)['name'];
     }
     
+    $scope.getSupplierName = function(id) {
+        return getObjectFromId($scope.suppliers, id)['name'];
+    }
+    
+    $scope.loadLentItems = function() {
+        AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
+            $scope.categories = data;
+        });
+        AjaxService.call('suppliers', 'GET').success(function(data, status, headers, config) {
+            $scope.suppliers = data;
+        });
+        
+        AjaxService.call('reports/lentItems', 'GET').success(function(data, status, headers, config) {
+            $scope.lentItems = data;
+        });
+    };
+    
 } ]);
 
 yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function($scope, AjaxService) {

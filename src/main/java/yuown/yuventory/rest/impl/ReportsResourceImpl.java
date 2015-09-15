@@ -64,4 +64,10 @@ public class ReportsResourceImpl {
 	public List<Map<String, Integer>> getItemsCount() {
 		return itemService.getItemsCount();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/lentItems")
+	@ResponseBody
+	public List<ItemModel> getLentItems() {
+		return itemService.getLentItems();
+	}
 }

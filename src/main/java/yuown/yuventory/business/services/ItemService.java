@@ -276,4 +276,8 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		}
 		return size;
 	}
+
+	public List<ItemModel> getLentItems() {
+		return transformer().transformTo(repoService().getLentItems());
+	}
 }
