@@ -12,8 +12,6 @@
 	}
 	.section-to-print {
 		background-color: white;
-/* 		height: 100%; */
-/* 		width: 100%; */
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -29,56 +27,43 @@
 	}
 }
 
-@media screen {
+@media screen , print {
 	.bar-tag-holder {
 		box-sizing: border-box;
+		display: inline;
 		clear: left;
-		color: rgb(51, 51, 51);
 		float: left;
-		height: 14px;
-		min-height: 1px;
+		height: 8px;
 		position: relative;
 		text-align: center;
-		width: 169.688px;
-		perspective-origin: 84.8438px 7px;
-		transform-origin: 84.8438px 7px;
-		border: 0px none rgb(51, 51, 51);
-		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		outline: rgb(51, 51, 51) none 0px;
-		padding: 0px 15px;
+		font-size: 8px;
+		white-space: nowrap;
 	}
 	.bar-tag-holder>.tag1 {
-		box-sizing: border-box;
-		color: rgb(51, 51, 51);
-		display: block;
 		float: left;
-		height: 14px;
-		min-height: 1px;
+		height: 8px;
 		position: relative;
 		text-align: center;
-		width: 69.8438px;
-		perspective-origin: 34.9219px 7px;
-		transform-origin: 34.9219px 7px;
-		border: 0px none rgb(51, 51, 51);
-		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		outline: rgb(51, 51, 51) none 0px;
-		padding: 0px 15px;
+		font-size: 8px;
+		width: 40%;
+		white-space: nowrap;
 	}
-	.bar-tag-holder>.tag2, .tag3 {
-		box-sizing: border-box;
-		color: rgb(51, 51, 51);
-		display: block;
+	.bar-tag-holder>.tag2 {
 		float: left;
-		height: 14px;
-		min-height: 1px;
+		height: 8px;
 		position: relative;
 		text-align: center;
-		width: 34.9219px;
-		perspective-origin: 17.4531px 7px;
-		transform-origin: 17.4531px 7px;
-		border: 0px none rgb(51, 51, 51);
-		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-		outline: rgb(51, 51, 51) none 0px;
-		padding: 0px 15px;
+		font-size: 8px;
+		width: 35%;
+		white-space: nowrap;
+	}
+	.bar-tag-holder>.tag3 {
+		height: 8px;
+		position: absolute;
+		float: right;
+		font-size: 8px;
+		width: 25%;
+		white-space: nowrap;
+		font-size: 8px;
 	}
 }
