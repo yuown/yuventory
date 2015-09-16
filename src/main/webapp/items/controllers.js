@@ -171,12 +171,15 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
     $scope.printBarcode = function() {
-    	// window.print();
-    	$.printPreview.loadPrintPreview();
+    	window.print();
     	$scope.addDialog.dismiss('cancel');
     	if($scope.onemore == true) {
             $scope.add();
         }
+    };
+    
+    $scope.previewBarcode = function() {
+        $.printPreview.loadPrintPreview();
     };
     
 } ]);

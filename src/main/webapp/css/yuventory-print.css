@@ -6,15 +6,14 @@
 @media print {
 	body * {
 		visibility: hidden;
-		display: none;
 	}
 	.section-to-print, .section-to-print * {
 		visibility: visible;
 	}
 	.section-to-print {
 		background-color: white;
-		/* 		height: 100%; */
-		/* 		width: 100%; */
+/* 		height: 100%; */
+/* 		width: 100%; */
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -22,9 +21,64 @@
 		padding: 1px;
 		font-size: 8px;
 		line-height: 12px;
+		width: 100%;
 	}
 	div.barcodecontainer {
 		border: 0px;
 		padding: 0px;
+	}
+}
+
+@media screen {
+	.bar-tag-holder {
+		box-sizing: border-box;
+		clear: left;
+		color: rgb(51, 51, 51);
+		float: left;
+		height: 14px;
+		min-height: 1px;
+		position: relative;
+		text-align: center;
+		width: 169.688px;
+		perspective-origin: 84.8438px 7px;
+		transform-origin: 84.8438px 7px;
+		border: 0px none rgb(51, 51, 51);
+		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		outline: rgb(51, 51, 51) none 0px;
+		padding: 0px 15px;
+	}
+	.bar-tag-holder>.tag1 {
+		box-sizing: border-box;
+		color: rgb(51, 51, 51);
+		display: block;
+		float: left;
+		height: 14px;
+		min-height: 1px;
+		position: relative;
+		text-align: center;
+		width: 69.8438px;
+		perspective-origin: 34.9219px 7px;
+		transform-origin: 34.9219px 7px;
+		border: 0px none rgb(51, 51, 51);
+		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		outline: rgb(51, 51, 51) none 0px;
+		padding: 0px 15px;
+	}
+	.bar-tag-holder>.tag2, .tag3 {
+		box-sizing: border-box;
+		color: rgb(51, 51, 51);
+		display: block;
+		float: left;
+		height: 14px;
+		min-height: 1px;
+		position: relative;
+		text-align: center;
+		width: 34.9219px;
+		perspective-origin: 17.4531px 7px;
+		transform-origin: 17.4531px 7px;
+		border: 0px none rgb(51, 51, 51);
+		font: normal normal normal normal 10px/14.2857px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		outline: rgb(51, 51, 51) none 0px;
+		padding: 0px 15px;
 	}
 }
