@@ -49,7 +49,7 @@
                     <span class="input-group-addon">Barcode</span>
                     <div class="barcodecontainer section-to-print">
                         <img src="data:image/png;base64,{{barcode}}" style="float: left;" />
-                        <div class="barcodecaption col-xs-12 bar-tag-holder">
+                        <div class="barcodecaption col-xs-10 bar-tag-holder">
                             <span class="col-xs-6 tag1">{{request.weight}} gm</span>
                             <span class="col-xs-3 tag2">{{request.currCategory}}</span>
 							<span class="col-xs-3 tag3">{{request.id}}</span>
@@ -69,6 +69,6 @@
         <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
         <button type="submit" class="btn btn-primary" form="addForm">Save</button>
         <button class="glyphicon glyphicon-print btn btn-warning" ng-click="printBarcode()" ng-show="request.id" access="ROLE_PRINT"></button>
-        <button class="glyphicon glyphicon glyphicon-eye-open btn btn-success" ng-click="previewBarcode()" ng-show="request.id" access="ROLE_PRINT"></button>
+        <button class="glyphicon glyphicon glyphicon-eye-open btn btn-success" ng-click="previewBarcode()" ng-show="false" access="ROLE_PRINT"></button>
     </div>
 </div>

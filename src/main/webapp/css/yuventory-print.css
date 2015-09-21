@@ -25,6 +25,10 @@
 		border: 0px;
 		padding: 0px;
 	}
+	
+	.stock-out-report-print {
+	   visibility: visible;
+	}
 }
 
 @media screen , print {

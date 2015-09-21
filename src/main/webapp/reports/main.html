@@ -50,7 +50,7 @@
 			<div class="col-md-2">
 				<div class="form-group">
 					<p class="input-group">
-						<span class="input-group-addon">Sell/ Lend</span>
+						<span class="input-group-addon">Stock out/ Lend</span>
 					</p>
 				</div>
 			</div>
@@ -171,11 +171,11 @@
 					<td>{{item.name}}</td>
 					<td>{{item.itemType}}</td>
 					<td>{{item.weight}}</td>
-					<td>{{item.categoryDesc}}</td>
-					<td>{{item.supplierDesc}}</td>
-					<td>{{item.lendToDesc}}</td>
+					<td>{{getCategoryName(item.category)}}</td>
+					<td>{{getSupplierName(item.supplier)}}</td>
+					<td>{{getSupplierName(item.lendTo)}}</td>
 					<td>{{item.stockTypeDesc}}</td>
-					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? item.status = 'In Stock' : (item.sold == true ? item.status = 'Item Sold' : item.status = 'Item Lent')}}</td>
+					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? item.status = 'In Stock' : (item.sold == true ? item.status = 'Item Stock out' : item.status = 'Item Lent')}}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -11,6 +11,9 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     	AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
             $scope.categories = data;
         });
+    	AjaxService.call('items/names', 'GET').success(function(data, status, headers, config) {
+            $scope.newItemNames = data;
+        });
     	
         AjaxService.call('items?page=' + (pageNumber - 1) + itemNameParam, 'GET').success(function(data, status, headers, config) {
         	$scope.totalItems = headers("totalItems");
@@ -127,21 +130,9 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     }
     
     $scope.getSupplierName = function(id) {
-        return getObjectFromId($scope.suppliers, id)['name'];
+        var r = getObjectFromId($scope.suppliers, id)['name'];
+        return r != null && r != '' ? r : '';
     }
-    
-    $scope.loadLentItems = function() {
-        AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
-            $scope.categories = data;
-        });
-        AjaxService.call('suppliers', 'GET').success(function(data, status, headers, config) {
-            $scope.suppliers = data;
-        });
-        
-        AjaxService.call('reports/lentItems', 'GET').success(function(data, status, headers, config) {
-            $scope.lentItems = data;
-        });
-    };
     
 } ]);
 

@@ -1,0 +1,80 @@
+<div ng-controller='MainReportsController' access="ROLE_REPORTS" ng-init="init();getSoldOrLentItems()">
+    <div class="col-xs-12 table-row">
+        <button type="button" class="btn btn-default" ng-click="toggleSellDate()">By Date</button>
+        <switch ng-model="reportsInput.soldOrLent" disable-text="Stock out Items" enable-text="Lent Items" access="ROLE_REPORTS" animate='false' />
+        <button type="button" class='btn btn-success pull-right' ng-click="getSoldOrLentItems()">Generate {{reportsInput.soldOrLent==false?'Stock out':'Lent'}} Items</button>
+        <button type="button" popover-placement="bottom" popover-title="Stock out Report Options" class="btn btn-primary" data-toggle="popover" popover-trigger="focus" popover-template="reportsInput.url" ng-show="reportsInput.soldOrLent==false && reportsOutput.length>0 && reportsOutput[0].sold==true">Options</button>
+    </div>
+    <hr class="col-md-12" />
+    <div collapse="reportsMeta.isSellCollapsed">
+	    <div class="col-md-2">
+	        <div class="form-group">
+	            <p class="input-group">
+	                <span class="input-group-addon">Stock out/ Lend</span>
+	            </p>
+	        </div>
+	    </div>
+	    <div class="col-md-5">
+	        <div class="form-group">
+	            <p class="input-group">
+	                <span class="input-group-addon">From</span>
+	                <input type="text" class="form-control" datepicker-popup="{{format}}"
+	                       ng-model="reportsInput.sellStartDate" is-open="status.ssopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+	                       datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+	                       close-text="Close" readonly="readonly" />
+	                <span class="input-group-btn">
+	                    <button type="button" class="btn btn-default" ng-click="open('sellStartDate')">
+	                        <i class="glyphicon glyphicon-calendar"></i>
+	                    </button>
+	                </span>
+	            </p>
+	        </div>
+	    </div>
+	    <div class="col-md-5">
+	        <div class="form-group">
+	            <p class="input-group">
+	                <span class="input-group-addon">To</span>
+	                <input type="text" class="form-control" datepicker-popup="{{format}}"
+	                       ng-model="reportsInput.sellEndDate" is-open="status.seopened" min-date="'2015-01-01'" max-date="'2099-12-31'"
+	                       datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+	                       close-text="Close" readonly="readonly" />
+	                <span class="input-group-btn">
+	                    <button type="button" class="btn btn-default" ng-click="open('sellEndDate')">
+	                        <i class="glyphicon glyphicon-calendar"></i>
+	                    </button>
+	                </span>
+	            </p>
+	        </div>
+	    </div>
+	</div>
+	<hr class="col-md-12" ng-hide="reportsMeta.isSellCollapsed" />
+	<div class="col-md-12 table-responsive">
+	     <table class="table table-hover">
+	         <thead>
+	             <tr class="info table-row">
+	                 <th ng-show="reportsInput.soldOrLent==false"></th>
+	                 <th>Item ID</th>
+	                 <th>Name</th>
+	                 <th>Weight</th>
+	                 <th>Category</th>
+	                 <th>Stock out to</th>
+	                 <th access="ROLE_SELLER,ROLE_ITEM_RETURNER">Actions</th>
+	             </tr>
+	         </thead>
+	         <tbody>
+	             <tr ng-repeat="item in reportsOutput" class="table-row noselect">
+	                 <td ng-show="reportsInput.soldOrLent==false && item.sold==true"><input type="checkbox" ng-model="item.selected" /></td>
+	                 <td ng-click="toggleEach(item)">{{item.id}}</td>
+	                 <td ng-click="toggleEach(item)">{{item.name}}</td>
+	                 <td ng-click="toggleEach(item)">{{item.weight}}</td>
+	                 <td ng-click="toggleEach(item)">{{getCategoryName(item.category)}}</td>
+	                 <td ng-click="toggleEach(item)">{{getSupplierName(item.supplier)}}</td>
+	                 <td access="ROLE_SELLER">
+	                     <button type='button' class='btn btn-danger' ng-click="deleteRecord(item)" access="ROLE_SELLER" ng-show="item.sold==true">Archive</button>
+	                     <button type='button' class='btn btn-success' ng-click="showInStockOut(item)" ng-show="item.sold==false" access="ROLE_ITEM_RETURNER">Get back Item</button>
+	                 </td>
+	             </tr>
+	         </tbody>
+	     </table>
+	</div>
+</div>

@@ -4,11 +4,15 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
     $scope.init = function() {
 		$scope.search = {};
         
-        $(document.body).scannerDetection(function(data){
-            $scope.search.id = parseInt(data);
-            $("#yuventoryBarcode").val(parseInt(data));
-            $scope.searchItem(false);
-        });
+		try {
+		    yuQuery(document.body).scannerDetection(function(data){
+	            $scope.search.id = parseInt(data);
+	            $("#yuventoryBarcode").val(parseInt(data));
+	            $scope.searchItem(false);
+	        });
+        } catch (e) {
+            console.log('Failed to Initialize barcode scanner: ' + e.message);
+        }
         
         if($scope.globals.search && $scope.globals.search.id) {
         	$scope.search.id = $scope.globals.search.id;

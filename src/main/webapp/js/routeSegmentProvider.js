@@ -19,7 +19,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/reports/unifiedReport', 'home.reports.unifiedReport').
         when('/home/reports/balanceSheet', 'home.reports.balanceSheet').
         when('/home/reports/supplierStats', 'home.reports.supplierStats').
-        when('/home/reports/lentItems', 'home.reports.lentItems').
+        when('/home/reports/stockOutOrLentItems', 'home.reports.stockOutOrLentItems').
         when('/home/settings', 'home.settings').
         when('/home/users', 'home.users').
         when('/home/changeProfile', 'home.changeProfile').
@@ -61,8 +61,8 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
 	            segment('supplierStats', {
 	                templateUrl : 'reports/supplierStats.html'
 	            }).
-                segment('lentItems', {
-                    templateUrl : 'reports/lentItems.html'
+                segment('stockOutOrLentItems', {
+                    templateUrl : 'reports/stockOutOrLentItems.html'
                 }).
             up().
             segment('notification', {

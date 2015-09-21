@@ -277,7 +277,29 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		return size;
 	}
 
-	public List<ItemModel> getLentItems() {
-		return transformer().transformTo(repoService().getLentItems());
+	public List<ItemModel> getLentItems(ReportRequestModel model) {
+		Long start = 0L, end = 0L;
+		List<Item> lentItems = null;
+		if (null != model.getSellStartDate() && null != model.getSellEndDate()) {
+			start = getBeginTimeStampForDate(model.getSellStartDate());
+			end = getEndTimeStampForDate(model.getSellEndDate());
+			lentItems = repoService().getLentItems(start, end);
+		} else {
+			lentItems = repoService().getLentItems();
+		}
+		return transformer().transformTo(lentItems);
+	}
+	
+	public List<ItemModel> getSoldItems(ReportRequestModel model) {
+		Long start = 0L, end = 0L;
+		List<Item> soldItems = null;
+		if (null != model.getSellStartDate() && null != model.getSellEndDate()) {
+			start = getBeginTimeStampForDate(model.getSellStartDate());
+			end = getEndTimeStampForDate(model.getSellEndDate());
+			soldItems = repoService().getSoldItems(start, end);
+		} else {
+			soldItems = repoService().getSoldItems();
+		}
+		return transformer().transformTo(soldItems);
 	}
 }

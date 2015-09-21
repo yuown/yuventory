@@ -65,9 +65,15 @@ public class ReportsResourceImpl {
 		return itemService.getItemsCount();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/lentItems")
+	@RequestMapping(method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/lentItems")
 	@ResponseBody
-	public List<ItemModel> getLentItems() {
-		return itemService.getLentItems();
+	public List<ItemModel> getLentItems(@RequestBody ReportRequestModel model) {
+		return itemService.getLentItems(model);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE }, value = "/soldItems")
+	@ResponseBody
+	public List<ItemModel> getSoldItems(@RequestBody ReportRequestModel model) {
+		return itemService.getSoldItems(model);
 	}
 }

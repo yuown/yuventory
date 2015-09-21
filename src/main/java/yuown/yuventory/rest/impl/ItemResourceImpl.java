@@ -151,7 +151,7 @@ public class ItemResourceImpl {
 
 		if (null != itemFromDB) {
 			if (itemFromDB.getSold() == true) {
-				headers.add("errorMessage", "Item Sold, cannot get back!");
+				headers.add("errorMessage", "Item Stock out, cannot get back!");
 				responseStatus = HttpStatus.BAD_REQUEST;
 			} else {
 				if (itemFromDB.getLendTo() == 0) {
@@ -188,6 +188,16 @@ public class ItemResourceImpl {
 			} catch (Exception e) {
 				headers.add("errorMessage", "Item with ID " + id + " cannot be Deleted");
 				return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/archiveSoldItems")
+	public void archiveSoldItems(@RequestBody List<Integer> ids) {
+		for (Integer id : ids) {
+			ItemModel item = itemService.getById(id);
+			if (null != item && item.getSold() == true) {
+				itemService.removeById(id);
 			}
 		}
 	}

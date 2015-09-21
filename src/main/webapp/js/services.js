@@ -20,16 +20,20 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 				roles.push(rolesArray[i].authority);
 			}
 			$rootScope.globals = {
-				currentUser : {
-					username : username,
-					authdata : authdata,
-					roles: roles,
-					fullName: fullName
-				}
-			};
+                currentUser : {
+                    username : username,
+                    authdata : authdata,
+                    roles: roles,
+                    fullName: fullName
+                }
+            };
 
-			$http.defaults.headers.common['YUOWN-KEY'] = authdata;
-			service.updateCookie();
+            $http.defaults.headers.common['YUOWN-KEY'] = authdata;
+            service.updateCookie();
+	        AjaxService.call('about', 'GET').success(function(data, status, headers, config) {
+	            $rootScope.globals.owner = data.licenceTo;
+	            service.updateCookie();
+	        });
 		} else{
 			$rootScope.errorMessage = "Failed to Login, due to a Server Error, Please contact Administrator!";
 		}
@@ -140,23 +144,33 @@ yuventoryApp.directive('switch', function() {
 					  "";
         },
         link: function(scope, element, attrs, ngModelController) {
-        	ngModelController.$render = function() {
-        	    var effect = 'drop';
-        		if(ngModelController.$viewValue == true) {
-        			jQuery(element.find('[data-f=0]')).show(effect)
-        			jQuery(element.find('[data-f=1]')).hide(effect);
-        		} else {
-        			jQuery(element.find('[data-f=0]')).hide(effect);
-                    jQuery(element.find('[data-f=1]')).show(effect);
-        		}
+        	ngModelController.$render = function(animate) {
+        	    if(animate && animate == "false") {
+                    if(ngModelController.$viewValue == true) {
+                        jQuery(element.find('[data-f=0]')).show()
+                        jQuery(element.find('[data-f=1]')).hide();
+                    } else {
+                        jQuery(element.find('[data-f=0]')).hide();
+                        jQuery(element.find('[data-f=1]')).show();
+                    }
+        	    } else {
+        	        var effect = 'drop';
+                    if(ngModelController.$viewValue == true) {
+                        jQuery(element.find('[data-f=0]')).show(effect)
+                        jQuery(element.find('[data-f=1]')).hide(effect);
+                    } else {
+                        jQuery(element.find('[data-f=0]')).hide(effect);
+                        jQuery(element.find('[data-f=1]')).show(effect);
+                    }
+        	    }
             };
-            function toggle() {
+            function toggle(animate) {
                 ngModelController.$setViewValue(!ngModelController.$viewValue);
-                ngModelController.$render();
+                ngModelController.$render(animate);
                 scope.callback();
             };
             element.on('click', function(event) {
-            	toggle();
+            	toggle(attrs.animate);
             });
         }
     };

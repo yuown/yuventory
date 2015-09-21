@@ -1,0 +1,86 @@
+<div ng-controller="AlertsArchiveSelectedController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        Are you sure to Archive the selected Items listed below ?<br />
+	    <div class="row stock-out-report-print">
+	        <div class="form-group col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">Stock out Report (Date)</span>
+                    <span class="input-group-addon">From: {{model.from}}</span>
+                    <span class="input-group-addon">To: {{model.to}}</span>
+                </div>
+            </div>
+            <div class="form-group col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">For: </span>
+                    <span class="input-group-addon">{{model.owner}}</span>
+                </div>
+            </div>
+	        <div class="col-xs-12">
+	           <div class="col-xs-6">
+	            <div class="form-group">
+                    <div class="input-group">
+	                   <span class="input-group-addon">Gold Items</span>
+	                </div>
+	            </div>
+	            <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">ID</span>
+                        <span class="input-group-addon">Item Name</span>
+                        <span class="input-group-addon">Item Weight</span>
+                    </div>
+                </div>
+		        <div class="form-group" ng-repeat="item in model.selectedItems" ng-if="item.itemType=='Gold'">
+		            <div class="input-group">
+		                <span class="input-group-addon">{{item.id}}</span>
+		                <span class="input-group-addon">{{item.name}}</span>
+		                <span class="input-group-addon">{{item.weight}}</span>
+		            </div>
+		        </div>
+		       </div> 
+		       <div class="col-xs-6">
+		        <div class="form-group">
+                    <div class="input-group">
+                       <span class="input-group-addon">Silver Items</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">ID</span>
+                        <span class="input-group-addon">Item Name</span>
+                        <span class="input-group-addon">Item Weight</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-repeat="item in model.selectedItems" ng-if="item.itemType=='Silver'">
+                    <div class="input-group">
+                        <span class="input-group-addon">{{item.id}}</span>
+                        <span class="input-group-addon">{{item.name}}</span>
+                        <span class="input-group-addon">{{item.weight}}</span>
+                    </div>
+                </div>
+               </div>
+	        </div>
+	        <div class="form-group col-xs-12">
+	            <div class="col-xs-6 form-group">
+	                <div class="input-group">
+	                    <span class="input-group-addon">Weight (grams)</span>
+	                    <span class="input-group-addon">{{getWeight(model.selectedItems, 'Gold')}}</span>
+	                </div>
+                </div>
+                <div class="col-xs-6 form-group">
+	                <div class="input-group">
+	                    <span class="input-group-addon">Weight (grams)</span>
+	                    <span class="input-group-addon">{{getWeight(model.selectedItems, 'Silver')}}</span>
+	                </div>
+	            </div>
+            </div>
+	    </div>
+	</div>
+    <div class="modal-footer">
+        <button class="glyphicon glyphicon-print btn btn-warning" ng-click="printStockOutReport()"></button>
+        <button class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="submitOption('no')"> No</button>
+        <button type="button" class="btn btn-success btn-large glyphicon glyphicon-ok" ng-click="submitOption('yes', confirmCallback)"> Yes</button>
+    </div>
+</div>

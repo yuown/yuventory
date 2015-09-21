@@ -29,5 +29,7 @@ public interface ItemsRepository extends BaseRepository<Item, Integer> {
 	@Query("select item.name, count(item.name) from Item item where item.lendTo is null and item.sold = ? group by item.name having count(item.name) <= ? order by count(item.name)")
 	public List<Map<String, Integer>> findItemsCount(Boolean sold, Long itemNotifyCount);
 
-	public List<Item> findAllByLendToNotNullOrderByLendToDesc();
+	public List<Item> findAllByLendToNotNullAndSoldOrderByLendToDesc(Boolean sold);
+
+	List<Item> findAllByLendToNotNullAndLendDateBetweenAndSoldOrderByLendToDesc(Long start, Long end, boolean b);
 }

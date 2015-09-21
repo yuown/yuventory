@@ -67,6 +67,18 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	}
 
 	public List<Item> getLentItems() {
-		return repository().findAllByLendToNotNullOrderByLendToDesc();
+		return repository().findAllByLendToNotNullAndSoldOrderByLendToDesc(false);
+	}
+	
+	public List<Item> getSoldItems() {
+		return repository().findAllByLendToNotNullAndSoldOrderByLendToDesc(true);
+	}
+
+	public List<Item> getSoldItems(Long start, Long end) {
+		return repository().findAllByLendToNotNullAndLendDateBetweenAndSoldOrderByLendToDesc(start, end, true);
+	}
+
+	public List<Item> getLentItems(Long start, Long end) {
+		return repository().findAllByLendToNotNullAndLendDateBetweenAndSoldOrderByLendToDesc(start, end, false);
 	}
 }

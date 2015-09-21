@@ -10,7 +10,10 @@
 			<div class="row">
 			  <form>
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Item name like" ng-model="search.name" />
+					<input type="text" class="form-control" placeholder="Item name like" ng-model="search.name" list="newNames" />
+					<datalist id="newNames">
+                       <option ng-repeat="newItem in newItemNames" ng-value="newItem">{{newItem}}</option>
+                    </datalist>
 					<span class="input-group-btn">
 						<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="load(1, search.name)"></button>
 						<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="search.name=''"></button>
@@ -34,6 +37,7 @@
 					<th>Item ID</th>
 					<th>Name</th>
 					<th>Weight</th>
+					<th>Type</th>
 					<th>Category</th>
 					<th>Status</th>
 					<th access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">Actions</th>
@@ -44,13 +48,15 @@
 					<td>{{item.id}}</td>
 					<td>{{item.name}}</td>
 					<td>{{item.weight}}</td>
+					<td>{{item.itemType}}</td>
 					<td>{{getCategoryName(item.category)}}</td>
-					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Sold' : 'Item Lent')}}</td>
+					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Stock out' : 'Item Lent')}}</td>
 					<td access="ROLE_VIEW_ITEMS,ROLE_DATAENTRY,ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
 					    <button type='button' class='btn btn-warning' ng-click="view(item)" access="ROLE_VIEW_ITEMS">View</button>
 						<button type='button' class='btn btn-success' ng-click="add(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false" access="ROLE_DATAENTRY">Edit</button>
 						<button type='button' class='btn btn-danger' ng-click="deleteRecord(item)" access="ROLE_SELLER">Delete</button>
 						<button type='button' class='btn btn-info' ng-click="showInStockOut(item)" ng-show="(item.lendTo == null || item.lendTo == 0) && item.sold == false" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">Stock Out</button>
+						<button type='button' class='btn btn-success' ng-click="showInStockOut(item)" ng-show="(item.lendTo != null && item.lendTo > 0) && item.sold == false" access="ROLE_ITEM_RETURNER">Get back Item</button>
 					</td>
 				</tr>
 			</tbody>

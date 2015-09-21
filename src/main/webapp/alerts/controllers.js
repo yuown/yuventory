@@ -39,6 +39,16 @@ yuventoryApp.factory('AlertsService', [ '$rootScope', '$modal', function($rootSc
                 templateUrl : 'alerts/confirmSell.html',
                 scope : $rootScope
             });
+        },
+        confirmArchiveSelected : function(model, callback) {
+            $rootScope.title = "yuventory";
+            $rootScope.confirmCallback = callback;
+            $rootScope.model = model;
+            $rootScope.confirmDialog = $modal.open({
+                templateUrl : 'alerts/confirmArchivSelected.html',
+                scope : $rootScope,
+                size: 'lg'
+            });
         }
     };
 
@@ -103,6 +113,44 @@ yuventoryApp.controller('AlertsSellController', [ '$scope', '$modal', 'AjaxServi
         if(getObjectFromId($scope.stockTypes, $scope.clonedRequest.stockType)) {
             $scope.deleteFromStock = getObjectFromId($scope.stockTypes, $scope.clonedRequest.stockType)['remove'];
         }
+    };
+    
+} ]);
+
+yuventoryApp.controller('AlertsArchiveSelectedController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
+    
+    $scope.submitOption = function(option, confirmCallback) {
+        $scope.confirmDialog.dismiss('cancel')
+        if(option == 'yes') {
+            confirmCallback($scope.clonedRequest);
+        }
+    };
+    
+    $scope.getWeight = function(list, type) {
+        var tot = 0;
+        for (var int = 0; int < list.length; int++) {
+            var elem = list[int];
+            if(elem.itemType == type) {
+                tot += elem.weight;
+            }
+        }
+        return tot;
+    };
+    
+    $scope.printStockOutReport = function() {
+        var winPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
+        winPrint.document.write('<html><head><title>Print Report</title>' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap-theme.css" />' +
+                '<script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>' +
+                '<script type="text/javascript">' +
+                    '$(document).ready(function() {window.print();window.close();});' +
+                '</script>' +  
+                '</head><body>' + yuQuery(".stock-out-report-print").html() + "</body></html>");
+        winPrint.document.close();
+        winPrint.focus();
+//        winPrint.print();
+//        winPrint.close();
     };
     
 } ]);

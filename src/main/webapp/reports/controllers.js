@@ -1,11 +1,9 @@
 yuventoryApp.controller('ReportsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
-
-    
     
 } ]);
 
-yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', '$location', function($scope, AjaxService, $modal, AlertsService, $location) {
     'use strict';
     
     $scope.resetPurchaseDate = function() {
@@ -69,7 +67,9 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 			purchaseStartDate: null,
 			purchaseEndDate: null,
 			sellStartDate: null,
-			sellEndDate: null
+			sellEndDate: null,
+			soldOrLent: false,
+			url: 'reports/stockOutReportsOptions.html'
         };
 		$scope.today();
 		
@@ -77,17 +77,30 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	    	$scope.reportsMeta.itemTypes = data;
 		});
 		
-		AjaxService.call("categories/", 'GET').success(function(data, status, headers, config) {
-	    	$scope.reportsMeta.categories = data;
-		});
-		
-		AjaxService.call("suppliers", 'GET').success(function(data, status, headers, config) {
-	    	$scope.reportsMeta.suppliers = data;
-		});
+		AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
+            $scope.categories = data;
+        });
+        AjaxService.call('suppliers', 'GET').success(function(data, status, headers, config) {
+            $scope.suppliers = data;
+        });
 		
 		AjaxService.call('stockTypes', 'GET').success(function(data, status, headers, config) {
             $scope.reportsMeta.stockTypes = data;
         });
+		
+		$scope.getCategoryName = function(id) {
+	        return getObjectFromId($scope.categories, id)['name'];
+	    }
+	    
+	    $scope.getSupplierName = function(id) {
+	        var r = '';
+	        if(id) {
+	            r = getObjectFromId($scope.suppliers, id)['name'];
+	        }
+	        return r;
+	    }
+	    
+	    yuQuery('[data-toggle="popover"]').popover();
 	};
 	
 	$scope.togglePurchaseDate = function() {
@@ -112,10 +125,7 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	    AjaxService.call('reports/generate/', 'POST', clonedReportsInput).success(function(data, status, headers, config) {
             $scope.reportsOutput = data;
             for (var i = 0; i < $scope.reportsOutput.length; i++) {
-            	$scope.reportsOutput[i].supplierDesc = getObjectFromId($scope.reportsMeta.suppliers, $scope.reportsOutput[i].supplier).name;
-            	$scope.reportsOutput[i].categoryDesc = getObjectFromId($scope.reportsMeta.categories, $scope.reportsOutput[i].category).name;
             	$scope.reportsOutput[i].stockTypeDesc = getObjectFromId($scope.reportsMeta.stockTypes, $scope.reportsOutput[i].stockType).name;
-            	$scope.reportsOutput[i].lendToDesc = getObjectFromId($scope.reportsMeta.suppliers, $scope.reportsOutput[i].lendTo).name;
 			}
         });
 	};
@@ -126,6 +136,85 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 		$("#downloadCSV").attr('href', 'data:Application/octet-stream,' + csv)[0].click();
 	};
 	
+	$scope.getSoldOrLentItems = function() {
+        var clonedReportsInput = angular.copy($scope.reportsInput);
+        if($scope.reportsMeta.isSellCollapsed == true) {
+            clonedReportsInput.sellStartDate = null;
+            clonedReportsInput.sellEndDate = null;
+        }
+        var param;
+        if($scope.reportsInput.soldOrLent) {
+            param = 'lent';
+        } else {
+            param = 'sold';
+        }
+        $scope.stockOutReportModel = {
+            from: clonedReportsInput.sellStartDate,
+            to: clonedReportsInput.sellEndDate,
+            owner: $scope.globals.owner[0]
+        };
+        AjaxService.call('reports/' + param + 'Items', 'POST', clonedReportsInput).success(function(data, status, headers, config) {
+            $scope.reportsOutput = data;
+            for (var i = 0; i < $scope.reportsOutput.length; i++) {
+                $scope.reportsOutput[i].stockTypeDesc = getObjectFromId($scope.reportsMeta.stockTypes, $scope.reportsOutput[i].stockType).name;
+            }
+            $scope.toggleSelectAllItems(true);
+        });
+    };
+    
+    $scope.showInStockOut = function(item) {
+        $scope.globals.search = {
+            id : item.id
+        };
+        $location.path('/home/stockOut');
+    };
+    
+    $scope.deleteRecord = function(request) {
+        AlertsService.confirm('Are you sure to Archive this ?', function() {
+            AjaxService.call('items/' + request.id, 'DELETE').success(function(data, status, headers, config) {
+                $scope.getSoldOrLentItems();
+            });
+        });
+    };
+    
+    $scope.toggleSelectAllItems = function(selectAll) {
+        if(selectAll == undefined || selectAll == null || selectAll == '') {
+            selectAll = false;
+        } else {
+            selectAll = true;
+        }
+        $scope.reportsOutput.selectAll=selectAll;
+        for(var i = 0; i < $scope.reportsOutput.length; i++) {
+            $scope.reportsOutput[i].selected=$scope.reportsOutput.selectAll;
+        }
+    }
+    
+    $scope.toggleEach = function(item) {
+        if(item.sold && item.sold == true) {
+            item.selected=!item.selected;
+        }
+    };
+    
+    $scope.archiveSelected = function() {
+        var selectedItems = [];
+        for (var int = 0; int < $scope.reportsOutput.length; int++) {
+            var element = $scope.reportsOutput[int];
+            if(element.selected == true) {
+                selectedItems.push(element);
+            }
+        }
+        $scope.stockOutReportModel.selectedItems = selectedItems;
+        AlertsService.confirmArchiveSelected($scope.stockOutReportModel, function() {
+            var selectedIds = [];
+            for (var int = 0; int < selectedItems.length; int++) {
+                selectedIds.push(selectedItems[int].id);
+            }
+            AjaxService.call('items/archiveSoldItems', 'POST', selectedIds).success(function(data, status, headers, config) {
+                $scope.getSoldOrLentItems();
+            });
+        });
+    };
+    
 } ]);
 
 yuventoryApp.controller('BalanceSheetController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
