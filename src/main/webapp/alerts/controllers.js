@@ -49,6 +49,15 @@ yuventoryApp.factory('AlertsService', [ '$rootScope', '$modal', function($rootSc
                 scope : $rootScope,
                 size: 'lg'
             });
+        },
+        estimateDetails : function(clonedRequest, callback) {
+            $rootScope.title = "yuventory";
+            $rootScope.confirmCallback = callback;
+            $rootScope.clonedRequest = clonedRequest;
+            $rootScope.confirmDialog = $modal.open({
+                templateUrl : 'alerts/estimateDetails.html',
+                scope : $rootScope
+            });
         }
     };
 
@@ -149,8 +158,18 @@ yuventoryApp.controller('AlertsArchiveSelectedController', [ '$scope', '$modal',
                 '</head><body>' + yuQuery(".stock-out-report-print").html() + "</body></html>");
         winPrint.document.close();
         winPrint.focus();
-//        winPrint.print();
-//        winPrint.close();
+    };
+    
+} ]);
+
+yuventoryApp.controller('EstimateDetailsController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
+    'use strict';
+    
+    $scope.submitOption = function(option, confirmCallback) {
+        $scope.confirmDialog.dismiss('cancel')
+        if(option == 'yes') {
+            confirmCallback($scope.clonedRequest);
+        }
     };
     
 } ]);

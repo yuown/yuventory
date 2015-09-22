@@ -1,18 +1,20 @@
 <div ng-controller='EstimateController' ng-init="init()">
 	<div class="container">
 		<div class="row">
-		  <form>
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" id='yuventoryBarcode' />
-				<span class="input-group-btn">
-					<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="searchItem(true)"></button>
-					<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="clearSearch()"></button>
-				</span>
-			</div>
-		  </form>
+			<form>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search item" ng-model="search.id" id='yuventoryBarcode' />
+					<span class="input-group-btn">
+						<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="searchItem(true)"></button>
+						<button class="btn btn-default glyphicon glyphicon-remove" type="button" ng-click="clearSearch()"></button>
+					</span>
+				</div>
+			</form>
 		</div>
 	</div>
-	<div class="divider"><br /></div>
+	<div class="divider">
+		<br />
+	</div>
 	<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
 	<div class="panel panel-success" ng-if="search.hasResult==true && request.id != null">
 		<div class="panel-heading">
@@ -20,41 +22,93 @@
 		</div>
 		<div class="panel-body" access="ROLE_ESTIMATE,ROLE_VIEW_ITEMS">
 			<div class="form-inline col-xs-12">
-	            <div class="input-group">
-	                <span class="input-group-addon">ID: {{request.id}}</span>
-	                <span class="input-group-addon"> </span>
-	            </div>
-	            <div class="input-group">
-                    <span class="input-group-addon">Item Type: {{request.itemType}}</span>
-                    <span class="input-group-addon"> </span>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">Weight (in gms): {{request.weight}}</span>
-                    <span class="input-group-addon"> </span>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">Category: {{request.categoryDesc}}</span>
-                    <span class="input-group-addon"> </span>
-                </div>
-	        </div>
+				<div class="input-group">
+					<span class="input-group-addon">ID: {{request.id}}</span>
+					<span class="input-group-addon"> </span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Item Type: {{request.itemType}}</span>
+					<span class="input-group-addon"> </span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Weight (in gms): {{request.weight}}</span>
+					<span class="input-group-addon"> </span>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Category: {{request.categoryDesc}}</span>
+					<span class="input-group-addon"> </span>
+				</div>
+			</div>
 		</div>
 		<div class="panel-footer" ng-hide="request.sold" access="ROLE_ESTIMATE">
-			<button class="btn btn-danger" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="addItem(request)" access="ROLE_ESTIMATE">Add Item</button>
+			<button class="btn btn-warning" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="addItem(request)" access="ROLE_ESTIMATE">Add Item</button>
+		</div>
+	</div>
+	<hr />
+	<div class="estimate-section-print" ng-show="addedItems2Estimate.length > 0">
+		<div class="list-group">
+			<a class="list-group-item">
+				<h4 class="list-group-item-heading">
+					{{globals.owner[0]}}
+					<div class="pull-right">
+						{{getDate()}}
+					</div>
+				</h4>
+				<p class="list-group-item-text"></p>
+			</a>
+		</div>
+		<div class="list-group" ng-repeat="item in addedItems2Estimate">
+			<a class="list-group-item">
+				<h4 class="list-group-item-heading">{{item.name}}</h4>
+				<p class="list-group-item-text">
+				<table class="table-responsive col-xs-12">
+					<tbody>
+						<tr>
+							<td>Weight: {{item.weight}}</td>
+							<td>Category: {{item.categoryDesc}}</td>
+						</tr>
+						<tr>
+							<td>Price Per gram: {{item.perGram}}</td>
+							<td>Wastage (%): {{item.wastage}}</td>
+						</tr>
+						<tr>
+							<td>Making Charges Per Gram: {{item.makingCharges}}</td>
+							<td class="bg-success">Total Price: {{item.totalPrice}}</td>
+						</tr>
+					</tbody>
+				</table>
+				</p>
+				<br />
+				<div class="row no-print">
+					<div class="pull-right">
+						<button class="btn btn-success" ng-click="modifyEstimatedItem(item)" access="ROLE_ESTIMATE">Modify</button>
+						<button class="btn btn-danger" ng-click="addedItems2Estimate.splice(addedItems2Estimate.indexOf(item), 1)" access="ROLE_ESTIMATE">Remove</button>
+					</div>
+				</div>
+			</a>
 		</div>
 		<hr />
-		<div>
-		  <div class="list-group" ng-repeat="item in addedItems2Estimate">
-		      <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">{{item.name}}</h4>
-			    <p class="list-group-item-text">
-			         Weight: {{item.weight}}. Category: {{item.category}}<br/>
-			         Per gram: {{item.perGram}}<br/>
-			         Wasted grams: {{item.wasteGrams}}<br/>
-			         Making Charges: {{item.makingCharges}}
-    		    </p>
-    		    <button class="btn btn-success pull-right" ng-click="modifyEstimatedItem(item)" access="ROLE_ESTIMATE">Modify</button>
-			  </a>
-		  </div>
+		<div class="list-group" ng-show="addedItems2Estimate.length > 0">
+			<a class="list-group-item">
+				<h4 class="list-group-item-heading">Estimate Summary</h4>
+				<p class="list-group-item-text">
+				<table class="table-responsive col-xs-12">
+					<tbody>
+						<tr>
+							<td>Total Items: {{addedItems2Estimate.length}}</td>
+							<td>Estimated Total Amount: {{sum(addedItems2Estimate)}}</td>
+						</tr>
+					</tbody>
+				</table>
+				</p>
+				<br />
+				<div class="row no-print">
+					<div class="pull-right">
+						<button class="glyphicon glyphicon-print btn btn-warning" ng-click="printEstimate()" access="ROLE_ESTIMATE"></button>
+						<button class="btn btn-danger glyphicon glyphicon-remove" type="button" ng-click="addedItems2Estimate.splice(0, addedItems2Estimate.length)"></button>
+					</div>
+				</div>
+			</a>
 		</div>
 	</div>
 </div>

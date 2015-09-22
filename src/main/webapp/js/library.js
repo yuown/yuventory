@@ -5,6 +5,7 @@ function getObjectFromId(array, id) {
 			return every;
 		}
 	}
+	return null;
 }
 
 function contains(array, obj, fieldName) {
@@ -75,4 +76,15 @@ function convertKey(key) {
 			'status': 'Status'
 	};
 	return mapper[key];
+}
+
+function getDate() {
+	var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+	var date = new Date();
+	var day = date.getDate();
+	var monthIndex = date.getMonth();
+	var year = date.getFullYear();
+
+	return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }

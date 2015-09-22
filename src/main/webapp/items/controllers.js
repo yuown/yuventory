@@ -177,6 +177,20 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
 
 yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
+
+    var roundTo2Decimals = function(amount) {
+    	return parseFloat(Math.round((amount) * 100) / 100).toFixed(2);
+    };
+    
+    var calculateTotalPrice = function(item) {
+    	var pW = parseFloat(item.weight);
+    	var pG = parseFloat(item.perGram);
+    	var pM = parseFloat(item.makingCharges);
+    	var pIw = parseFloat(item.wastage);
+    	var wt1 = pW * (pG + pM);
+    	var wt2 = (pW * pG) * pIw / 100;
+    	return roundTo2Decimals(wt1 + wt2);
+    };
     
     $scope.init = function() {
         $scope.search = {};
@@ -227,32 +241,56 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
         $scope.errorMessage = null;
     };
     
-    $scope.lendItem = function(request) {
-        
-        var clonedRequest = angular.copy(request);
-        AlertsService.confirmLending(clonedRequest, function(clonedRequest) {
-            AjaxService.call("items/lend", 'POST', clonedRequest).success(function(data, status, headers, config) {
-                $scope.searchItem();
-            });
-        });
-    };
-    
-    $scope.getItemBack = function(request) {
-        
-        var clonedRequest = angular.copy(request);
-        AlertsService.confirmReturn(clonedRequest, function(clonedRequest) {
-            clonedRequest.lendTo = null;
-            clonedRequest.lendDescription = null;
-            AjaxService.call("items/getBack", 'POST', clonedRequest).success(function(data, status, headers, config) {
-                $scope.searchItem();
-            });
-        });
-    };
-    
     $scope.addItem = function(request) {
-        
-        var clonedRequest = angular.copy(request);
-        $scope.addedItems2Estimate.push(clonedRequest);
+        var contains = getObjectFromId($scope.addedItems2Estimate, request.id);
+    	if(contains == null) {
+    		var clonedRequest = angular.copy(request);
+            AlertsService.estimateDetails(clonedRequest, function(item) {
+            	item.totalPrice = calculateTotalPrice(item);
+            	$scope.addedItems2Estimate.push(item);
+            	$scope.clearSearch();
+            });
+    	} else {
+    		$scope.clearSearch();
+    	}
+    };
+    
+    $scope.modifyEstimatedItem = function(request) {
+    	var cloned = angular.copy(request);
+        AlertsService.estimateDetails(cloned, function(item) {
+        	request.perGram = item.perGram;
+        	request.makingCharges = item.makingCharges;
+        	request.wastage = item.wastage;
+        	request.totalPrice = calculateTotalPrice(item);
+        });
+    };
+    
+    $scope.sum = function(addedItems2Estimate) {
+    	var sum = 0.0;
+    	for (var int = 0; int < addedItems2Estimate.length; int++) {
+    		sum += parseFloat(addedItems2Estimate[int].totalPrice);
+		}
+    	return roundTo2Decimals(sum);
+    };
+    
+    $scope.printEstimate = function() {
+        var winPrint = window.open('', '', 'left=0,top=0,toolbar=0,scrollbars=0,status=0');
+        winPrint.document.write('<html><head><title>Print Estimate</title>' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap-theme.css" />' +
+                '<script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>' +
+                '<script type="text/javascript">' +
+                    '$(document).ready(function() {' +
+                    	'$(".no-print").remove();' +
+            			'window.print();window.close();});' +
+                '</script>' +  
+                '</head><body>' + yuQuery(".estimate-section-print").html() + "</body></html>");
+        winPrint.document.close();
+        winPrint.focus();
+    };
+    
+    $scope.getDate = function() {
+    	return getDate();
     };
     
 } ]);
