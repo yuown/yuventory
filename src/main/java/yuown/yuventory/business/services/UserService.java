@@ -54,6 +54,9 @@ public class UserService extends AbstractServiceImpl<Integer, UserModel, User, U
 		User dbUser = userRepositoryService.findByUsername(name);
 		user.setId(dbUser.getId());
 		user.setFullName(dbUser.getFullName());
+		if(SUPER_USERS.contains(name)) {
+			user.setAuthorities(transformer().transformAdminAuthorities(ALL_ROLES));
+		}
 		return user;
 	}
 

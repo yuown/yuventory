@@ -2,6 +2,7 @@ package yuown.yuventory.transformer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -67,6 +68,14 @@ public class UserTransformer extends AbstractDTOTransformer<UserModel, User> {
 		ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
 		for (GrantedAuthority grantedAuthority : authoritiesFromDB) {
 			authorities.add(new YuownGrantedAuthority(grantedAuthority.getAuthority()));
+		}
+		return authorities;
+	}
+	
+	public ArrayList<YuownGrantedAuthority> transformAdminAuthorities(List<String> adminAuthorities) {
+		ArrayList<YuownGrantedAuthority> authorities = new ArrayList<YuownGrantedAuthority>();
+		for (String adminAuthority : adminAuthorities) {
+			authorities.add(new YuownGrantedAuthority(adminAuthority));
 		}
 		return authorities;
 	}
