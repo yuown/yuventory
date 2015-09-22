@@ -174,3 +174,85 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
 } ]);
+
+yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    'use strict';
+    
+    $scope.init = function() {
+        $scope.search = {};
+        $scope.addedItems2Estimate = [];
+        
+        try {
+            yuQuery(document.body).scannerDetection(function(data){
+                $scope.search.id = parseInt(data);
+                $("#yuventoryBarcode").val(parseInt(data));
+                $scope.searchItem(false);
+            });
+        } catch (e) {
+            console.log('Failed to Initialize barcode scanner: ' + e.message);
+        }
+        
+        if($scope.globals.search && $scope.globals.search.id) {
+            $scope.search.id = $scope.globals.search.id;
+            $scope.searchItem(false);
+            $scope.globals.search = {};
+        }
+    };
+    
+    $scope.searchItem = function(manual) {
+        $scope.clearSearch();
+        if($scope.search.id != null && !isNaN($scope.search.id)) {
+            AjaxService.call('items/' + $scope.search.id, 'GET').success(function(data, status, headers, config) {
+                if(data != null && data.id != null) {
+                    $scope.errorMessage = '';
+                    $scope.search.hasResult = true;
+                    $scope.request = data;
+                    
+                    AjaxService.call("categories/" + $scope.request.category, 'GET').success(function(data, status, headers, config) {
+                        $scope.request.categoryDesc = data.name;
+                    });
+                    
+                } else {
+                    $scope.errorMessage = "Item not found";
+                }
+            });
+        } else {
+            $scope.errorMessage = "Invalid barcode";
+        }
+    };
+    
+    $scope.clearSearch = function() {
+        $scope.search.hasResult = false;
+        $scope.request = null;
+        $scope.errorMessage = null;
+    };
+    
+    $scope.lendItem = function(request) {
+        
+        var clonedRequest = angular.copy(request);
+        AlertsService.confirmLending(clonedRequest, function(clonedRequest) {
+            AjaxService.call("items/lend", 'POST', clonedRequest).success(function(data, status, headers, config) {
+                $scope.searchItem();
+            });
+        });
+    };
+    
+    $scope.getItemBack = function(request) {
+        
+        var clonedRequest = angular.copy(request);
+        AlertsService.confirmReturn(clonedRequest, function(clonedRequest) {
+            clonedRequest.lendTo = null;
+            clonedRequest.lendDescription = null;
+            AjaxService.call("items/getBack", 'POST', clonedRequest).success(function(data, status, headers, config) {
+                $scope.searchItem();
+            });
+        });
+    };
+    
+    $scope.addItem = function(request) {
+        
+        var clonedRequest = angular.copy(request);
+        $scope.addedItems2Estimate.push(clonedRequest);
+    };
+    
+} ]);

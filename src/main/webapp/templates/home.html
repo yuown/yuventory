@@ -14,6 +14,7 @@
 	          <ul class="nav navbar-nav">
 	          	<li ng-class="{active: isSegment('stockOut')}" access="ROLE_LENDER,ROLE_SELLER,ROLE_ITEM_RETURNER"><a href="#/home/stockOut">Stock Out</a></li>
 	            <li ng-class="{active: isSegment('stockIn')}" access="ROLE_DATAENTRY"><a href="#/home/stockIn">Stock In</a></li>
+	            <li ng-class="{active: isSegment('estimate')}" access="ROLE_ESTIMATE"><a href="#/home/estimate">Estimate</a></li>
 	            <li class="dropdown" ng-class="{active: isSegment('suppliers') || isSegment('categories') || isSegment('stockTypes')}" access="ROLE_REFERENCE_ENTRY,ROLE_DATAENTRY">
 	               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference Data <span class="caret"></span></a>
 	               <ul class="dropdown-menu">
