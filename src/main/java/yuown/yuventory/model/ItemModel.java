@@ -23,6 +23,8 @@ public class ItemModel extends Model {
 	private String lendDescription;
 
 	private Boolean sold;
+	
+	private int location;
 
 	private long createDate;
 
@@ -114,6 +116,14 @@ public class ItemModel extends Model {
 
 	public void setSold(Boolean sold) {
 		this.sold = sold;
+	}
+
+	public int getLocation() {
+		return location;
+	}
+
+	public void setLocation(int location) {
+		this.location = location;
 	}
 
 	public long getCreateDate() {

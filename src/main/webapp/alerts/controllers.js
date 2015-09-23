@@ -83,6 +83,11 @@ yuventoryApp.controller('AlertsLendController', [ '$scope', '$modal', 'AjaxServi
     	$scope.clonedRequest.lendTo = $scope.clonedRequest.lendTo == 0 || $scope.clonedRequest.lendTo == null ? data[0].id : $scope.clonedRequest.lendTo;
 	});
     
+    AjaxService.call("locations/", 'GET').success(function(data, status, headers, config) {
+        $scope.locations = data;
+        $scope.clonedRequest.location = data[0].id;
+    });
+    
     AjaxService.call('stockTypes?method=' + $scope.lendReturnEntryExitFlag + '&remove=false', 'GET').success(function(data, status, headers, config) {
         $scope.stockTypes = data;
         $scope.clonedRequest.stockType = $scope.clonedRequest.stockType == null ? data[0].id : $scope.clonedRequest.stockType;
@@ -103,6 +108,11 @@ yuventoryApp.controller('AlertsSellController', [ '$scope', '$modal', 'AjaxServi
     AjaxService.call("suppliers/", 'GET').success(function(data, status, headers, config) {
         $scope.lendTos = data;
         $scope.clonedRequest.lendTo = $scope.clonedRequest.lendTo == 0 || $scope.clonedRequest.lendTo == null ? data[0].id : $scope.clonedRequest.lendTo;
+    });
+    
+    AjaxService.call("locations/", 'GET').success(function(data, status, headers, config) {
+        $scope.locations = data;
+        $scope.clonedRequest.location = data[0].id;
     });
     
     AjaxService.call('stockTypes?method=Exit', 'GET').success(function(data, status, headers, config) {

@@ -1,0 +1,26 @@
+<div ng-controller='LocationsController' ng-init="load()" access="ROLE_REFERENCE_ENTRY,ROLE_DATAENTRY">
+    <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+    <div>
+        <button type="button" class="btn btn-primary" ng-click="add()" access="ROLE_REFERENCE_ENTRY">Add</button>
+        <button type="button" class="btn btn-info" ng-click="load()">Refresh</button>
+    </div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr class="info table-row">
+					<th>Name</th>
+					<th access="ROLE_REFERENCE_ENTRY">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="location in locations" class="table-row">
+					<td>{{location.name}}</td>
+					<td access="ROLE_REFERENCE_ENTRY">
+						<button type='button' class='btn btn-success' ng-click="add(location)" access="ROLE_REFERENCE_ENTRY">Edit</button>
+						<button type='button' class='btn btn-danger' ng-click="deleteRecord(location)" access="ROLE_REFERENCE_ENTRY">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

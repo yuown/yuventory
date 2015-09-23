@@ -5,6 +5,14 @@
     <div class="modal-body">
 	    <form ng-submit="submitOption('yes', confirmCallback)" id="formConfirmSell">
 	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Location</span>
+                    <select class="form-control" ng-options="location.id as location.name for location in locations" ng-model="clonedRequest.location" ng-required="true">
+                       <option value="">Select a Location</option>
+                    </select>
+                </div>
+            </div>
+	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Reason</span>
 	                <select class="form-control" ng-options="stockType.id as stockType.name for stockType in stockTypes" ng-model="clonedRequest.stockType" ng-change="showHideDeleteMessage()" ng-required="true">

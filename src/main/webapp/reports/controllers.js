@@ -87,10 +87,13 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 		AjaxService.call('stockTypes', 'GET').success(function(data, status, headers, config) {
             $scope.reportsMeta.stockTypes = data;
         });
+		AjaxService.call('locations', 'GET').success(function(data, status, headers, config) {
+            $scope.locations = data;
+        });
 		
 		$scope.getCategoryName = function(id) {
 	        return getObjectFromId($scope.categories, id)['name'];
-	    }
+	    };
 	    
 	    $scope.getSupplierName = function(id) {
 	        var r = '';
@@ -98,7 +101,15 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
 	            r = getObjectFromId($scope.suppliers, id)['name'];
 	        }
 	        return r;
-	    }
+	    };
+	    
+	    $scope.getLocationName = function(id) {
+	        var r = '';
+            if(id) {
+                r = getObjectFromId($scope.locations, id)['name'];
+            }
+            return r;
+        }
 	    
 	    yuQuery('[data-toggle="popover"]').popover();
 	};

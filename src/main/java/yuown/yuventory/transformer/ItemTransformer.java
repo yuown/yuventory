@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.entity.Location;
 import yuown.yuventory.jpa.services.CategoryRepositoryService;
 import yuown.yuventory.jpa.services.ItemsRepositoryService;
+import yuown.yuventory.jpa.services.LocationRepositoryService;
 import yuown.yuventory.jpa.services.StockTypeRepositoryService;
 import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.jpa.services.UserRepositoryService;
@@ -25,6 +27,9 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 
 	@Autowired
 	private CategoryRepositoryService categoryRepositoryService;
+	
+	@Autowired
+	private LocationRepositoryService locationRepositoryService;
 
 	@Autowired
 	private StockTypeRepositoryService stockTypeRepositoryService;
@@ -60,6 +65,7 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 					dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
 					dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
 					dest.setUser(userRepositoryService.findOne(source.getUser()));
+					dest.setLocation(locationRepositoryService.findOne(source.getLocation()));
 
 					decideLending(null, dest);
 					dest.setSold(false);
@@ -97,6 +103,10 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 				dest.setStockType(source.getStockType().getId());
 				dest.setUser(source.getUser().getId());
 				dest.setSold(source.getSold());
+				Location loc = source.getLocation();
+				if(loc != null) {
+					dest.setLocation(loc.getId());
+				}
 				if (source.getLendTo() != null) {
 					dest.setLendTo(source.getLendTo().getId());
 					dest.setLendDescription(source.getLendDescription());

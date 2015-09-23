@@ -265,6 +265,20 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
         });
     };
     
+    $scope.calculatedWastage = function(item) {
+        var pW = parseFloat(item.weight);
+        var pG = parseFloat(item.perGram);
+        var pIw = parseFloat(item.wastage);
+        var wt2 = (pW * pG) * pIw / 100;
+        return roundTo2Decimals(wt2);
+    };
+    
+    $scope.calculatedMaking = function(item) {
+        var pW = parseFloat(item.weight);
+        var pM = parseFloat(item.makingCharges);
+        return roundTo2Decimals(pW * pM);
+    };
+    
     $scope.sum = function(addedItems2Estimate) {
     	var sum = 0.0;
     	for (var int = 0; int < addedItems2Estimate.length; int++) {

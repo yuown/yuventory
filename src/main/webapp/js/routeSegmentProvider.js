@@ -15,6 +15,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/suppliers', 'home.suppliers').
         when('/home/stockTypes', 'home.stockTypes').
         when('/home/categories', 'home.categories').
+        when('/home/locations', 'home.locations').
         when('/home/reports', 'home.reports').
         when('/home/notification', 'home.notification').
         when('/home/reports/unifiedReport', 'home.reports.unifiedReport').
@@ -50,6 +51,9 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
             }).
             segment('categories', {
                 templateUrl : 'categories/list.html'
+            }).
+            segment('locations', {
+                templateUrl : 'locations/list.html'
             }).
             segment('reports', {
                 templateUrl : 'reports/list.html'

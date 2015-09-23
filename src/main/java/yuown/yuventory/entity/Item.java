@@ -34,7 +34,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
         @AttributeOverride(name = "lendTo", column = @Column(name = "lend_to")),
         @AttributeOverride(name = "lendDate", column = @Column(name = "lend_date")),
         @AttributeOverride(name = "lendDescription", column = @Column(name = "lend_description")),
-        @AttributeOverride(name = "sold", column = @Column(name = "sold"))
+        @AttributeOverride(name = "sold", column = @Column(name = "sold")),
+        @AttributeOverride(name = "location", column = @Column(name = "location"))
 })
 public class Item extends BaseEntity<Integer> implements Serializable {
 
@@ -65,6 +66,8 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 	private String lendDescription;
 
 	private Boolean sold;
+	
+	private Location location;
 
 	public String getName() {
 		return name;
@@ -146,6 +149,16 @@ public class Item extends BaseEntity<Integer> implements Serializable {
 
 	public void setLendDescription(String lendDescription) {
 		this.lendDescription = lendDescription;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "location", nullable = true)
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	public Boolean getSold() {

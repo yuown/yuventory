@@ -24,6 +24,10 @@
         <security:intercept-url pattern="/rest/categories/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
         <security:intercept-url pattern="/rest/categories/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
         
+        <security:intercept-url pattern="/rest/locations/**" access="hasRole('ROLE_DATAENTRY')" method="GET" />
+        <security:intercept-url pattern="/rest/locations/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="POST" />
+        <security:intercept-url pattern="/rest/locations/**" access="hasRole('ROLE_REFERENCE_ENTRY')" method="DELETE" />
+        
 		<security:intercept-url pattern="/rest/items/**" access="hasRole('ROLE_VIEW_ITEMS')" method="GET" />
 		<security:intercept-url pattern="/rest/items/sell/**" access="hasRole('ROLE_LENDER')" method="POST" />
 		<security:intercept-url pattern="/rest/items/lend/**" access="hasRole('ROLE_LENDER')" method="POST" />

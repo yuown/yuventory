@@ -26,7 +26,7 @@
 	</bean>
 	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="showSql" value="true" />
-		<property name="generateDdl" value="false" />
+		<property name="generateDdl" value="true" />
 		<property name="database" value="MYSQL" />
 	</bean>
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
