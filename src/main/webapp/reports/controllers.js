@@ -255,6 +255,14 @@ yuventoryApp.controller('SupplierStatisticsController', [ '$scope', 'AjaxService
         });
     };
     
+    $scope.getGoldPercent = function(val) {
+    	return roundTo2Decimals(val*100/($scope.goldTotal==0?1:$scope.goldTotal));
+    };
+    
+    $scope.getSilverPercent = function(val) {
+    	return roundTo2Decimals(val*100/($scope.silverTotal==0?1:$scope.silverTotal));
+    };
+    
 } ]);
 
 yuventoryApp.controller('ItemsCountController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {

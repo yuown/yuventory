@@ -1,10 +1,10 @@
 <div ng-controller='BalanceSheetController' access="ROLE_REPORTS" ng-init="generateReport()">
 	<div class="col-xs-12" ng-show="reportsOutput" access="ROLE_REPORTS">
 	    <div>
-	        <div style="width: {{reportsOutput.goldWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert goldbar">{{reportsOutput.goldWeight}} grams</div>
+	        <div style="width: {{reportsOutput.goldWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert goldbar">{{reportsOutput.goldWeight}} grams ({{reportsOutput.goldWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}} %)</div>
 	    </div>
 	    <div>
-	        <div style="width: {{reportsOutput.silverWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert silverbar">{{reportsOutput.silverWeight}} grams</div>
+	        <div style="width: {{reportsOutput.silverWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}}%" class="alert silverbar">{{reportsOutput.silverWeight}} grams ({{reportsOutput.silverWeight*100/(reportsOutput.goldWeight+reportsOutput.silverWeight)}} %)</div>
 	    </div>
 	</div>
 </div>

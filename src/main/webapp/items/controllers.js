@@ -178,10 +178,6 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
 yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
     'use strict';
 
-    var roundTo2Decimals = function(amount) {
-    	return parseFloat(Math.round((amount) * 100) / 100).toFixed(2);
-    };
-    
     var calculateTotalPrice = function(item) {
     	var pW = parseFloat(item.weight);
     	var pG = parseFloat(item.perGram);
@@ -285,6 +281,10 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
     		sum += parseFloat(addedItems2Estimate[int].totalPrice);
 		}
     	return roundTo2Decimals(sum);
+    };
+    
+    $scope.basePrice = function(item) {
+    	return roundTo2Decimals(parseFloat(item.weight) * parseFloat(item.perGram));
     };
     
     $scope.printEstimate = function() {

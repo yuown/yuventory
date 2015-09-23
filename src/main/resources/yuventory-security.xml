@@ -72,7 +72,6 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="enableGroups" value="true" />
 		<property name="enableAuthorities" value="false" />
-<!-- 		<property name="rolePrefix" value="${YUOWNROLE}" /> -->
 		<property name="AuthenticationManager" ref="yuownAuthenticationManagerForRest" />
 	</bean>
 	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />

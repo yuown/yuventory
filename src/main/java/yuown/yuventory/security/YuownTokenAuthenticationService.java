@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import yuown.yuventory.model.UserModel;
 
-@Component
 public class YuownTokenAuthenticationService {
 
 	@Value("${auth.header.name}")

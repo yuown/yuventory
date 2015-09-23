@@ -88,3 +88,11 @@ function getDate() {
 
 	return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
+
+function roundTo2Decimals(amount) {
+	return parseFloat(Math.round((amount) * 100) / 100).toFixed(2);
+}
+
+function roundTo3Decimals(amount) {
+	return parseFloat(Math.round((amount) * 1000) / 1000).toFixed(3);
+}

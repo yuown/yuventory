@@ -14,19 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
-import yuown.yuventory.business.services.BarcodeService;
-import yuown.yuventory.business.services.ItemService;
 import yuown.yuventory.business.services.UserService;
 import yuown.yuventory.model.UserModel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-@Component
 public class YuownAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-
-	private ObjectMapper objectMapper;
 
 	@Autowired
 	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
@@ -34,17 +26,11 @@ public class YuownAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private BarcodeService barcodeService;
-
-	@Autowired
-	private ItemService itemService;
-
 	private Logger log = LoggerFactory.getLogger(YuownAuthenticationSuccessHandler.class);
 
 	@Autowired
 	public YuownAuthenticationSuccessHandler(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter) {
-		this.objectMapper = mappingJackson2HttpMessageConverter.getObjectMapper();
+
 	}
 
 	@Override

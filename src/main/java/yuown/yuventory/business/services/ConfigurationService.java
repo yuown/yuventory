@@ -12,9 +12,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ import yuown.yuventory.model.ConfigurationModel;
 import yuown.yuventory.transformer.ConfigurationTransformer;
 
 @Service
-@Scope("singleton")
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 public class ConfigurationService extends AbstractServiceImpl<Integer, ConfigurationModel, Configuration, ConfigurationRepositoryService, ConfigurationTransformer> {
 
 	@Autowired
@@ -35,8 +35,8 @@ public class ConfigurationService extends AbstractServiceImpl<Integer, Configura
 	@Autowired
 	private ConfigurationTransformer configurationTransformer;
 
-	@Value("${settings.to.init}")
-	private String settingsToInit;
+	@Value("#{'${settings.to.init}'.split(',')}")
+	private List<String> settingsToInit;
 
 	@Override
 	protected ConfigurationRepositoryService repoService() {
@@ -112,7 +112,7 @@ public class ConfigurationService extends AbstractServiceImpl<Integer, Configura
 	}
 
 	public void saveSettingsToSystem() {
-		String[] names = StringUtils.split(settingsToInit, ",");
+		String[] names = settingsToInit.toArray(new String[0]);
 		List<ConfigurationModel> settingsFromDB = getSettings(names);
 		for (ConfigurationModel configurationModel : settingsFromDB) {
 			saveSettingsToSystem(configurationModel.getName(), configurationModel);

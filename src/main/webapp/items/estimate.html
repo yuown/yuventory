@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="panel-footer" ng-show="request.lendTo == null || request.lendTo == 0" access="ROLE_ESTIMATE">
-			<button class="btn btn-warning" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="addItem(request)" access="ROLE_ESTIMATE">Add Item</button>
+			<button class="btn btn-warning" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="addItem(request)" access="ROLE_ESTIMATE">Add Item to Estimate</button>
 		</div>
 	</div>
 	<hr />
@@ -57,56 +57,48 @@
 				<p class="list-group-item-text"></p>
 			</a>
 		</div>
-		<div class="row list-group" ng-repeat="item in addedItems2Estimate">
-			<a class="list-group-item">
-				<h4 class="list-group-item-heading">{{item.name}}</h4>
-<!-- 				<p class="list-group-item-text"> -->
-				<table class="table-responsive col-xs-12">
-					<tbody>
-						<tr>
-							<td>Weight: {{item.weight}}</td>
-							<td>Category: {{item.categoryDesc}}</td>
-						</tr>
-						<tr>
-							<td colspan="2">Price Per gram: {{item.perGram}}</td>
-						</tr>
-						<tr class="bg-danger">
-						    <td>Wastage (%): {{item.wastage}}</td>
-						    <td>Total Wastage Charges: {{calculatedWastage(item)}}</td>
-						</tr>
-						<tr class="bg-warning">
-							<td>Making Charges Per Gram: {{item.makingCharges}}</td>
-							<td>Total Making Charges: {{calculatedMaking(item)}}</td>
-						</tr>
-						<tr class="bg-success">
-						    <td colspan="2">Total Price: {{item.totalPrice}}</td>
-						</tr>
-					</tbody>
-				</table>
-<!-- 				</p> -->
-				<br />
-				<div class="row no-print">
+		<div class="panel panel-info" ng-repeat="item in addedItems2Estimate">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					{{item.name}} ({{item.weight}} gm)
 					<div class="pull-right">
-						<button class="btn btn-success" ng-click="modifyEstimatedItem(item)" access="ROLE_ESTIMATE">Modify</button>
-						<button class="btn btn-danger" ng-click="addedItems2Estimate.splice(addedItems2Estimate.indexOf(item), 1)" access="ROLE_ESTIMATE">Remove</button>
+						{{item.categoryDesc}}
+					</div>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="col-xs-12">
+					<div class="col-xs-12 bg-danger">
+					    <div class="col-xs-6">Wastage (%): {{item.wastage}}</div>
+					    <div class="col-xs-6">Total Wastage Charges: <div class="pull-right">{{calculatedWastage(item)}}</div></div>
+					</div>
+					<div class="col-xs-12 bg-warning">
+						<div class="col-xs-6">Making Charges Per Gram: {{item.makingCharges}}</div>
+						<div class="col-xs-6">Total Making Charges: <div class="pull-right">{{calculatedMaking(item)}}</div></div>
+					</div>
+					<div class="col-xs-12 bg-info">
+						<div class="col-xs-6">Price Per gram: {{item.perGram}}</div>
+					    <div class="col-xs-6">Base Price: <div class="pull-right">{{basePrice(item)}}</div></div>
+					</div>
+					<div class="col-xs-12 bg-success">
+						<div class="col-xs-6">Item ID: {{item.id}}</div>
+					    <div class="col-xs-6">Total Price: <div class="pull-right">{{item.totalPrice}}</div></div>
 					</div>
 				</div>
-			</a>
+			</div>
+			<div class="panel-footer no-print">
+				<button class="btn btn-success pull-right" ng-click="modifyEstimatedItem(item)" access="ROLE_ESTIMATE">Modify</button>
+				<button class="btn btn-danger" ng-click="addedItems2Estimate.splice(addedItems2Estimate.indexOf(item), 1)" access="ROLE_ESTIMATE">Exclude</button>
+			</div>
 		</div>
 		<hr />
 		<div class="list-group" ng-show="addedItems2Estimate.length > 0">
-			<a class="list-group-item">
+			<div class="list-group-item">
 				<h4 class="list-group-item-heading">Estimate Summary</h4>
-				<p class="list-group-item-text">
-				<table class="table-responsive col-xs-12">
-					<tbody>
-						<tr>
-							<td>Total Items: {{addedItems2Estimate.length}}</td>
-							<td>Estimated Total Amount: {{sum(addedItems2Estimate)}}</td>
-						</tr>
-					</tbody>
-				</table>
-				</p>
+				<div class="col-xs-12">
+					<div class="col-xs-6">Total Items: {{addedItems2Estimate.length}}</div>
+					<div class="col-xs-6">Estimated Total Amount: <div class="pull-right">{{sum(addedItems2Estimate)}}</div></div>
+				</div>
 				<br />
 				<div class="row no-print">
 					<div class="pull-right">
@@ -114,7 +106,7 @@
 						<button class="btn btn-danger glyphicon glyphicon-remove" type="button" ng-click="addedItems2Estimate.splice(0, addedItems2Estimate.length)"></button>
 					</div>
 				</div>
-			</a>
+			</div>
 		</div>
 	</div>
 </div>

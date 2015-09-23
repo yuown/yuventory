@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import yuown.yuventory.entity.Item;
@@ -15,19 +16,19 @@ import yuown.yuventory.entity.Supplier;
 @Repository
 public interface ItemsRepository extends BaseRepository<Item, Integer> {
 	
-	@Query("select sum(weight) from Item item where item.lendTo is null and item.sold = ? and item.itemType = ?")
-	Double findAllWeightByItemType(Boolean sold, String type);
+	@Query("select sum(weight) from Item item where item.lendTo is null and item.sold = :sold and item.itemType = :type")
+	Double findAllWeightByItemType(@Param("sold") Boolean sold, @Param("type") String type);
 
 	@Query("select distinct name from Item")
 	Set<String> findAllItemNames();
 
 	public PageImpl<Item> findAllByNameLike(String name, Pageable pageRequest);
 	
-	@Query("select sum(weight) from Item item where item.lendTo is null and item.sold = ? and item.itemType = ? and item.supplier = ?")
-	Double sumByWeightByItemTypeSupplier(Boolean sold, String type, Supplier supplier);
+	@Query("select sum(weight) from Item item where item.lendTo is null and item.sold = :sold and item.itemType = :type and item.supplier = :supplier")
+	Double sumByWeightByItemTypeSupplier(@Param("sold") Boolean sold, @Param("type") String type, @Param("supplier") Supplier supplier);
 
-	@Query("select item.name, count(item.name) from Item item where item.lendTo is null and item.sold = ? group by item.name having count(item.name) <= ? order by count(item.name)")
-	public List<Map<String, Integer>> findItemsCount(Boolean sold, Long itemNotifyCount);
+	@Query("select item.name, count(item.name) from Item item where item.lendTo is null and item.sold = :sold group by item.name having count(item.name) <= :count order by count(item.name)")
+	public List<Map<String, Integer>> findItemsCount(@Param("sold") Boolean sold, @Param("count") Long itemNotifyCount);
 
 	public List<Item> findAllByLendToNotNullAndSoldOrderByLendToDesc(Boolean sold);
 
