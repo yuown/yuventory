@@ -1,12 +1,12 @@
-@page {
+@page print {
 	size: 6cm 1.3cm;
 	margin: 0.1mm 0.1mm 0.1mm 0.1mm;
 }
 
 @media print {
-	body * {
-		visibility: hidden;
-	}
+/* 	body * { */
+/* 		visibility: hidden; */
+/* 	} */
 	.section-to-print, .section-to-print * {
 		visibility: visible;
 	}

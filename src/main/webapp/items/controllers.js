@@ -162,7 +162,29 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
     $scope.printBarcode = function() {
-    	window.print();
+//    	window.print();
+        var winPrint = window.open('', '', '');
+        winPrint.document.write('<html><head><title>Print Estimate</title>' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />' +
+                '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap-theme.css" />' +
+                '<style type="text/css">' +
+	            	'@page {' +
+	            		'size: 6cm 1.3cm;' +
+	            		'margin: 0.1mm 0.1mm 0.1mm 0.1mm;' +
+	            	'}' +
+	            '</style>' +
+                '<link rel="stylesheet" type="text/css" href="css/yuventory-print.css" />' +
+                '<script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>' +
+                '<script type="text/javascript">' +
+                    '$(document).ready(function() {' +
+                    	'$(".no-print").remove();' +
+            			'window.print();' +
+                    	'window.close();' +
+            		 '});' +
+                '</script>' +  
+                '</head><body>' + yuQuery(".print-section").html() + "</body></html>");
+        winPrint.document.close();
+        winPrint.focus();
     	$scope.addDialog.dismiss('cancel');
     	if($scope.onemore == true) {
             $scope.add();
