@@ -55,20 +55,22 @@ public class ItemTransformer extends AbstractDTOTransformer<ItemModel, Item> {
 					} else {
 						decideLending(null, dest);
 					}
-
 				} else {
 					dest = new Item();
 					BeanUtils.copyProperties(source, dest, FROM_EXCLUDES);
 					dest.setCreateDate(new Date().getTime());
 
-					dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
-					dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
-					dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
-					dest.setUser(userRepositoryService.findOne(source.getUser()));
-					dest.setLocation(locationRepositoryService.findOne(source.getLocation()));
-
 					decideLending(null, dest);
 					dest.setSold(false);
+				}
+				dest.setSupplier(supplierRepositoryService.findOne(source.getSupplier()));
+				dest.setCategory(categoryRepositoryService.findOne(source.getCategory()));
+				dest.setStockType(stockTypeRepositoryService.findOne(source.getStockType()));
+				dest.setUser(userRepositoryService.findOne(source.getUser()));
+				
+				Location loc = locationRepositoryService.findOne(source.getLocation());
+				if(loc != null) {
+					dest.setLocation(loc);
 				}
 
 				dest.setName(dest.getName().toUpperCase());
