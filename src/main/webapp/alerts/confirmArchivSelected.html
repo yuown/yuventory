@@ -1,4 +1,4 @@
-<div ng-controller="AlertsArchiveSelectedController"> 
+<div ng-controller="AlertsArchiveSelectedController" ng-init='init()'> 
     <div class="modal-header modal-header-danger">
         <h4 class="modal-title">{{title}}</h4>
     </div>
@@ -28,8 +28,9 @@
 	            <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon">ID</span>
-                        <span class="input-group-addon">Item Name</span>
-                        <span class="input-group-addon">Item Weight</span>
+                        <span class="input-group-addon">Name</span>
+                        <span class="input-group-addon">Weight</span>
+                        <span class="input-group-addon">Location</span>
                     </div>
                 </div>
 		        <div class="form-group" ng-repeat="item in model.selectedItems" ng-if="item.itemType=='Gold'">
@@ -37,6 +38,7 @@
 		                <span class="input-group-addon">{{item.id}}</span>
 		                <span class="input-group-addon">{{item.name}}</span>
 		                <span class="input-group-addon">{{item.weight}}</span>
+		                <span class="input-group-addon">{{item.locationDesc}}</span>
 		            </div>
 		        </div>
 		       </div> 
@@ -49,8 +51,9 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon">ID</span>
-                        <span class="input-group-addon">Item Name</span>
-                        <span class="input-group-addon">Item Weight</span>
+                        <span class="input-group-addon">Name</span>
+                        <span class="input-group-addon">Weight</span>
+                        <span class="input-group-addon">Location</span>
                     </div>
                 </div>
                 <div class="form-group" ng-repeat="item in model.selectedItems" ng-if="item.itemType=='Silver'">
@@ -58,6 +61,7 @@
                         <span class="input-group-addon">{{item.id}}</span>
                         <span class="input-group-addon">{{item.name}}</span>
                         <span class="input-group-addon">{{item.weight}}</span>
+                        <span class="input-group-addon">{{item.locationDesc}}</span>
                     </div>
                 </div>
                </div>
