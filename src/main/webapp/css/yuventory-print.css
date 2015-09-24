@@ -1,12 +1,9 @@
-@page print {
+@page {
 	size: 6cm 1.3cm;
-	margin: 0.1mm 0.1mm 0.1mm 0.1mm;
+	margin: 2mm 0mm 0mm 0mm;
 }
 
 @media print {
-/* 	body * { */
-/* 		visibility: hidden; */
-/* 	} */
 	.section-to-print, .section-to-print * {
 		visibility: visible;
 	}
@@ -48,8 +45,6 @@
 		height: 8px;
 		position: relative;
 		text-align: center;
-		font-size: 8px;
-		width: 40%;
 		white-space: nowrap;
 	}
 	.bar-tag-holder>.tag2 {
@@ -57,17 +52,13 @@
 		height: 8px;
 		position: relative;
 		text-align: center;
-		font-size: 8px;
-		width: 35%;
 		white-space: nowrap;
 	}
 	.bar-tag-holder>.tag3 {
 		height: 8px;
 		position: absolute;
 		float: right;
-		font-size: 8px;
-		width: 25%;
 		white-space: nowrap;
-		font-size: 8px;
+		text-align: center;
 	}
 }
