@@ -1,0 +1,19 @@
+<div ng-controller="DiscountBoxController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+	    <form ng-submit="submitOption('yes', confirmCallback)" id="formDiscountDetails">
+			<div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Discount Amount</span>
+	                <input class="form-control" ng-model="clonedRequest.discAmount" ng-required="true" min="0" />
+	            </div>
+	        </div>
+	    </form>
+	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="submitOption('no')"> Cancel</button>
+        <button type="submit" class="btn btn-success btn-large glyphicon glyphicon-ok" form="formDiscountDetails"> Discount</button>
+    </div>
+</div>

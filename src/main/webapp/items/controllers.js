@@ -188,6 +188,10 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
     	return roundTo2Decimals(wt1 + wt2);
     };
     
+    $scope.roundTo2Decimals = function(amount) {
+        return roundTo2Decimals(amount);
+    };
+    
     $scope.init = function() {
         $scope.search = {};
         $scope.addedItems2Estimate = [];
@@ -243,6 +247,7 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
     		var clonedRequest = angular.copy(request);
             AlertsService.estimateDetails(clonedRequest, function(item) {
             	item.totalPrice = calculateTotalPrice(item);
+            	item.discAmount = 0;
             	$scope.addedItems2Estimate.push(item);
             	$scope.clearSearch();
             });
@@ -257,7 +262,15 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
         	request.perGram = item.perGram;
         	request.makingCharges = item.makingCharges;
         	request.wastage = item.wastage;
+        	request.discAmount = item.discAmount;
         	request.totalPrice = calculateTotalPrice(item);
+        });
+    };
+    
+    $scope.applyDiscount = function(request) {
+        var cloned = angular.copy(request);
+        AlertsService.discountBox(cloned, function(item) {
+            request.discAmount = item.discAmount;
         });
     };
     
@@ -278,7 +291,7 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
     $scope.sum = function(addedItems2Estimate) {
     	var sum = 0.0;
     	for (var int = 0; int < addedItems2Estimate.length; int++) {
-    		sum += parseFloat(addedItems2Estimate[int].totalPrice);
+    		sum += parseFloat(addedItems2Estimate[int].totalPrice - addedItems2Estimate[int].discAmount);
 		}
     	return roundTo2Decimals(sum);
     };

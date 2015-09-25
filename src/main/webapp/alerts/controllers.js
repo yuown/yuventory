@@ -58,6 +58,15 @@ yuventoryApp.factory('AlertsService', [ '$rootScope', '$modal', function($rootSc
                 templateUrl : 'alerts/estimateDetails.html',
                 scope : $rootScope
             });
+        },
+        discountBox : function(clonedRequest, callback) {
+            $rootScope.title = "yuventory";
+            $rootScope.confirmCallback = callback;
+            $rootScope.clonedRequest = clonedRequest;
+            $rootScope.confirmDialog = $modal.open({
+                templateUrl : 'alerts/discountBox.html',
+                scope : $rootScope
+            });
         }
     };
 
@@ -173,6 +182,18 @@ yuventoryApp.controller('AlertsArchiveSelectedController', [ '$scope', '$modal',
 } ]);
 
 yuventoryApp.controller('EstimateDetailsController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
+    'use strict';
+    
+    $scope.submitOption = function(option, confirmCallback) {
+        $scope.confirmDialog.dismiss('cancel')
+        if(option == 'yes') {
+            confirmCallback($scope.clonedRequest);
+        }
+    };
+    
+} ]);
+
+yuventoryApp.controller('DiscountBoxController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
     'use strict';
     
     $scope.submitOption = function(option, confirmCallback) {
