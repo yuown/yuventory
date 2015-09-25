@@ -146,7 +146,25 @@ yuventoryApp.controller('AlertsSellController', [ '$scope', '$modal', 'AjaxServi
 } ]);
 
 yuventoryApp.controller('AlertsArchiveSelectedController', [ '$scope', '$modal', 'AjaxService', function($scope, $modal, AjaxService) {
-    
+
+	$scope.init = function() {
+		AjaxService.call('locations', 'GET').success(function(data, status, headers, config) {
+	        $scope.locations = data;
+	        for (var int = 0; int < $scope.model.selectedItems.length; int++) {
+				var element = $scope.model.selectedItems[int];
+				element.locationDesc = $scope.getLocationName(element.location);
+			}
+	    });
+	};
+	
+	$scope.getLocationName = function(id) {
+        var r = '';
+        if(id) {
+            r = getObjectFromId($scope.locations, id)['name'];
+        }
+        return r;
+    };
+	
     $scope.submitOption = function(option, confirmCallback) {
         $scope.confirmDialog.dismiss('cancel')
         if(option == 'yes') {
