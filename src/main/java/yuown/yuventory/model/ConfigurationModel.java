@@ -10,6 +10,8 @@ public class ConfigurationModel extends Model {
 	private String name;
 
 	private Integer value;
+	
+	private String strValue;
 
 	public String getName() {
 		return name;
@@ -25,6 +27,14 @@ public class ConfigurationModel extends Model {
 
 	public void setValue(Integer value) {
 		this.value = value;
+	}
+
+	public String getStrValue() {
+		return strValue;
+	}
+
+	public void setStrValue(String strValue) {
+		this.strValue = strValue;
 	}
 
 }

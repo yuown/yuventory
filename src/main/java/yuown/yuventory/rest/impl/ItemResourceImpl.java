@@ -204,14 +204,18 @@ public class ItemResourceImpl {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<ItemModel>> getAll(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+	public ResponseEntity<List<ItemModel>> getAll(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, @RequestParam(value = "valid", required = false) Boolean valid) {
 		HttpHeaders headers = new HttpHeaders();
 		PageImpl<Item> pagedItems = null;
 		List<ItemModel> items = null;
-		if(StringUtils.isNotBlank(name)) {
-			pagedItems = itemService.search(name, page, size);
+		if(valid == null) {
+			if(StringUtils.isNotBlank(name)) {
+				pagedItems = itemService.search(name, page, size);
+			} else {
+				pagedItems = itemService.getAll(page, size);
+			}
 		} else {
-			pagedItems = itemService.getAll(page, size);
+			pagedItems = itemService.getAll(valid.booleanValue(), page, size);
 		}
 		items = itemService.transformer().transformTo(pagedItems.getContent());
 		
@@ -219,6 +223,21 @@ public class ItemResourceImpl {
 		headers.add("totalItems", pagedItems.getTotalElements() + StringUtils.EMPTY);
 
 		return new ResponseEntity<List<ItemModel>>(items, headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/validateAll")
+	@ResponseBody
+	public void updateValidity(@RequestParam(value = "flag", required = true) Boolean flag) {
+		itemService.saveAllAsValid(flag);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, value = "/validity")
+	@ResponseBody
+	public void updateValidity(@RequestBody ItemModel model) {
+		ItemModel itemFromDB = itemService.getById(model.getId());
+		if (null != itemFromDB) {
+			itemFromDB.setValidated(model.getValidated());
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/pageSize")

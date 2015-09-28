@@ -109,7 +109,7 @@
 			<div class="form-group">
 				<p class="input-group">
 					<span class="input-group-addon">By Category</span>
-					<select class="form-control" ng-options="category.id as category.name for category in reportsMeta.categories" ng-model="reportsInput.category">
+					<select class="form-control" ng-options="category.id as category.name for category in categories" ng-model="reportsInput.category">
 						<option value=''>All</option>
 					</select>
 				</p>
@@ -129,7 +129,7 @@
 			<div class="form-group">
 				<p class="input-group">
 					<span class="input-group-addon">Purchased from Supplier</span>
-					<select class="form-control" ng-options="supplier.id as supplier.name for supplier in reportsMeta.suppliers" ng-model="reportsInput.supplier">
+					<select class="form-control" ng-options="supplier.id as supplier.name for supplier in suppliers" ng-model="reportsInput.supplier">
 						<option value=''>All</option>
 					</select>
 				</p>
@@ -139,7 +139,7 @@
             <div class="form-group">
                 <p class="input-group">
                     <span class="input-group-addon">Sold or Lent to</span>
-                    <select class="form-control" ng-options="lent.id as lent.name for lent in reportsMeta.suppliers" ng-model="reportsInput.lent">
+                    <select class="form-control" ng-options="lent.id as lent.name for lent in suppliers" ng-model="reportsInput.lent">
                         <option value=''>All</option>
                     </select>
                 </p>

@@ -7,7 +7,7 @@ import java.util.Set;
 
 public enum ItemType {
 
-	Gold("Gold", "gold"), Silver("Silver", "silver"), Others("Others", "others");
+	Gold("Gold", "gold"), Silver("Silver", "silver");
 
 	private String name;
 	private String type;

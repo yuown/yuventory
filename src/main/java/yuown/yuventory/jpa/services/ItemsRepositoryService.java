@@ -81,4 +81,12 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	public List<Item> getLentItems(Long start, Long end) {
 		return repository().findAllByLendToNotNullAndLendDateBetweenAndSoldOrderByLendToDesc(start, end, false);
 	}
+
+	public PageImpl<Item> findAllByValidated(boolean booleanValue, Pageable pageRequest) {
+		return repository().findAllByValidated(booleanValue, pageRequest);
+	}
+
+	public void saveAllAsValid(Boolean flag) {
+		repository().saveAllAsValid(flag);
+	}
 }

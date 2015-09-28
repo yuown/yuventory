@@ -12,6 +12,7 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
         when('/home/stockOut', 'home.stockOut').
         when('/home/stockIn', 'home.stockIn').
         when('/home/estimate', 'home.estimate').
+        when('/home/validate', 'home.validate').
         when('/home/suppliers', 'home.suppliers').
         when('/home/stockTypes', 'home.stockTypes').
         when('/home/categories', 'home.categories').
@@ -39,6 +40,9 @@ yuventoryApp.config(function($routeSegmentProvider, $routeProvider) {
 	        }).
             segment('stockIn', {
                 templateUrl : 'items/list.html'
+            }).
+            segment('validate', {
+                templateUrl : 'items/validate.html'
             }).
             segment('estimate', {
                 templateUrl : 'items/estimate.html'

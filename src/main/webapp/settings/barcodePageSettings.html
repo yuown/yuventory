@@ -1,0 +1,55 @@
+<div ng-controller="BarcodePageSettingsController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+	    <form ng-submit="submitOption('yes', barcodePageSettingsCallback)" id="formBarcodePageSettings">
+	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Page Settings - All below in millimeters</span>
+                    <span class="input-group-addon"> </span>
+                </div>
+            </div>
+			<div class="form-group">
+	            <div class="input-group">
+	                <span class="input-group-addon">Page Width</span>
+	                <input class="form-control" ng-model="settings.barcodePageSettings.page_width" ng-required="true" min="0" />
+	            </div>
+	        </div>
+	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Page Height</span>
+                    <input class="form-control" ng-model="settings.barcodePageSettings.page_height" ng-required="true" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Margin Top</span>
+                    <input class="form-control" ng-model="settings.barcodePageSettings.margin_top" ng-required="true" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Margin Right</span>
+                    <input class="form-control" ng-model="settings.barcodePageSettings.margin_right" ng-required="true" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Margin Bottom</span>
+                    <input class="form-control" ng-model="settings.barcodePageSettings.margin_bottom" ng-required="true" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Margin Left</span>
+                    <input class="form-control" ng-model="settings.barcodePageSettings.margin_left" ng-required="true" min="0" />
+                </div>
+            </div>
+	    </form>
+	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="submitOption('no')"> Cancel</button>
+        <button type="submit" class="btn btn-success btn-large glyphicon glyphicon-ok" form="formBarcodePageSettings"> Save</button>
+    </div>
+</div>

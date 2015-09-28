@@ -162,7 +162,30 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     };
     
     $scope.printBarcode = function() {
-    	window.print();
+        var bcPgSet = $scope.globals.barcodePageSettings;
+        var printCode = '<html><head><title>Print Barcode</title>' +
+                            '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />' +
+                            '<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap-theme.css" />' +
+                            '<link rel="stylesheet" type="text/css" href="css/bar-print.css" />' +
+                            '<style type="text/css" media="print">' +
+                                '@page {' +
+                                '    size: ' + bcPgSet.page_width + 'mm ' + bcPgSet.page_height + 'mm;' +
+                                '    margin: ' + bcPgSet.margin_top + 'mm ' + bcPgSet.margin_right + 'mm ' + bcPgSet.margin_bottom + 'mm ' + bcPgSet.margin_left + 'mm;' +
+                                '}' +
+                            '</style>' +
+                            '<script type="text/javascript" src="jquery/jquery-2.1.4.js"></script>' +
+                            '<script type="text/javascript">' +
+                                '$(document).ready(function() {' +
+                                    '$(".no-print").remove();' +
+                                  'window.print();' +
+                                  'window.close();' +
+                                 '});' +
+                            '</script>' +  
+                        '</head><body>' + yuQuery(".print-section").html() + '</body></html>';
+        var winPrint = window.open('', '', '');
+        winPrint.document.write(printCode);
+        winPrint.document.close();
+        winPrint.focus();
     	$scope.addDialog.dismiss('cancel');
     	if($scope.onemore == true) {
             $scope.add();
@@ -319,5 +342,97 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
     $scope.getDate = function() {
     	return getDate();
     };
+    
+} ]);
+
+yuventoryApp.controller('ItemsValidationController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', '$location', function($scope, AjaxService, $modal, AlertsService, $location) {
+    'use strict';
+    
+    $scope.init = function() {
+        $scope.currentPage = 1;
+        $scope.validateRequest = {
+            valid : true,
+            invalid : true
+        };
+        $scope.search = {};
+        yuQuery(document.body).scannerDetection(function(data) {
+            $scope.search.id = parseInt(data);
+            AjaxService.call('items/' + $scope.search.id, 'GET').success(function(data, status, headers, config) {
+                if(data) {
+                    $scope.validate(data);
+                }
+            });
+        });
+        AjaxService.call('categories', 'GET').success(function(data, status, headers, config) {
+            $scope.categories = data;
+        });
+    };
+    
+    $scope.loadByValidity = function(pageNumber, valid, invalid) {
+        var param = null;
+        if(valid == true || invalid == true) {
+            if(valid) {
+                param = true;
+            }
+            if(invalid) {
+                param = false;
+            }
+        }
+        if(valid == true && invalid == true) {
+            param = null;
+        }
+        var paramVal = '';
+        if(param != null) {
+            paramVal = '&valid=' + param;
+        }
+        
+        AjaxService.call('items?page=' + (pageNumber - 1) + paramVal, 'GET').success(function(data, status, headers, config) {
+            $scope.totalItems = headers("totalItems");
+            $scope.pages = headers("pages");
+            $scope.currentPage = pageNumber;
+            $scope.items = data;
+        });
+    };
+    
+    $scope.getNumber = function(num) {
+        var array = [];
+        for (var int = 0; int < num;) {
+            array[int] = ++int;
+        }
+        return array;
+    };
+    
+    $scope.validate = function(request) {
+        request.validated = true;
+        $scope.submitValidation(request);
+    };
+    
+    $scope.invalidate = function(request) {
+        request.validated = false;
+        $scope.submitValidation(request);
+    };
+    
+    $scope.submitValidation = function(request) {
+        AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
+            $scope.message = "Item with ID " + request.id + ", successfully marked as " + (request.validated == false ? 'InValidated' : 'Validated');
+            $scope.request = data;
+            $scope.loadByValidity($scope.currentPage, $scope.validateRequest.valid, $scope.validateRequest.invalid);
+        });
+    };
+    
+    $scope.validateAll = function(flag) {
+        AjaxService.call('items/validateAll?flag=' + flag, 'GET').success(function(data, status, headers, config) {
+            $scope.loadByValidity(1, $scope.validateRequest.valid, $scope.validateRequest.invalid);
+        });
+    };
+    
+    $scope.getCategoryName = function(id) {
+        return getObjectFromId($scope.categories, id)['name'];
+    }
+    
+    $scope.getSupplierName = function(id) {
+        var r = getObjectFromId($scope.suppliers, id)['name'];
+        return r != null && r != '' ? r : '';
+    }
     
 } ]);

@@ -302,4 +302,19 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		}
 		return transformer().transformTo(soldItems);
 	}
+
+	public PageImpl<Item> getAll(boolean booleanValue, Integer page, Integer size) {
+		if (page == null || page < 0) {
+			page = 0;
+		}
+		Integer fromSystem = Integer.parseInt(System.getProperty(ITEM_PAGE_SIZE));
+		if (size == null || (size < 0 || size > fromSystem)) {
+			size = fromSystem;
+		}
+		return repoService().findAllByValidated(booleanValue, new PageRequest(page, size));
+	}
+
+	public void saveAllAsValid(Boolean flag) {
+		repoService().saveAllAsValid(flag);
+	}
 }

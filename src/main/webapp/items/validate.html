@@ -1,0 +1,61 @@
+<div ng-controller='ItemsValidationController' ng-init="init(); loadByValidity(1, validateRequest.valid, validateRequest.invalid)" access="ROLE_VIEW_ITEMS,ROLE_VALIDATE">
+    <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
+    <nav>
+        <div>
+            <button type="button" class="btn btn-success" ng-click="validateAll(true)" access="ROLE_VALIDATE">Validate All</button>
+            <button type="button" class="btn btn-danger" ng-click="validateAll(false)" access="ROLE_VALIDATE">InValidate All</button>
+        </div>
+        <div class="container">
+			<div class="row">
+			  <form>
+				<div class="input-group">
+				    <span class="input-group-addon">Get Items By Validated Status</span>
+					<label class="input-group-addon">Valid Items<input class="form-control" type="checkbox" ng-model="validateRequest.valid" ng-click="loadByValidity(1, validateRequest.valid, validateRequest.invalid)" /></label>
+					<label class="input-group-addon">Invalid Items<input class="form-control" type="checkbox" ng-model="validateRequest.invalid" ng-click="loadByValidity(1, validateRequest.valid, validateRequest.invalid)" /></label>
+				</div>
+			  </form>
+			</div>
+			<div class="row">
+              <div class="alert alert-success" ng-show="message">{{message}}</div>
+            </div>
+		</div>
+		<div>
+			<ul class="pagination noselect">
+				<li ng-class="{disabled: currentPage==1}"><a aria-label="Previous" ng-click="currentPage > 1 && loadByValidity(currentPage - 1, validateRequest.valid, validateRequest.invalid)"><span aria-hidden="true">Previous</span></a></li>
+				<li ng-class="{active: page==currentPage}" ng-repeat="page in getNumber(pages)"><a ng-click="currentPage != page && loadByValidity(page, validateRequest.valid, validateRequest.invalid)">{{page}}</a></li>
+				<li ng-class="{disabled: currentPage==pages}"><a aria-label="Next" ng-click="currentPage < pages && loadByValidity(currentPage + 1, validateRequest.valid, validateRequest.invalid)"><span aria-hidden="true">Next</span></a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr class="info table-row">
+					<th>Item ID</th>
+					<th>Name</th>
+					<th>Weight</th>
+					<th>Type</th>
+					<th>Category</th>
+					<th>Status</th>
+					<th>Validated Status</th>
+					<th access="ROLE_VALIDATE">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in items" class="table-row" ng-if="(item.lendTo == null || item.lendTo == 0) && item.sold == false">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.weight}}</td>
+					<td>{{item.itemType}}</td>
+					<td>{{getCategoryName(item.category)}}</td>
+					<td>{{((item.lendTo == null || item.lendTo == 0) && item.sold == false) ? 'In Stock' : (item.sold == true ? 'Item Stock out' : 'Item Lent')}}</td>
+					<td>{{item.validated == null || item.validated == false ? 'Not Valid' : 'Valid'}}</td>
+					<td access="ROLE_VALIDATE">
+						<button type='button' class='btn btn-success' ng-click="validate(item)" ng-show="item.validated == null || item.validated == false" access="ROLE_VALIDATE">Validate</button>
+						<button type='button' class='btn btn-danger' ng-click="invalidate(item)" ng-show="item.validated == true"access="ROLE_VALIDATE">InValidate</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

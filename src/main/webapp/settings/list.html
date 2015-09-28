@@ -25,5 +25,21 @@
                 <button class="form-control btn btn-warning pull-right" style="width: 200px" ng-click="popNotifySize()">Change</button>
           </div>
         </div>
+        <div class="form-group">
+          <div class="input-group">
+                <span class="input-group-addon">Barcode Page Settings</span>
+                <span class="input-group-addon">
+                    <div>
+                        <div class="pull-left">Page Width: {{settings.barcodePageSettings.page_width}} mm</div>
+                        <div class="pull-left">Page Height: {{settings.barcodePageSettings.page_width}} mm</div>
+                        <div class="pull-left">Margin Top: {{settings.barcodePageSettings.margin_top}} mm</div>
+                        <div class="pull-left">Margin Right: {{settings.barcodePageSettings.margin_right}} mm</div>
+                        <div class="pull-left">Margin Bottom: {{settings.barcodePageSettings.margin_bottom}} mm</div>
+                        <div class="pull-left">Margin Left: {{settings.barcodePageSettings.margin_left}} mm</div>
+                    </div>
+                </span>
+                <button class="form-control btn btn-warning pull-right" style="width: 200px" ng-click="popBarcodePageSettings()">Change</button>
+          </div>
+        </div>
 	</div>
 </div>

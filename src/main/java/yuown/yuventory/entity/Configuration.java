@@ -1,23 +1,19 @@
 package yuown.yuventory.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "CONFIGURATION", uniqueConstraints = @UniqueConstraint(columnNames = { "id" }))
@@ -25,7 +21,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 {
     @AttributeOverride(name = "id", column = @Column(name = "ID", insertable = false, updatable = false)),
     @AttributeOverride(name = "name", column = @Column(name = "name")),
-    @AttributeOverride(name = "value", column = @Column(name = "value"))
+    @AttributeOverride(name = "value", column = @Column(name = "value")),
+    @AttributeOverride(name = "strValue", column = @Column(name = "str_value"))
 })
 public class Configuration extends BaseEntity<Integer> implements Serializable {
 
@@ -34,6 +31,8 @@ public class Configuration extends BaseEntity<Integer> implements Serializable {
     private String name;
     
     private Integer value;
+    
+    private String strValue;
     
     public String getName() {
         return name;
@@ -49,6 +48,14 @@ public class Configuration extends BaseEntity<Integer> implements Serializable {
 
 	public void setValue(Integer value) {
 		this.value = value;
+	}
+
+	public String getStrValue() {
+		return strValue;
+	}
+
+	public void setStrValue(String strValue) {
+		this.strValue = strValue;
 	}
 
 	@Override

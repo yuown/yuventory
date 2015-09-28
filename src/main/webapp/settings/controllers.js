@@ -1,4 +1,4 @@
-yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', 'AuthenticationService', function($scope, AjaxService, $modal, AlertsService, AuthenticationService) {
     'use strict';
 
     $scope.settings = {};
@@ -25,6 +25,10 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
         
         AjaxService.call("items/notifySize", 'GET').success(function(data, status, headers, config) {
             $scope.settings.itemNotifySize = data;
+        });
+        
+        AjaxService.call("settings/barPage", 'GET').success(function(data, status, headers, config) {
+            $scope.settings.barcodePageSettings = data;
         });
     };
     
@@ -67,6 +71,21 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
         });
     };
     
+    $scope.popBarcodePageSettings = function() {
+        $scope.barcodePageSettings = $modal.open({
+            templateUrl : 'settings/barcodePageSettings.html',
+            scope : $scope
+        });
+    };
+    
+    $scope.barcodePageSettingsCallback = function() {
+        AjaxService.call("settings/barPage", 'POST', $scope.settings.barcodePageSettings).success(function(data, status, headers, config) {
+            $scope.globals.barcodePageSettings = $scope.settings.barcodePageSettings;
+            AuthenticationService.updateCookie();
+            $scope.refreshSettings();
+        });
+    };
+    
 } ]);
 
 yuventoryApp.controller('BarcodeDimensionsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
@@ -95,6 +114,17 @@ yuventoryApp.controller('ItemsizeController', [ '$scope', 'AjaxService', '$modal
     
     $scope.submitOption = function(option, callback) {
         $scope.notifySizeDialog.dismiss('cancel')
+        if(option == 'yes') {
+            callback();
+        }
+    };
+    
+} ]);
+
+yuventoryApp.controller('BarcodePageSettingsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    
+    $scope.submitOption = function(option, callback) {
+        $scope.barcodePageSettings.dismiss('cancel')
         if(option == 'yes') {
             callback();
         }

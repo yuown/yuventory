@@ -29,6 +29,8 @@ public class ItemModel extends Model {
 	private long createDate;
 
 	private long updateDate;
+	
+	private Boolean validated;
 
 	public String getName() {
 		return name;
@@ -140,5 +142,13 @@ public class ItemModel extends Model {
 
 	public void setUpdateDate(long updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public Boolean getValidated() {
+		return validated;
+	}
+
+	public void setValidated(Boolean validated) {
+		this.validated = validated;
 	}
 }

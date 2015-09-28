@@ -34,6 +34,10 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	            $rootScope.globals.owner = data.licenceTo;
 	            service.updateCookie();
 	        });
+	        AjaxService.call("settings/barPage", 'GET').success(function(data, status, headers, config) {
+	            $rootScope.globals.barcodePageSettings = data;
+	            service.updateCookie();
+	        });
 		} else{
 			$rootScope.errorMessage = "Failed to Login, due to a Server Error, Please contact Administrator!";
 		}

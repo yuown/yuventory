@@ -5,7 +5,7 @@
     <div class="modal-body">
         Are you sure to Archive the selected Items listed below ?<br />
 	    <div class="row stock-out-report-print">
-	        <div class="form-group col-xs-12">
+	        <div class="form-group col-xs-12" ng-show="model.from && model.to">
                 <div class="input-group">
                     <span class="input-group-addon">Stock out Report (Date)</span>
                     <span class="input-group-addon">From: {{model.from}}</span>

@@ -1,0 +1,57 @@
+@media print {
+    .section-to-print, .section-to-print * {
+        visibility: visible;
+    }
+    .section-to-print {
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 1px;
+        font-size: 8px;
+        line-height: 12px;
+        width: 100%;
+    }
+    div.barcodecontainer {
+        border: 0px;
+        padding: 0px;
+    }
+    
+    .stock-out-report-print {
+       visibility: visible;
+    }
+}
+
+@media print {
+    .bar-tag-holder {
+        box-sizing: border-box;
+        display: inline;
+        clear: left;
+        float: left;
+        height: 8px;
+        position: relative;
+        text-align: center;
+        font-size: 10px;
+        white-space: nowrap;
+    }
+    .bar-tag-holder>.tag1 {
+        float: left;
+        height: 8px;
+        position: relative;
+        text-align: center;
+        white-space: nowrap;
+    }
+    .bar-tag-holder>.tag2 {
+        float: left;
+        height: 8px;
+        position: relative;
+        text-align: center;
+        white-space: nowrap;
+    }
+    .bar-tag-holder>.tag3 {
+        height: 8px;
+        white-space: nowrap;
+        text-align: center;
+    }
+}

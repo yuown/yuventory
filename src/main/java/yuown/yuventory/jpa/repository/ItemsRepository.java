@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -33,4 +34,10 @@ public interface ItemsRepository extends BaseRepository<Item, Integer> {
 	public List<Item> findAllByLendToNotNullAndSoldOrderByLendToDesc(Boolean sold);
 
 	List<Item> findAllByLendToNotNullAndLendDateBetweenAndSoldOrderByLendToDesc(Long start, Long end, boolean b);
+
+	PageImpl<Item> findAllByValidated(boolean booleanValue, Pageable pageRequest);
+
+	@Query("update Item item set validated = :type where (item.lendTo is null or item.lendTo = 0) and item.sold = 0")
+	@Modifying
+	public void saveAllAsValid(@Param("type") Boolean flag);
 }
