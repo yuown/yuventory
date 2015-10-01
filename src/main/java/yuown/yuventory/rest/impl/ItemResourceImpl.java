@@ -238,6 +238,7 @@ public class ItemResourceImpl {
 		if (null != itemFromDB) {
 			itemFromDB.setValidated(model.getValidated());
 		}
+		itemService.save(model);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/pageSize")

@@ -413,7 +413,7 @@ yuventoryApp.controller('ItemsValidationController', [ '$scope', 'AjaxService', 
     };
     
     $scope.submitValidation = function(request) {
-        AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
+        AjaxService.call('items/validity', 'POST', request).success(function(data, status, headers, config) {
             $scope.message = "Item with ID " + request.id + ", successfully marked as " + (request.validated == false ? 'InValidated' : 'Validated');
             $scope.request = data;
             $scope.loadByValidity($scope.currentPage, $scope.validateRequest.valid, $scope.validateRequest.invalid);
