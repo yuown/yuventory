@@ -97,6 +97,7 @@
 				</div>
 			</div>
 			<div class="panel-footer no-print">
+			    <button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)" access="ROLE_SELLER">Stock Out</button>
 				<button class="btn btn-success pull-right" ng-click="modifyEstimatedItem(item)" access="ROLE_ESTIMATE">Modify</button>
 				<button class="btn btn-warning pull-right" ng-click="applyDiscount(item)" access="ROLE_ESTIMATE">Discount</button>
 				<button class="btn btn-danger" ng-click="addedItems2Estimate.splice(addedItems2Estimate.indexOf(item), 1)" access="ROLE_ESTIMATE">Exclude</button>

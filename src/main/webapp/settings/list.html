@@ -1,4 +1,4 @@
-<div ng-controller='SettingsController' ng-init="refreshSettings()" access="ROLE_SETTINGS">
+<div ng-controller='SettingsController' ng-init="refreshSettings()" access="ROLE_SETTINGS" class="table-responsive">
 	<div class="panel-body">
 		<div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
 		<div class="divider">
@@ -31,7 +31,7 @@
                 <span class="input-group-addon">
                     <div>
                         <div class="pull-left">Page Width: {{settings.barcodePageSettings.page_width}} mm</div>
-                        <div class="pull-left">Page Height: {{settings.barcodePageSettings.page_width}} mm</div>
+                        <div class="pull-left">Page Height: {{settings.barcodePageSettings.page_height}} mm</div>
                         <div class="pull-left">Margin Top: {{settings.barcodePageSettings.margin_top}} mm</div>
                         <div class="pull-left">Margin Right: {{settings.barcodePageSettings.margin_right}} mm</div>
                         <div class="pull-left">Margin Bottom: {{settings.barcodePageSettings.margin_bottom}} mm</div>
@@ -39,6 +39,22 @@
                     </div>
                 </span>
                 <button class="form-control btn btn-warning pull-right" style="width: 200px" ng-click="popBarcodePageSettings()">Change</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+                <span class="input-group-addon">Default Rates for Estimation</span>
+                <span class="input-group-addon">
+                    <div>
+                        <div class="pull-left">Gold Price/gm: {{settings.defaultRateSettings.goldPrice}}</div>
+                        <div class="pull-left">Gold Wastage (%)/gm: {{settings.defaultRateSettings.goldWastagePerc}}</div>
+                        <div class="pull-left">Gold Making Charges/gm: {{settings.defaultRateSettings.goldMakingChgs}}</div>
+                        <div class="pull-left">Silver Price/gm: {{settings.defaultRateSettings.silverPrice}}</div>
+                        <div class="pull-left">Silver Wastage (%)/gm: {{settings.defaultRateSettings.silverWastagePerc}}</div>
+                        <div class="pull-left">Silver Making Charges/gm: {{settings.defaultRateSettings.silverMakingChgs}}</div>
+                    </div>
+                </span>
+                <button class="form-control btn btn-warning pull-right" style="width: 200px" ng-click="popDefaultRateSettings()">Change</button>
           </div>
         </div>
 	</div>

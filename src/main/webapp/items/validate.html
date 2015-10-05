@@ -1,4 +1,4 @@
-<div ng-controller='ItemsValidationController' ng-init="init(); loadByValidity(1, validateRequest.valid, validateRequest.invalid)" access="ROLE_VIEW_ITEMS,ROLE_VALIDATE">
+<div ng-controller='ItemsValidationController' ng-init="init(); loadByValidity(1, validateRequest.valid, validateRequest.invalid)" access="ROLE_VIEW_ITEMS,ROLE_VALIDATE" class="table-responsive">
     <div class="alert alert-danger" ng-show="errorMessage">{{errorMessage}}</div>
     <nav>
         <div>

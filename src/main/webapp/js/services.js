@@ -38,6 +38,10 @@ yuventoryApp.factory('AuthenticationService', ['$http', '$cookieStore', '$rootSc
 	            $rootScope.globals.barcodePageSettings = data;
 	            service.updateCookie();
 	        });
+	        AjaxService.call("settings/defaultRates", 'GET').success(function(data, status, headers, config) {
+	            $rootScope.globals.defaultRateSettings = data;
+	            service.updateCookie();
+	        });
 		} else{
 			$rootScope.errorMessage = "Failed to Login, due to a Server Error, Please contact Administrator!";
 		}

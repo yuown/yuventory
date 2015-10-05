@@ -12,7 +12,7 @@
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Item name like" ng-model="search.name" list="newNames" />
 					<datalist id="newNames">
-                       <option ng-repeat="newItem in newItemNames" ng-value="newItem">{{newItem}}</option>
+                       <option ng-repeat="newItem in newItemNames" ng-value="newItem.name">{{newItem.name}}</option>
                     </datalist>
 					<span class="input-group-btn">
 						<button class="btn btn-default glyphicon glyphicon-search" type="submit" ng-click="load(1, search.name)"></button>

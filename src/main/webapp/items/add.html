@@ -8,9 +8,9 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Name</span>
-	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" list="newNames" />
+	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" list="newNames" ng-change="fixNewItemType(request, newItemNames)" />
 	                <datalist id="newNames">
-	                   <option ng-repeat="newItem in newItemNames" ng-value="newItem">{{newItem}}</option>
+	                   <option ng-repeat="newItem in newItemNames" ng-value="newItem.name">{{newItem.name}}</option>
 	                </datalist>
 	            </div>
 	        </div>
@@ -70,7 +70,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="addDialog.dismiss('cancel')">Close</button>
         <button type="submit" class="btn btn-primary" form="addForm">Save</button>
-        <button class="glyphicon glyphicon-print btn btn-warning" ng-click="printBarcode()" ng-show="request.id" access="ROLE_PRINT"></button>
+        <button class="glyphicon glyphicon-print btn btn-warning" ng-click="printBarcode()" ng-show="request.id" access="ROLE_PRINT" id="printBarCodeBtn"></button>
         <button class="glyphicon glyphicon glyphicon-eye-open btn btn-success" ng-click="previewBarcode()" ng-show="false" access="ROLE_PRINT"></button>
     </div>
 </div>

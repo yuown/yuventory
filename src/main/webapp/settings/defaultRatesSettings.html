@@ -1,0 +1,49 @@
+<div ng-controller="DefaultRatesSettingsController"> 
+    <div class="modal-header modal-header-danger">
+        <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+	    <form ng-submit="submitOption('yes', defaultRateSettingsCallback)" id="formDefaultRatesSettings">
+			<div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Gold Price Per gram</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.goldPrice" ng-required="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Gold Wastage (%)</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.goldWastagePerc" ng-required="true" min="0" step="0.1" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Gold Making Charges Per Gram</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.goldMakingChgs" ng-required="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Silver Price Per gram</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.silverPrice" ng-required="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Silver Wastage (%)</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.silverWastagePerc" ng-required="true" min="0" step="0.1" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Silver Making Charges Per Gram</span>
+                    <input class="form-control" ng-model="settings.defaultRateSettings.silverMakingChgs" ng-required="true" />
+                </div>
+            </div>
+	    </form>
+	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-large glyphicon glyphicon-remove" ng-click="submitOption('no')"> Cancel</button>
+        <button type="submit" class="btn btn-success btn-large glyphicon glyphicon-ok" form="formDefaultRatesSettings"> Save</button>
+    </div>
+</div>

@@ -17,7 +17,7 @@
 	            <li ng-class="{active: isSegment('validate')}" access="ROLE_VIEW_ITEMS,ROLE_VALIDATE"><a href="#/home/validate">Validate</a></li>
 	            <li ng-class="{active: isSegment('estimate')}" access="ROLE_VIEW_ITEMS,ROLE_ESTIMATE"><a href="#/home/estimate">Estimate</a></li>
 	            <li class="dropdown" ng-class="{active: isSegment('suppliers') || isSegment('categories') || isSegment('stockTypes') || isSegment('locations')}" access="ROLE_REFERENCE_ENTRY,ROLE_DATAENTRY">
-	               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference Data <span class="caret"></span></a>
+	               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data <span class="caret"></span></a>
 	               <ul class="dropdown-menu">
                     <li ng-class="{active: isSegment('suppliers')}"><a href="#/home/suppliers">Suppliers</a></li>
                     <li ng-class="{active: isSegment('categories')}"><a href="#/home/categories">Categories</a></li>
@@ -28,8 +28,8 @@
 	            <li ng-class="{active: isSegment('unifiedReport') || isSegment('balanceSheet') || isSegment('supplierStats') || isSegment('stockOutOrLentItems')}" access="ROLE_REPORTS"><a href="#/home/reports/unifiedReport">Reports</a></li>
 	            <li ng-class="{active: isSegment('notification')}" access="ROLE_REPORTS"><a href="#/home/notification">Notifier</a></li>
 	            <li ng-class="{active: isSegment('settings')}" access="ROLE_SETTINGS"><a href="#/home/settings">Settings</a></li>
-	            <li class="dropdown" ng-class="{active: isSegment('users')}" access="ROLE_USER_MANAGER">
-	              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users/ Roles <span class="caret"></span></a>
+	            <li class="dropdown" ng-class="{active: isSegment('users') || isSegment('groups')}" access="ROLE_USER_MANAGER">
+	              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Security <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
 	                <li ng-class="{active: isSegment('users')}"><a href="#/home/users">Users</a></li>
 	                <li ng-class="{active: isSegment('groups')}"><a href="#/home/groups">Groups</a></li>

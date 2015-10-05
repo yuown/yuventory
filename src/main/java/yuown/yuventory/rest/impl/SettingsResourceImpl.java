@@ -32,6 +32,18 @@ public class SettingsResourceImpl {
 	private static final String MARGIN_BOTTOM = "margin_bottom";
 
 	private static final String MARGIN_LEFT = "margin_left";
+	
+	private static final String GOLD_PRICE = "goldPrice";
+
+	private static final String GOLD_WASTAGE = "goldWastagePerc";
+
+	private static final String GOLD_MAKING_CHARGES = "goldMakingChgs";
+
+	private static final String SILVER_PRICE = "silverPrice";
+
+	private static final String SILVER_WASTAGE = "silverWastagePerc";
+
+	private static final String SILVER_MAKING_CHARGES = "silverMakingChgs";
 
 	@RequestMapping(value = "/barPage", method = RequestMethod.GET)
 	@ResponseBody
@@ -57,6 +69,36 @@ public class SettingsResourceImpl {
 			saveConfigValue(MARGIN_RIGHT, pageSettings.get(MARGIN_RIGHT));
 			saveConfigValue(MARGIN_BOTTOM, pageSettings.get(MARGIN_BOTTOM));
 			saveConfigValue(MARGIN_LEFT, pageSettings.get(MARGIN_LEFT));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/defaultRates", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Double> readDefaultRatesSettings() {
+		Map<String, Double> defaultRates = new HashMap<String, Double>();
+		defaultRates.put(GOLD_PRICE, getConfigValue(GOLD_PRICE));
+		defaultRates.put(GOLD_WASTAGE, getConfigValue(GOLD_WASTAGE));
+		defaultRates.put(GOLD_MAKING_CHARGES, getConfigValue(GOLD_MAKING_CHARGES));
+		defaultRates.put(SILVER_PRICE, getConfigValue(SILVER_PRICE));
+		defaultRates.put(SILVER_WASTAGE, getConfigValue(SILVER_WASTAGE));
+		defaultRates.put(SILVER_MAKING_CHARGES, getConfigValue(SILVER_MAKING_CHARGES));
+
+		return defaultRates;
+	}
+
+	@RequestMapping(value = "/defaultRates", method = RequestMethod.POST)
+	@ResponseBody
+	public void writeDefaultRatesSettings(@RequestBody Map<String, Double> defaultRates) {
+		try {
+			saveConfigValue(GOLD_PRICE, defaultRates.get(GOLD_PRICE));
+			saveConfigValue(GOLD_WASTAGE, defaultRates.get(GOLD_WASTAGE));
+			saveConfigValue(GOLD_MAKING_CHARGES, defaultRates.get(GOLD_MAKING_CHARGES));
+			saveConfigValue(SILVER_PRICE, defaultRates.get(SILVER_PRICE));
+			saveConfigValue(SILVER_WASTAGE, defaultRates.get(SILVER_WASTAGE));
+			saveConfigValue(SILVER_MAKING_CHARGES, defaultRates.get(SILVER_MAKING_CHARGES));
 
 		} catch (Exception e) {
 			e.printStackTrace();

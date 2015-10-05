@@ -8,6 +8,16 @@ function getObjectFromId(array, id) {
 	return null;
 }
 
+function getObjectFromName(array, name) {
+    for (var int = 0; int < array.length; int++) {
+        var every = array[int];
+        if (every.name == name) {
+            return every;
+        }
+    }
+    return null;
+}
+
 function contains(array, obj, fieldName) {
     for (var int = 0; int < array.length; int++) {
         var every = array[int];

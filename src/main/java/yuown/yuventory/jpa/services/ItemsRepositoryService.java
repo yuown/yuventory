@@ -2,7 +2,6 @@ package yuown.yuventory.jpa.services;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
@@ -50,7 +49,7 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 		return repository().findAllWeightByItemType(false, type);
 	}
 	
-	public Set<String> findAllItemNames() {
+	public List<Map<String, String>> findAllItemNames() {
 		return repository().findAllItemNames();
 	}
 	

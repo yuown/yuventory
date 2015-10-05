@@ -3,7 +3,7 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
     
     $scope.currentPage = 1;
 
-    $scope.load = function(pageNumber, itemName) {
+    $scope.load = function(pageNumber, itemName, focus) {
     	var itemNameParam = '';
     	if(itemName) {
     		itemNameParam = '&name=' + itemName;
@@ -12,7 +12,10 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
             $scope.categories = data;
         });
     	AjaxService.call('items/names', 'GET').success(function(data, status, headers, config) {
-            $scope.newItemNames = data;
+    	    $scope.newItemNames = [];
+    	    for(var i=0;i<data.length;i++) {
+    	        $scope.newItemNames.push({name: data[i][0]});
+    	    }
         });
     	
         AjaxService.call('items?page=' + (pageNumber - 1) + itemNameParam, 'GET').success(function(data, status, headers, config) {
@@ -21,6 +24,9 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         	$scope.currentPage = pageNumber;
             $scope.items = data;
         });
+        if(focus == true) {
+            $("#printBarCodeBtn").focus();
+        }
     };
     
     $scope.getNumber = function(num) {
@@ -146,7 +152,7 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
             AjaxService.call("barcode/print/" + data.id, 'GET').success(function(data, status, headers, config) {
         		$scope.barcode = data;
         	});
-            $scope.load($scope.currentPage);
+            $scope.load($scope.currentPage, null, true);
         });
     };
     
@@ -157,7 +163,10 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     $scope.init = function() {
         $scope.onemore = true;
         AjaxService.call('items/names', 'GET').success(function(data, status, headers, config) {
-            $scope.newItemNames = data;
+            $scope.newItemNames = [];
+            for(var i=0;i<data.length;i++) {
+                $scope.newItemNames.push({name: data[i][0], type: data[i][1]});
+            }
         });
     };
     
@@ -194,6 +203,15 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     
     $scope.previewBarcode = function() {
         $.printPreview.loadPrintPreview();
+    };
+    
+    $scope.fixNewItemType = function(item, newItemNames) {
+        if(item && item.id == null) {
+            var objectByName = getObjectFromName(newItemNames, item.name);
+            if(objectByName != null) {
+                item.itemType=objectByName.type;
+            }
+        }
     };
     
 } ]);
@@ -268,12 +286,22 @@ yuventoryApp.controller('EstimateController', [ '$scope', 'AjaxService', '$modal
         var contains = getObjectFromId($scope.addedItems2Estimate, request.id);
     	if(contains == null) {
     		var clonedRequest = angular.copy(request);
-            AlertsService.estimateDetails(clonedRequest, function(item) {
-            	item.totalPrice = calculateTotalPrice(item);
-            	item.discAmount = 0;
-            	$scope.addedItems2Estimate.push(item);
-            	$scope.clearSearch();
-            });
+    		var defaultRates = $scope.globals.defaultRateSettings;
+    		if(clonedRequest.itemType == 'Gold') {
+    		    clonedRequest.perGram = defaultRates.goldPrice;
+    		    clonedRequest.makingCharges = defaultRates.goldMakingChgs;
+    		    clonedRequest.wastage = defaultRates.goldWastagePerc;
+    		} else if(clonedRequest.itemType == 'Silver') {
+    		    clonedRequest.perGram = defaultRates.silverPrice;
+    		    clonedRequest.makingCharges = defaultRates.silverMakingChgs;
+    		    clonedRequest.wastage = defaultRates.silverWastagePerc;
+    		}
+            //AlertsService.estimateDetails(clonedRequest, function(item) {
+    		clonedRequest.totalPrice = calculateTotalPrice(clonedRequest);
+    		clonedRequest.discAmount = 0;
+        	$scope.addedItems2Estimate.push(clonedRequest);
+        	$scope.clearSearch();
+            //});
     	} else {
     		$scope.clearSearch();
     	}

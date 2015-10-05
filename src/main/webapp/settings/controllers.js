@@ -30,6 +30,10 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
         AjaxService.call("settings/barPage", 'GET').success(function(data, status, headers, config) {
             $scope.settings.barcodePageSettings = data;
         });
+        
+        AjaxService.call("settings/defaultRates", 'GET').success(function(data, status, headers, config) {
+            $scope.settings.defaultRateSettings = data;
+        });
     };
     
     $scope.popDimensions = function() {
@@ -72,6 +76,7 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
     };
     
     $scope.popBarcodePageSettings = function() {
+        $scope.title = 'yuventory';
         $scope.barcodePageSettings = $modal.open({
             templateUrl : 'settings/barcodePageSettings.html',
             scope : $scope
@@ -81,6 +86,22 @@ yuventoryApp.controller('SettingsController', [ '$scope', 'AjaxService', '$modal
     $scope.barcodePageSettingsCallback = function() {
         AjaxService.call("settings/barPage", 'POST', $scope.settings.barcodePageSettings).success(function(data, status, headers, config) {
             $scope.globals.barcodePageSettings = $scope.settings.barcodePageSettings;
+            AuthenticationService.updateCookie();
+            $scope.refreshSettings();
+        });
+    };
+    
+    $scope.popDefaultRateSettings = function() {
+        $scope.title = 'yuventory';
+        $scope.defaultRateSettings = $modal.open({
+            templateUrl : 'settings/defaultRatesSettings.html',
+            scope : $scope
+        });
+    };
+    
+    $scope.defaultRateSettingsCallback = function() {
+        AjaxService.call("settings/defaultRates", 'POST', $scope.settings.defaultRateSettings).success(function(data, status, headers, config) {
+            $scope.globals.defaultRateSettings = $scope.settings.defaultRateSettings;
             AuthenticationService.updateCookie();
             $scope.refreshSettings();
         });
@@ -125,6 +146,17 @@ yuventoryApp.controller('BarcodePageSettingsController', [ '$scope', 'AjaxServic
     
     $scope.submitOption = function(option, callback) {
         $scope.barcodePageSettings.dismiss('cancel')
+        if(option == 'yes') {
+            callback();
+        }
+    };
+    
+} ]);
+
+yuventoryApp.controller('DefaultRatesSettingsController', [ '$scope', 'AjaxService', '$modal', 'AlertsService', function($scope, AjaxService, $modal, AlertsService) {
+    
+    $scope.submitOption = function(option, callback) {
+        $scope.defaultRateSettings.dismiss('cancel')
         if(option == 'yes') {
             callback();
         }

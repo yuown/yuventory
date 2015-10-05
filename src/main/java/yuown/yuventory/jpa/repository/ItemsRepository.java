@@ -2,7 +2,6 @@ package yuown.yuventory.jpa.repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +19,8 @@ public interface ItemsRepository extends BaseRepository<Item, Integer> {
 	@Query("select sum(weight) from Item item where item.lendTo is null and item.sold = :sold and item.itemType = :type")
 	Double findAllWeightByItemType(@Param("sold") Boolean sold, @Param("type") String type);
 
-	@Query("select distinct name from Item")
-	Set<String> findAllItemNames();
+	@Query("select distinct name, itemType from Item")
+	List<Map<String, String>> findAllItemNames();
 
 	public PageImpl<Item> findAllByNameLike(String name, Pageable pageRequest);
 	

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -187,7 +186,7 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 		return output;
 	}
 	
-	public Set<String> findAllItemNames() {
+	public List<Map<String, String>> findAllItemNames() {
 		return repoService().findAllItemNames();
 	}
 
