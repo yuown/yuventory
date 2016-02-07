@@ -27,6 +27,15 @@ function contains(array, obj, fieldName) {
     }
 }
 
+function getIndexByField(array, obj, fieldName) {
+    for (var int = 0; int < array.length; int++) {
+        var every = array[int];
+        if (every[0] == obj[fieldName]) {
+            return int;
+        }
+    }
+}
+
 function json2csv(dataArray) {
 	var output = '';
 	for (var i = 0; i < dataArray.length; i++) {

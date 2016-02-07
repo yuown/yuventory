@@ -180,9 +180,10 @@ yuventoryApp.controller('MainReportsController', [ '$scope', 'AjaxService', '$mo
         $location.path('/home/stockOut');
     };
     
-    $scope.deleteRecord = function(request) {
+    $scope.archiveRecord = function(request) {
         AlertsService.confirm('Are you sure to Archive this ?', function() {
-            AjaxService.call('items/' + request.id, 'DELETE').success(function(data, status, headers, config) {
+            var selectedIds = [ request.id ];
+            AjaxService.call('items/archiveSoldItems', 'POST', selectedIds).success(function(data, status, headers, config) {
                 $scope.getSoldOrLentItems();
             });
         });

@@ -35,6 +35,7 @@
 			<thead>
 				<tr class="info table-row">
 					<th>Item ID</th>
+					<th>StockIn Date</th>
 					<th>Name</th>
 					<th>Weight</th>
 					<th>Type</th>
@@ -46,6 +47,7 @@
 			<tbody>
 				<tr ng-repeat="item in items" class="table-row">
 					<td>{{item.id}}</td>
+					<td>{{item.createDate.toDateString()}}</td>
 					<td>{{item.name}}</td>
 					<td>{{item.weight}}</td>
 					<td>{{item.itemType}}</td>

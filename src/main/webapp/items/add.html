@@ -8,7 +8,7 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Name</span>
-	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" list="newNames" ng-change="fixNewItemType(request, newItemNames)" />
+	                <input class="form-control" type="text" placeholder="Enter Item Name" ng-model="request.name" required="required" maxlength="60" list="newNames" ng-change="fixNewItemType(request, newItemNames); fixNewCategory(request, newTypeCategories)" />
 	                <datalist id="newNames">
 	                   <option ng-repeat="newItem in newItemNames" ng-value="newItem.name">{{newItem.name}}</option>
 	                </datalist>
@@ -17,7 +17,7 @@
 	        <div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Type</span>
-	                <select class="form-control" ng-options="itemType as itemType for itemType in itemTypes" ng-model="request.itemType"></select>
+	                <select class="form-control" ng-options="itemType as itemType for itemType in itemTypes" ng-model="request.itemType" ng-change="fixNewCategory(request, newTypeCategories)"></select>
 	            </div>
 	        </div>
 	        <div class="form-group">

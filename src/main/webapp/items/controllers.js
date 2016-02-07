@@ -23,6 +23,9 @@ yuventoryApp.controller('ItemsController', [ '$scope', 'AjaxService', '$modal', 
         	$scope.pages = headers("pages");
         	$scope.currentPage = pageNumber;
             $scope.items = data;
+            for (var i = 0; i < $scope.items.length; i++) {
+                $scope.items[i].createDate = new Date($scope.items[i].createDate);
+            }
         });
         if(focus == true) {
             $("#printBarCodeBtn").focus();
@@ -146,6 +149,9 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
     'use strict';
     
     $scope.save = function(request) {
+        try{
+            request.createDate = request.createDate.getTime();
+        } catch (e) { }
         AjaxService.call('items', 'POST', request).success(function(data, status, headers, config) {
             $scope.request = data;
             $scope.request.currCategory=getObjectFromId($scope.categories, $scope.request.category)['name'];
@@ -167,6 +173,10 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
             for(var i=0;i<data.length;i++) {
                 $scope.newItemNames.push({name: data[i][0], type: data[i][1]});
             }
+        });
+        AjaxService.call('items/typeCategories', 'GET').success(function(data, status, headers, config) {
+            $scope.newTypeCategories = data;
+            $scope.fixNewCategory($scope.request, $scope.newTypeCategories);
         });
     };
     
@@ -210,6 +220,15 @@ yuventoryApp.controller('AddItemController', [ '$scope', 'AjaxService', function
             var objectByName = getObjectFromName(newItemNames, item.name);
             if(objectByName != null) {
                 item.itemType=objectByName.type;
+            }
+        }
+    };
+    
+    $scope.fixNewCategory = function(item, newTypeCategories) {
+        if(item && item.id == null) {
+            var index = getIndexByField(newTypeCategories, item, "itemType");
+            if(index != null) {
+                item.category=newTypeCategories[index][1];
             }
         }
     };

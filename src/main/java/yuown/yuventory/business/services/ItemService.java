@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ import yuown.yuventory.entity.Supplier;
 import yuown.yuventory.jpa.services.ItemsRepositoryService;
 import yuown.yuventory.jpa.services.SupplierRepositoryService;
 import yuown.yuventory.model.ConfigurationModel;
+import yuown.yuventory.model.ItemArcModel;
 import yuown.yuventory.model.ItemModel;
 import yuown.yuventory.model.ReportRequestModel;
 import yuown.yuventory.model.SupplierStatsModel;
@@ -54,6 +56,9 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 
 	@Autowired
 	private ConfigurationService configurationService;
+	
+	@Autowired
+	private ItemArcService itemArcService;
 
 	@Override
 	protected ItemsRepositoryService repoService() {
@@ -315,5 +320,20 @@ public class ItemService extends AbstractServiceImpl<Integer, ItemModel, Item, I
 
 	public void saveAllAsValid(Boolean flag) {
 		repoService().saveAllAsValid(flag);
+	}
+	
+	public void archiveItem(ItemModel item) {
+		ItemArcModel arcItem = new ItemArcModel();
+		try {
+			BeanUtils.copyProperties(item, arcItem);
+			arcItem.setItemId(item.getId());
+		} catch (Exception e) {
+		}
+		itemArcService.save(arcItem);
+		super.removeById(item.getId());
+	}
+	
+	public List<Map<String, Integer>> findAllTypeCategories() {
+		return repoService().findAllTypeCategories();
 	}
 }

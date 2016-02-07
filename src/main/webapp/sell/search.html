@@ -22,40 +22,53 @@
 			<div class="form-group">
 	            <div class="input-group">
 	                <span class="input-group-addon">Item ID</span>
-	                <input class="form-control" type="text" ng-model="request.id" readonly="readonly" />
+	                <input class="form-control" type="text" ng-model="request.id" readonly="readonly" ng-hide="request.itemId" />
+	                <input class="form-control" type="text" ng-model="request.itemId" readonly="readonly" ng-show="request.itemId" />
 	            </div>
 	        </div>
 	        <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Item StockIn Date</span>
+                    <input class="form-control" type="text" ng-value="request.createDate.toDateString()" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Item StockOut Date</span>
+                    <input class="form-control" type="text" ng-value="request.lendDate.toDateString()" readonly="readonly" />
+                </div>
+            </div>
+	        <div class="form-group" ng-hide="request.itemId">
 	            <div class="input-group">
 	                <span class="input-group-addon">Item Type</span>
 	                <input class="form-control" type="text" ng-model="request.itemType" readonly="readonly" />
 	            </div>
 	        </div>
-	        <div class="form-group">
+	        <div class="form-group" ng-hide="request.itemId">
 	            <div class="input-group">
 	                <span class="input-group-addon">Weight (in grams)</span>
 	                <input class="form-control" type="text" ng-model="request.weight" readonly="readonly" />
 	            </div>
 	        </div>
-	        <div class="form-group">
+	        <div class="form-group" ng-hide="request.itemId">
                 <div class="input-group">
                     <span class="input-group-addon">Category</span>
                     <input class="form-control" type="text" ng-model="request.categoryDesc" readonly="readonly" />
                 </div>
             </div>
-	        <div class="form-group">
+	        <div class="form-group" ng-hide="request.itemId">
 	            <div class="input-group">
 	                <span class="input-group-addon">Stock Type</span>
 	                <input class="form-control" type="text" ng-model="request.stockTypeDesc" readonly="readonly" />
 	            </div>
 	        </div>
-	        <div class="form-group">
+	        <div class="form-group" ng-hide="request.itemId">
 	            <div class="input-group">
 	                <span class="input-group-addon">Supplier</span>
 	                <input class="form-control" type="text" ng-model="request.supplierDesc" readonly="readonly" />
 	            </div>
 	        </div>
-	        <div class="form-group" ng-if="barcode">
+	        <div class="form-group" ng-if="barcode" ng-hide="request.itemId">
 	            <div class="input-group">
                     <span class="input-group-addon">Barcode</span>
                     <div class="section-to-print">
@@ -77,7 +90,7 @@
                     </div>
                 </div>
 	        </div>
-	        <div ng-hide="request.sold">
+	        <div ng-hide="request.sold || request.itemId">
 	            <div ng-if="request.lendTo != null && request.lendTo > 0">
 	                <div class="form-group">
 	                    <div class="input-group">
@@ -94,7 +107,7 @@
 	            </div>
 	        </div>
 		</div>
-		<div class="panel-footer" ng-hide="request.sold" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
+		<div class="panel-footer" ng-hide="request.sold || request.itemId" access="ROLE_LENDER,ROLE_ITEM_RETURNER,ROLE_SELLER">
 			<button class="btn btn-success" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="lendItem(request)" access="ROLE_LENDER">Lend Item</button>
 			<button class="btn btn-success" ng-if="request.lendTo != null && request.lendTo > 0" ng-click="getItemBack(request)" access="ROLE_ITEM_RETURNER">Get back Item</button>
 			<button class="btn btn-danger pull-right" ng-if="request.lendTo == null || request.lendTo == 0" ng-click="sellItem(request)" access="ROLE_LENDER,ROLE_SELLER">Stock Out Item</button>

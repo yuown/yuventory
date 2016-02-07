@@ -31,6 +31,7 @@
         
         <security:intercept-url pattern="/rest/items/**" access="hasRole('ROLE_DATAENTRY')" method="POST" />
 		<security:intercept-url pattern="/rest/items/**" access="hasAnyRole('ROLE_VIEW_ITEMS', 'ROLE_DATAENTRY')" method="GET" />
+		<security:intercept-url pattern="/rest/items/stockout/**" access="hasAnyRole('ROLE_SELLER')" method="GET" />
 		<security:intercept-url pattern="/rest/items/sell/**" access="hasRole('ROLE_LENDER')" method="POST" />
 		<security:intercept-url pattern="/rest/items/lend/**" access="hasRole('ROLE_LENDER')" method="POST" />
 		<security:intercept-url pattern="/rest/items/getBack/**" access="hasRole('ROLE_ITEM_RETURNER')" method="POST" />

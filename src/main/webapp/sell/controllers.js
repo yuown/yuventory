@@ -7,7 +7,7 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
 		try {
 		    yuQuery(document.body).scannerDetection(function(data){
 	            $scope.search.id = parseInt(data);
-	            $("#yuventoryBarcode").val(parseInt(data));
+	            yuQuery("#yuventoryBarcode").val(parseInt(data));
 	            $scope.searchItem(false);
 	        });
         } catch (e) {
@@ -24,35 +24,42 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
     $scope.searchItem = function(manual) {
     	$scope.clearSearch();
     	if($scope.search.id != null && !isNaN($scope.search.id)) {
-	    	AjaxService.call('items/' + $scope.search.id, 'GET').success(function(data, status, headers, config) {
+    	    $scope.errorMessage = null;
+	    	AjaxService.call('items/stockout/' + $scope.search.id, 'GET').success(function(data, status, headers, config) {
 	    	    if(data != null && data.id != null) {
-	    	        $scope.errorMessage = '';
+	    	        $scope.errorMessage = headers("errorMessage");
     	    		$scope.search.hasResult = true;
+    	    		data.createDate = new Date(data.createDate);
+                    data.lendDate = new Date(data.lendDate);
     	            $scope.request = data;
-    	            AjaxService.call("barcode/print/" + $scope.search.id, 'GET').success(function(data, status, headers, config) {
-    	        		$scope.barcode = data;
-    	        	});
-    	            
-    	            AjaxService.call("stockTypes/" + $scope.request.stockType, 'GET').success(function(data, status, headers, config) {
-    	            	$scope.request.stockTypeDesc = data.name;
-    	        	});
-    	            
-    	            AjaxService.call("categories/" + $scope.request.category, 'GET').success(function(data, status, headers, config) {
-    	            	$scope.request.categoryDesc = data.name;
-    	        	});
-    	            
-    	            AjaxService.call("suppliers/" + $scope.request.supplier, 'GET').success(function(data, status, headers, config) {
-                        $scope.request.supplierDesc = data.name;
-                    });
-    	            
-    	            if($scope.request.lendTo && $scope.request.lendTo > 0) {
-        	            AjaxService.call("suppliers/" + $scope.request.lendTo, 'GET').success(function(data, status, headers, config) {
-                            $scope.request.lendToDesc = data.name;
+    	            if(!$scope.errorMessage) {
+        	            AjaxService.call("barcode/print/" + $scope.search.id, 'GET').success(function(data, status, headers, config) {
+        	        		$scope.barcode = data;
+        	        	});
+        	            
+        	            AjaxService.call("stockTypes/" + $scope.request.stockType, 'GET').success(function(data, status, headers, config) {
+        	            	$scope.request.stockTypeDesc = data.name;
+        	        	});
+        	            
+        	            AjaxService.call("categories/" + $scope.request.category, 'GET').success(function(data, status, headers, config) {
+        	            	$scope.request.categoryDesc = data.name;
+        	        	});
+        	            
+        	            AjaxService.call("suppliers/" + $scope.request.supplier, 'GET').success(function(data, status, headers, config) {
+                            $scope.request.supplierDesc = data.name;
                         });
+        	            
+        	            if($scope.request.lendTo && $scope.request.lendTo > 0) {
+            	            AjaxService.call("suppliers/" + $scope.request.lendTo, 'GET').success(function(data, status, headers, config) {
+                                $scope.request.lendToDesc = data.name;
+                            });
+        	            }
     	            }
 	    	    } else {
 	    	        $scope.errorMessage = "Item not found";
 	    	    }
+	        }).error(function(data, status, headers, config) {
+	            $scope.errorMessage = headers("errorMessage");
 	        });
     	} else {
 	        $scope.errorMessage = "Invalid barcode";
@@ -97,6 +104,8 @@ yuventoryApp.controller('SellController', [ '$scope', 'AjaxService', '$modal', '
                 });
             } else {
                 clonedRequest.sold = true;
+                clonedRequest.createDate = clonedRequest.createDate.getTime();
+                clonedRequest.lendDate = clonedRequest.lendDate.getTime();
                 AjaxService.call("items/sell", 'POST', clonedRequest).success(function(data, status, headers, config) {
                     $scope.searchItem();
                 });

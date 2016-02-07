@@ -39,4 +39,7 @@ public interface ItemsRepository extends BaseRepository<Item, Integer> {
 	@Query("update Item item set validated = :type where (item.lendTo is null or item.lendTo = 0) and item.sold = 0")
 	@Modifying
 	public void saveAllAsValid(@Param("type") Boolean flag);
+	
+	@Query("SELECT distinct itemType, category.id from Item")
+	List<Map<String, Integer>> findAllTypeCategories();
 }

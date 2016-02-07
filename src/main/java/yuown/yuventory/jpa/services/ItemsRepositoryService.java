@@ -88,4 +88,8 @@ public class ItemsRepositoryService extends AbstractRepositoryService<ItemsRepos
 	public void saveAllAsValid(Boolean flag) {
 		repository().saveAllAsValid(flag);
 	}
+	
+	public List<Map<String, Integer>> findAllTypeCategories() {
+		return repository().findAllTypeCategories();
+	}
 }

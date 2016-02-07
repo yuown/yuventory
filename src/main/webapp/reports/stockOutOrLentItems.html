@@ -72,7 +72,7 @@
 	                 <td ng-click="toggleEach(item)">{{getSupplierName(item.supplier)}}</td>
 	                 <td ng-click="toggleEach(item)">{{getLocationName(item.location)}}</td>
 	                 <td access="ROLE_SELLER">
-	                     <button type='button' class='btn btn-danger' ng-click="deleteRecord(item)" access="ROLE_SELLER" ng-show="item.sold==true">Archive</button>
+	                     <button type='button' class='btn btn-danger' ng-click="archiveRecord(item)" access="ROLE_SELLER" ng-show="item.sold==true">Archive</button>
 	                     <button type='button' class='btn btn-success' ng-click="showInStockOut(item)" ng-show="item.sold==false" access="ROLE_ITEM_RETURNER">Get back Item</button>
 	                 </td>
 	             </tr>

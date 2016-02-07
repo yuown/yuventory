@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import yuown.yuventory.business.services.ItemArcService;
 import yuown.yuventory.business.services.ItemService;
 import yuown.yuventory.business.services.SupplierService;
 import yuown.yuventory.entity.Item;
+import yuown.yuventory.model.ItemArcModel;
 import yuown.yuventory.model.ItemModel;
+import yuown.yuventory.model.Model;
 import yuown.yuventory.model.SupplierModel;
 import yuown.yuventory.security.YuownTokenAuthenticationService;
 
@@ -40,6 +43,9 @@ public class ItemResourceImpl {
 
 	@Autowired
 	private YuownTokenAuthenticationService yuownTokenAuthenticationService;
+	
+	@Autowired
+	private ItemArcService itemArcService;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
@@ -197,7 +203,7 @@ public class ItemResourceImpl {
 		for (Integer id : ids) {
 			ItemModel item = itemService.getById(id);
 			if (null != item && item.getSold() == true) {
-				itemService.removeById(id);
+				itemService.archiveItem(item);
 			}
 		}
 	}
@@ -267,5 +273,30 @@ public class ItemResourceImpl {
 	@ResponseBody
 	public List<Map<String, String>> getAllItemNames() {
 		return itemService.findAllItemNames();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/stockout/{id}")
+	@ResponseBody
+	public ResponseEntity<Model> getStockOutItemById(@PathVariable("id") int id) {
+		ItemModel item = itemService.getById(id);
+		HttpHeaders headers = new HttpHeaders();
+		if (null == item) {
+			ItemArcModel arcItem = itemArcService.getByItemId(id);
+			if (null != arcItem) {
+				headers.add("errorMessage", "Item with ID " + id + " StockedOut");
+				return new ResponseEntity<Model>(arcItem, headers, HttpStatus.OK);
+			} else {
+				headers.add("errorMessage", "Item with ID " + id + " cannot be found");
+				return new ResponseEntity<Model>(headers, HttpStatus.NOT_FOUND);
+			}
+		} else {
+			return new ResponseEntity<Model>(item, headers, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/typeCategories")
+	@ResponseBody
+	public List<Map<String, Integer>> getAllTypeCategories() {
+		return itemService.findAllTypeCategories();
 	}
 }
