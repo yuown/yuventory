@@ -104,10 +104,12 @@ CREATE TABLE `group_members` (
   CONSTRAINT `group_members_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
 );
 
-INSERT INTO `yuventory`.`groups` (`id`, `group_name`) VALUES (1, 'USERS');
-INSERT INTO `yuventory`.`groups` (`id`, `group_name`) VALUES (2, 'ADMINS');
+INSERT INTO `yuventory`.`users` (`id`, `username`, `password`, `enabled`, `full_name`) VALUES (1, 'admin', 'admin', 1, 'Admin');
 
-INSERT INTO `yuventory`.`group_members` (`id`, `username`, `group_id`) VALUES (1, 'user1', 1);
+INSERT INTO `yuventory`.`groups` (`id`, `group_name`) VALUES (1, 'ADMINS');
+INSERT INTO `yuventory`.`groups` (`id`, `group_name`) VALUES (2, 'USERS');
+
+INSERT INTO `yuventory`.`group_members` (`id`, `username`, `group_id`) VALUES (1, 'admin', 1);
 
 INSERT INTO `yuventory`.`group_authorities` (`group_id`, `authority`) VALUES (1,"ROLE_SETTINGS");
 INSERT INTO `yuventory`.`group_authorities` (`group_id`, `authority`) VALUES (1,"ROLE_PRINT");
